@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#2980b9</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+
+    <color name="home_screen_bg">#010f1a</color>
+
+    <color name="white">#FFFFFF</color>
+    <color name="btn_color">#2980b9</color>
+    <color name="btn_pressed_color">#303F9F</color>
+
+    <color name="edit_text_hint_color">#EdEAE3</color>
+
+    <color name="defence_graph_color">#14DDF9</color>
+
+
+</resources>

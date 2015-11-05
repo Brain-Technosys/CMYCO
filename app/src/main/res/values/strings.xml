@@ -1,0 +1,62 @@
+<resources>
+
+    <string name="app_name">CMYCO</string>
+    <string name="title_activity_home">CMYCO</string>
+    <string name="title_activity_login">Login</string>
+    <string name="title_activity_forget_password">Forgot Your Password?</string>
+    <string name="title_activity_registration">Create An Account</string>
+    <string name="title_activity_instruction">Gaming Instructions</string>
+    <string name="title_activity_defence">The Game</string>
+
+    <!--alert dialog -->
+    <string name="empty_fields">Please fill all the fields.</string>
+    <string name="invalid_email">Please enter a valid email id.</string>
+    <string name="internet_connectivity_message">Please connect to working Internet connection.</string>
+    <string name="server_not_responding">Server is not responding! Please try later.</string>
+    <string name="password_match">Password and confirm password must be same.</string>
+
+    <!-- common -->
+    <string name="time_out">This request has timed out. Please try later.</string>
+    <string name="logo_email">Email</string>
+    <string name="btn_submit">SUBMIT</string>
+    <string name="action_logout">Logout</string>
+    <string name="btn_continue">CONTINUE</string>
+
+
+    <!--Login Activity -->
+
+    <string name="logo_login">LOGIN</string>
+    <string name="logo_login_password">Password</string>
+    <string name="logo_login_forget_pass">Forget Password?</string>
+    <string name="logo_login_sign_up">Sign Up</string>
+    <string name="btn_sign_in">SIGN IN</string>
+
+    <!--Sign Up-->
+    <string name="logo_sign_up">CREATE AN ACCOUNT</string>
+    <string name="logo_name">Name</string>
+    <string name="logo_login_confirm_password">Confirm Password</string>
+    <string name="btn_sign_up">SIGN UP</string>
+    <string name="alert_pwd_length">Password should be of minimum 6 characters.</string>
+
+
+    <!-- forget Password-->
+    <string name="logo_forget_password">FORGET YOUR PASSWORD ?</string>
+    <string name="empty_email">Please enter a email id.</string>
+
+
+    <!-- Home Activity -->
+    <string name="spn_coach_title">Select Coach</string>
+    <string name="spn_team_title">Select Team</string>
+    <string name="home_continue_error">Please select Coach and Team first.</string>
+    <string name="alert_no_coach_selected">Please select Coach first.</string>
+    <string name="alert_no_team_selected">Please select Team first.</string>
+
+
+    <!-- defence Screen-->
+    <string name="logo_defence">Defence</string>
+    <string name="alert_no_data">No data found.</string>
+    <string name="alert_no_data_sf">Please try again.</string>
+    <string name="title_activity_instruction_page_two">Instruction</string>
+    <string name="title_activity_master_page">Master Page</string>
+
+</resources>
