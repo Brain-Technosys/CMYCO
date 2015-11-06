@@ -9,6 +9,7 @@ import android.support.design.widget.Snackbar;
 import android.util.Log;
 
 import com.braintech.cmyco.R;
+import com.braintech.cmyco.activity.HomeActivity;
 import com.braintech.cmyco.activity.LoginActivity;
 import com.braintech.cmyco.my_interface.SnakeOnClick;
 import com.braintech.cmyco.sessions.PollsPref;
@@ -307,7 +308,15 @@ public class CommonAPI {
             Progress.stop();
 
             if (result == 1) {
-                //do something
+
+                //
+                if (LoginActivity.class.isInstance(context)) {
+                    Intent intent = new Intent(context, HomeActivity.class);
+                    context.startActivity(intent);
+                    LoginActivity.loginActivity.finish();
+                } else {
+                    //do something
+                }
 
             } else if (result == 0) {
                 alertDialogManager.showAlertDialog(context, msg);
@@ -318,12 +327,14 @@ public class CommonAPI {
     }
 
 
+    //this method is used to do Rating from Master Screen
     public void doRating(SnakeOnClick snakeOnClick, CoordinatorLayout coordinatorLayout, String gameId, String pollId, String pollOption, String teamId) {
 
         this.gameId = gameId;
         this.pollId = pollId;
         this.pollOption = pollOption;
         this.teamId = teamId;
+
         if (Utility.isNetworkAvailable(context)) {
             new Rating().execute();
         } else {

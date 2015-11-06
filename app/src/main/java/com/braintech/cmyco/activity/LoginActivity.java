@@ -1,5 +1,6 @@
 package com.braintech.cmyco.activity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.AsyncTask;
@@ -68,6 +69,7 @@ public class LoginActivity extends AppCompatActivity {
     CoordinatorLayout coordinatorLayout;
 
     SnakeOnClick snakeOnClick;
+    SnakeOnClick snakeOnClickPollRetry;
 
     String email;
     String password;
@@ -78,6 +80,10 @@ public class LoginActivity extends AppCompatActivity {
 
     boolean doubleBackToExitPressedOnce = false;
 
+    CommonAPI commonAPI;
+
+    public static Activity loginActivity;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,12 +92,15 @@ public class LoginActivity extends AppCompatActivity {
 
         ButterKnife.inject(this);
 
+        loginActivity = this;
+
         alertDialogManager = new AlertDialogManager();
 
         userSession = new UserSession(getApplicationContext());
 
-        pollsPref = new PollsPref(this);
+        commonAPI = new CommonAPI(LoginActivity.this);
 
+        pollsPref = new PollsPref(this);
 
         handleSnakeRetryCall();
 
@@ -99,11 +108,19 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
+    //this method will call only if their is no internet connection
     private void handleSnakeRetryCall() {
         snakeOnClick = new SnakeOnClick() {
             @Override
             public void onRetryClick() {
                 validateData();
+            }
+        };
+
+        snakeOnClickPollRetry = new SnakeOnClick() {
+            @Override
+            public void onRetryClick() {
+                commonAPI.getPollData(snakeOnClickPollRetry, coordinatorLayout);
             }
         };
     }
@@ -270,11 +287,10 @@ public class LoginActivity extends AppCompatActivity {
             if (result == 1) {
                 if (activeGame != 0) {
 
-                    CommonAPI commonAPI = new CommonAPI(LoginActivity.this);
-                    commonAPI.getPollData(snakeOnClick, coordinatorLayout);
-                    Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
-                    startActivity(intent);
-                    finish();
+
+                    commonAPI.getPollData(snakeOnClickPollRetry, coordinatorLayout);
+
+
                 } else {
                     alertDialogManager.showAlertDialog(LoginActivity.this, getString(R.string.alert_no_active_game));
                 }
