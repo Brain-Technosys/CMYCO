@@ -114,6 +114,7 @@ public class HomeActivity extends AppCompatActivity {
     private void manageToolbar() {
         toolbar.setTitle(getString(R.string.app_name));
         setSupportActionBar(toolbar);
+        // getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     private void setFont() {
@@ -204,7 +205,7 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     private class GetCoachData extends AsyncTask<String, String, String> {
-        int result = 0;
+        int result = -1;
         String msg;
 
         @Override
@@ -216,41 +217,50 @@ public class HomeActivity extends AppCompatActivity {
 
         @Override
         protected String doInBackground(String... strings) {
-
+            JsonParser jsonParser = new JsonParser(HomeActivity.this);
             arrayListCoach = new ArrayList<>();
 
             HashMap<String, String> hashMapCoachTitle = new HashMap<>();
 
             hashMapCoachTitle.put(Const.KEY_ID, "0");
             hashMapCoachTitle.put(Const.KEY_NAME, getString(R.string.spn_coach_title));
-            result = 1;
+
+            String url = Const.GET_COACH_RESULT;
+            Log.e("url", url);
+            String urlString = jsonParser.getJSONFromUrl(url);
+            // result = 1;
 
             arrayListCoach.add(hashMapCoachTitle);
             try {
 
-                for (int j = 0; j < 2; j++) {
-                    result = 0;
-                    JSONObject jsonObject;
-                    if (j == 0) {
-                        jsonObject = new JSONObject(pollsPref.getTeam1Detail().toString());
-                    } else {
-                        jsonObject = new JSONObject(pollsPref.getTeam2Detail().toString());
-                    }
-                    if (jsonObject != null) {
+//                for (int j = 0; j < 2; j++) {
+//                    result = 0;
+                JSONObject jsonObject = new JSONObject(urlString);
+                result = jsonObject.getInt(Const.KEY_RESULT);
+//                    if (j == 0) {
+//                        jsonObject = new JSONObject(pollsPref.getTeam1Detail().toString());
+//                    } else {
+//                        jsonObject = new JSONObject(pollsPref.getTeam2Detail().toString());
+//                    }
+                if (jsonObject != null) {
 
+                    JSONArray jsonArrayTeam = jsonObject.getJSONArray(Const.KEY_DATA);
+
+                    for (int i = 0; i < jsonArrayTeam.length(); i++) {
+
+                        JSONObject jsonObjectCoach = jsonArrayTeam.getJSONObject(i);
                         HashMap<String, String> hashMapCoach = new HashMap<>();
 
-                        hashMapCoach.put(Const.KEY_ID, jsonObject.getString(Const.KEY_ID));
-                        hashMapCoach.put(Const.KEY_NAME, jsonObject.getString(Const.KEY_COACH));
+                        hashMapCoach.put(Const.KEY_ID, jsonObjectCoach.getString(Const.KEY_ID));
+                        hashMapCoach.put(Const.KEY_NAME, jsonObjectCoach.getString(Const.KEY_COACH));
 
                         arrayListCoach.add(hashMapCoach);
-
-                        result = 1;
-
-                    } else {
-                        result = 0;
                     }
+
+
                 }
+
+//                }
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -270,12 +280,14 @@ public class HomeActivity extends AppCompatActivity {
                 coachSpinner.setAdapter(coachAdapter);
             } else if (result == 0) {
                 alertDialogManager.showAlertDialog(HomeActivity.this, getString(R.string.alert_no_data));
+            } else {
+                alertDialogManager.showAlertDialog(HomeActivity.this, getString(R.string.server_not_responding));
             }
         }
     }
 
     private class GetTeamData extends AsyncTask<String, String, String> {
-        int result = 0;
+        int result = -1;
         String msg;
 
         @Override
@@ -291,6 +303,7 @@ public class HomeActivity extends AppCompatActivity {
 
             try {
 
+                JsonParser jsonParser = new JsonParser(HomeActivity.this);
                 arrayListTeam = new ArrayList<>();
                 HashMap<String, String> hashMapTeamTitle = new HashMap<>();
 
@@ -298,21 +311,25 @@ public class HomeActivity extends AppCompatActivity {
                 hashMapTeamTitle.put(Const.KEY_NAME, getString(R.string.spn_team_title));
 
                 arrayListTeam.add(hashMapTeamTitle);
-                result = 1;
 
-                JSONObject jsonObject;
-                if (Integer.parseInt(strings[0]) == 1) {
-                    jsonObject = new JSONObject(pollsPref.getTeam1Detail());
-                } else {
-                    jsonObject = new JSONObject(pollsPref.getTeam2Detail());
-                }
+                String url = Const.GET_TEAM_RESULT + strings[0];
+                String urlString = jsonParser.getJSONFromUrl(url);
+//                result = 1;
+
+                JSONObject jsonObject = new JSONObject(urlString);
+                result = jsonObject.getInt(Const.KEY_RESULT);
+//                if (Integer.parseInt(strings[0]) == 1) {
+//                    jsonObject = new JSONObject(pollsPref.getTeam1Detail());
+//                } else {
+//                    jsonObject = new JSONObject(pollsPref.getTeam2Detail());
+//                }
 
                 if (jsonObject != null) {
 
-                    JSONArray jsonArrayTeamData = jsonObject.getJSONArray(Const.KEY_PLAYERS);
+                    JSONArray jsonArrayTeamData = jsonObject.getJSONArray(Const.KEY_DATA);
 
                     for (int i = 0; i < jsonArrayTeamData.length(); i++) {
-                        result = 0;
+
 
                         JSONObject jsonObjectGetTeamData = jsonArrayTeamData.getJSONObject(i);
                         HashMap<String, String> hashMapTeam = new HashMap<>();
@@ -321,11 +338,11 @@ public class HomeActivity extends AppCompatActivity {
                         hashMapTeam.put(Const.KEY_NAME, jsonObjectGetTeamData.getString(Const.KEY_NAME));
 
                         arrayListTeam.add(hashMapTeam);
-                        result = 1;
+
                     }
 
                 } else {
-                    result = 0;
+
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -346,6 +363,8 @@ public class HomeActivity extends AppCompatActivity {
                 teamAdapter.notifyDataSetChanged();
             } else if (result == 0) {
                 alertDialogManager.showAlertDialog(HomeActivity.this, getString(R.string.empty_fields));
+            }else{
+                alertDialogManager.showAlertDialog(HomeActivity.this, getString(R.string.server_not_responding));
             }
         }
     }
