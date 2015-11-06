@@ -11,6 +11,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -391,6 +392,9 @@ public class GameActivity extends AppCompatActivity {
 
                     for(int i = 0; i < defenceRadioGroup.getChildCount(); i++){
                         ((RadioButton)defenceRadioGroup.getChildAt(i)).setEnabled(false);
+
+                        txtViewTimer.setVisibility(View.GONE);
+
                     }
 
                 }

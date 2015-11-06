@@ -17,22 +17,21 @@
         android:id="@+id/lbl_defence"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/logo_defence"
+        android:text="Offence"
         android:textColor="@color/white"
         android:textSize="@dimen/txt_title_size" />
 
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/lbl_defence">
+
 
         <LinearLayout
             android:id="@+id/linLayTextView"
+            android:layout_below="@+id/lbl_defence"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:layout_margin="10dp">
+
 
         </LinearLayout>
 
@@ -41,10 +40,10 @@
             android:id="@+id/chart"
             android:layout_width="match_parent"
             android:layout_height="200dp"
-            android:layout_below="@+id/rg_defence"
+            android:layout_below="@+id/linLayTextView"
             android:layout_marginTop="15dp" />
 
 
-    </RelativeLayout>
+
 
 </RelativeLayout>

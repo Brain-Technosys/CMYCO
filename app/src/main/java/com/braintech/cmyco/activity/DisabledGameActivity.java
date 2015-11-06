@@ -1,6 +1,7 @@
 package com.braintech.cmyco.activity;
 
 import android.content.Intent;
+import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -12,6 +13,7 @@ import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
@@ -107,7 +109,7 @@ public class DisabledGameActivity extends AppCompatActivity {
 
 
         //Preparing data for graph
-        // getGraphData(xTitle, barDataStrings);
+         getGraphData(xTitle, barDataStrings);
 
         handleLogoutRetry();
 
@@ -135,11 +137,12 @@ public class DisabledGameActivity extends AppCompatActivity {
     private void createOptionsTextView() {
         if (arrayListPollOpt.size() != 0) {
             for (int i = 0; i < arrayListPollOpt.size(); i++) {
-                TextView txtView = new TextView(this);
-                txtView.setText(arrayListPollOpt.get(i).getPoll_name());
-                txtView.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 18);
-                txtView.setGravity(Gravity.CENTER_VERTICAL);
-                linLayTextView.addView(txtView);
+
+                //Inflating textView
+                View tvView = getLayoutInflater().inflate(R.layout.textview_layout, null);
+                TextView textView = (TextView) tvView.findViewById(R.id.tvCat);
+                textView.setText(String.valueOf(i + 1)+"."+arrayListPollOpt.get(i).getPoll_name());
+                linLayTextView.addView(tvView);
             }
         }
     }
