@@ -36,6 +36,7 @@ public class Const {
     public static String KEY_PLAYERS = "players";
     public static String KEY_GAME_DATA = "gamedata";
     public static String KEY_GAME = "game";
+    public static String KEY_ACTIVE_GAME = "active_game";
 
     //key common activity
     public static String KEY_RESULT = "result";

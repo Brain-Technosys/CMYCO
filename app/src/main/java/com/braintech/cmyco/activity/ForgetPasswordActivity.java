@@ -43,7 +43,6 @@ public class ForgetPasswordActivity extends AppCompatActivity {
     @InjectView(R.id.coordinatorLayout)
     CoordinatorLayout coordinatorLayout;
 
-//nkhnkjghf;k
     String email;
 
     AlertDialogManager alertDialogManager;

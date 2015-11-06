@@ -18,6 +18,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.braintech.cmyco.R;
+import com.braintech.cmyco.common.CommonAPI;
 import com.braintech.cmyco.my_interface.SnakeOnClick;
 import com.braintech.cmyco.sessions.PollsPref;
 import com.braintech.cmyco.sessions.UserSession;
@@ -77,6 +78,8 @@ public class LoginActivity extends AppCompatActivity {
 
     boolean doubleBackToExitPressedOnce = false;
 
+    CommonAPI commonAPI;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,6 +93,8 @@ public class LoginActivity extends AppCompatActivity {
         userSession = new UserSession(getApplicationContext());
 
         pollsPref = new PollsPref(this);
+
+        commonAPI = new CommonAPI(this);
 
         handleSnakeRetryCall();
 
@@ -189,6 +194,7 @@ public class LoginActivity extends AppCompatActivity {
     private class CallLoginAPI extends AsyncTask<String, String, String> {
         JsonParser jsonParser;
         int result = -1;
+        int activeGame;
         String msg = "";
         String team1;
         String team2;
@@ -214,7 +220,7 @@ public class LoginActivity extends AppCompatActivity {
                 String url = Const.SIGN_IN + Const.TAG_EMAIL + URLEncoder.encode(email, "UTF-8") +
                         Const.TAG_PASSWORD + URLEncoder.encode(password, "UTF-8");
 
-                Log.e("url",url);
+                Log.e("url", url);
 
                 String jsonString = jsonParser.getJSONFromUrl(url);
                 JSONObject jsonObject = new JSONObject(jsonString);
@@ -231,28 +237,24 @@ public class LoginActivity extends AppCompatActivity {
                         hashMapLoginDetail.put(Const.KEY_EMAIL, jsonObjectLoginDetail.getString(Const.KEY_EMAIL));
 
 
-                        JSONObject jsonObjectGameData = jsonObject.getJSONObject(Const.KEY_GAME_DATA);
+                        activeGame = jsonObject.getInt(Const.KEY_ACTIVE_GAME);
+                        if (activeGame != 0) {
 
-                        //Storing game json in sheared pref
-                        JSONObject jsonObjectGame = jsonObjectGameData.getJSONObject(Const.KEY_GAME);
-                        game = jsonObjectGame.toString();
-                        Log.e("game",game);
+                            JSONObject jsonObjectGameData = jsonObject.getJSONObject(Const.KEY_GAME_DATA);
 
-                        //Storing team1 json in sheared pref
-                        JSONObject jsonObjectTeam1 = jsonObjectGameData.getJSONObject(Const.KEY_TEAM1);
-                        team1 = jsonObjectTeam1.toString();
-                        Log.e("team1",team1);
+                            //Storing game json in sheared pref
+                            JSONObject jsonObjectGame = jsonObjectGameData.getJSONObject(Const.KEY_GAME);
+                            pollsPref.storeGameJson(jsonObjectGame.toString());
 
-                        //Storing team2 json in sheared pref
-                        JSONObject jsonObjectTeam2 = jsonObjectGameData.getJSONObject(Const.KEY_TEAM2);
-                        team2 = jsonObjectTeam2.toString();
-                        Log.e("team2",team2);
+                            //Storing team1 json in sheared pref
+                            JSONObject jsonObjectTeam1 = jsonObjectGameData.getJSONObject(Const.KEY_TEAM1);
+                            pollsPref.storeTeam1Json(jsonObjectTeam1.toString());
 
-                        //Storing team2 json in sheared pref
-                        JSONObject jsonObjectPollData = jsonObject.getJSONObject(Const.KEY_POLL_DATA);
-                        polldata = jsonObjectPollData.toString();
+                            //Storing team2 json in sheared pref
+                            JSONObject jsonObjectTeam2 = jsonObjectGameData.getJSONObject(Const.KEY_TEAM2);
+                            pollsPref.storeTeam2Json(jsonObjectTeam2.toString());
 
-                        Log.e("polldata",polldata);
+                        }
 
 
                     }
@@ -273,18 +275,15 @@ public class LoginActivity extends AppCompatActivity {
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
             if (result == 1) {
+                if (activeGame != 0) {
+                 //   commonAPI.get
 
-                pollsPref.storeGameJson(game);
-                pollsPref.storeTeam1Json(team1);
-                pollsPref.storeTeam2Json(team2);
-                pollsPref.storePoleData(polldata);
-
-                userSession.createUserSession(hashMapLoginDetail.get(Const.KEY_EMAIL), hashMapLoginDetail.get(Const.KEY_ID), hashMapLoginDetail.get(Const.KEY_USERNAME));
-
-
-                Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
-                startActivity(intent);
-                finish();
+                    Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
+                    startActivity(intent);
+                    finish();
+                } else {
+                    alertDialogManager.showAlertDialog(LoginActivity.this, getString(R.string.alert_no_active_game));
+                }
             } else if (result == 0) {
                 alertDialogManager.showAlertDialog(LoginActivity.this, msg);
             } else {
@@ -295,8 +294,6 @@ public class LoginActivity extends AppCompatActivity {
             Progress.stop();
         }
     }
-
-
 
 
 }

@@ -240,6 +240,18 @@ public class CommonAPI {
             }
         }
 
+
+        public void getAPollData(SnakeOnClick snakeOnClick, CoordinatorLayout coordinatorLayout) {
+
+            if (Utility.isNetworkAvailable(context)) {
+                new GetPollData().execute();
+            } else {
+                SnackNotify.showSnakeBar((Activity) context, snakeOnClick, coordinatorLayout);
+            }
+
+        }
+
+
         //Asynchronous class to call GET_POLL_DATA API
 
         private class GetPollData extends AsyncTask<String, String, String> {
@@ -273,30 +285,30 @@ public class CommonAPI {
                             if (jsonObjectPollData != null) {
                                 JSONArray jsonArrayPoleData = jsonObjectPollData.getJSONArray(Const.KEY_DATA);
 
-                                for (int i = 0; i < jsonArrayPoleData.length(); i++) {
-                                    JSONObject jsonObjectPoleOption = jsonArrayPoleData.getJSONObject(i);
-                                    int id = jsonObjectPoleOption.getInt(Const.KEY_ID);
-
-                                    if (id == 1) {
-                                        pollsPref.storeDefenceJson(jsonObjectPoleOption.toString());
-                                    }
-
-                                    if (id == 2) {
-
-                                    }
-
-                                    if (id == 3) {
-
-                                    }
-
-                                    if (id == 4) {
-
-                                    }
-
-                                    if (id == 5) {
-
-                                    }
-                                }
+//                                for (int i = 0; i < jsonArrayPoleData.length(); i++) {
+//                                    JSONObject jsonObjectPoleOption = jsonArrayPoleData.getJSONObject(i);
+//                                    int id = jsonObjectPoleOption.getInt(Const.KEY_ID);
+//
+////                                    if (id == 1) {
+////                                        pollsPref.storeDefenceJson(jsonObjectPoleOption.toString());
+////                                    }
+////
+////                                    if (id == 2) {
+////
+////                                    }
+////
+////                                    if (id == 3) {
+////
+////                                    }
+////
+////                                    if (id == 4) {
+////
+////                                    }
+////
+////                                    if (id == 5) {
+////
+////                                    }
+//                                }
                             }
                         }
 

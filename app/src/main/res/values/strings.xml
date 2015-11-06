@@ -30,6 +30,7 @@
     <string name="logo_login_forget_pass">Forget Password?</string>
     <string name="logo_login_sign_up">Sign Up</string>
     <string name="btn_sign_in">SIGN IN</string>
+    <string name="alert_no_active_game">There is no active game.</string>
 
     <!--Sign Up-->
     <string name="logo_sign_up">CREATE AN ACCOUNT</string>

@@ -15,8 +15,6 @@ public class SplashActivity extends Activity {
     // SplashActivity screen timer
     private static int SPLASH_TIME_OUT = 3000;
 
-    UserSession userSession;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,10 +26,6 @@ public class SplashActivity extends Activity {
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         setContentView(R.layout.activity_splash);
-
-        //Instantiating user session
-        userSession = new UserSession(this);
-
         new Handler().postDelayed(new Runnable() {
 
 			/*
@@ -42,15 +36,8 @@ public class SplashActivity extends Activity {
             @Override
             public void run() {
                 // This method will be executed once the timer is over
-                Intent intent;
-
-                if (!userSession.isUserLoggedIn())
-                    intent = new Intent(SplashActivity.this, LoginActivity.class);
-                else
-                    intent = new Intent(SplashActivity.this, HomeActivity.class);
-
+                Intent intent = new Intent(SplashActivity.this, LoginActivity.class);
                 startActivity(intent);
-
                 finish();
             }
         }, SPLASH_TIME_OUT);
