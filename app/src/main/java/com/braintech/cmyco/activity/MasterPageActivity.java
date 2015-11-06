@@ -1,5 +1,6 @@
 package com.braintech.cmyco.activity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -13,6 +14,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.braintech.cmyco.R;
 import com.braintech.cmyco.adapter.CustomAdapterPollData;
@@ -21,8 +23,12 @@ import com.braintech.cmyco.my_interface.SnakeOnClick;
 import com.braintech.cmyco.objectclasses.PollData;
 import com.braintech.cmyco.objectclasses.PollOptions;
 import com.braintech.cmyco.sessions.PollsPref;
+import com.braintech.cmyco.utils.AlertDialogManager;
 import com.braintech.cmyco.utils.Const;
+import com.braintech.cmyco.utils.JsonParser;
 import com.braintech.cmyco.utils.Progress;
+import com.braintech.cmyco.utils.SnackNotify;
+import com.braintech.cmyco.utils.Utility;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -35,6 +41,7 @@ import java.util.HashMap;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
+import butterknife.OnItemClick;
 
 public class MasterPageActivity extends AppCompatActivity {
 
@@ -43,6 +50,12 @@ public class MasterPageActivity extends AppCompatActivity {
 
     @InjectView(R.id.listViewPoll)
     ListView listViewPoll;
+
+    @InjectView(R.id.txt_active_users)
+    TextView txt_active_users;
+
+    @InjectView(R.id.txt_team_name)
+    TextView txt_team_name;
 
     SnakeOnClick snakeOnClick;
 
@@ -55,6 +68,8 @@ public class MasterPageActivity extends AppCompatActivity {
     HashMap<Integer, ArrayList<PollOptions>> hashMapPollOptions;
 
     ArrayList<PollData> arrayListPollData;
+
+    AlertDialogManager alertDialogManager;
 
 
     @Override
@@ -70,8 +85,9 @@ public class MasterPageActivity extends AppCompatActivity {
 
         pollsPref = new PollsPref(this);
 
-        handleSnakeRetryCall();
+        alertDialogManager = new AlertDialogManager();
 
+        handleSnakeRetryCall();
     }
 
     private void handleSnakeRetryCall() {
@@ -89,6 +105,15 @@ public class MasterPageActivity extends AppCompatActivity {
         super.onResume();
 
         new GetPollData().execute();
+    }
+
+    private void getActiveUsers() {
+        if (Utility.isNetworkAvailable(this)) {
+            new GetActiveUsers().execute();
+        } else {
+            SnackNotify.showSnakeBar(this, snakeOnClick, coordinatorLayout);
+        }
+
     }
 
     @Override
@@ -135,9 +160,9 @@ public class MasterPageActivity extends AppCompatActivity {
             try {
                 JSONObject jsonObject = new JSONObject(pollsPref.getPollData().toString());
 
-                if(jsonObject!=null) {
+                if (jsonObject != null) {
 
-                    result=1;
+                    result = 1;
 
                     JSONArray jsonArrayPolLData = jsonObject.getJSONArray(Const.KEY_POLL_DATA);
 
@@ -180,9 +205,8 @@ public class MasterPageActivity extends AppCompatActivity {
 
 
                     }
-                }
-                else
-                    result=0;
+                } else
+                    result = 0;
 
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -197,16 +221,96 @@ public class MasterPageActivity extends AppCompatActivity {
 
             Progress.stop();
 
-            if(result==1)
-            {
+            if (result == 1) {
                 addDataToListView();
+            } else {
+                alertDialogManager.showAlertDialog(MasterPageActivity.this, getString(R.string.server_not_responding));
             }
+
+            getActiveUsers();
         }
     }
 
-    private void addDataToListView()
-    {
-        CustomAdapterPollData customAdapterPollData=new CustomAdapterPollData(this,arrayListPollData,hashMapPollOptions);
+    private void addDataToListView() {
+        CustomAdapterPollData customAdapterPollData = new CustomAdapterPollData(this, arrayListPollData, hashMapPollOptions);
         listViewPoll.setAdapter(customAdapterPollData);
+    }
+
+    //Asynchronous class to call GET_TIME_OUT API
+
+    private class GetActiveUsers extends AsyncTask<String, String, String> {
+        int result = -1;
+        String msg;
+
+        String activeUsers;
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+
+            Progress.start(MasterPageActivity.this);
+        }
+
+        @Override
+        protected String doInBackground(String... strings) {
+            JsonParser jsonParser = new JsonParser(MasterPageActivity.this);
+
+            String url = Const.GET_ACTIVE_USERS;
+            String jsonString = jsonParser.getJSONFromUrl(url);
+
+            Log.e("jsonString", jsonString);
+
+            try {
+                JSONObject jsonObject = new JSONObject(jsonString);
+
+                if (jsonObject != null) {
+                    result = jsonObject.getInt(Const.KEY_RESULT);
+
+                    activeUsers = jsonObject.getString(Const.KEY_ACTIVE_USER);
+                } else {
+                    msg = jsonObject.getString(Const.KEY_MSG);
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+
+            Progress.stop();
+
+            if (pollsPref.getTeam() != null) {
+                txt_active_users.setText("TEAM: " + pollsPref.getTeam());
+            }
+            if (result == 1) {
+
+                txt_active_users.setText("ACTIVE USERS: " + activeUsers);
+
+            } else if (result == 0) {
+                alertDialogManager.showAlertDialog(MasterPageActivity.this, msg);
+            } else {
+                alertDialogManager.showAlertDialog(MasterPageActivity.this, getString(R.string.server_not_responding));
+            }
+        }
+
+
+    }
+
+    @OnItemClick(R.id.listViewPoll)
+    void onItemClick(int position) {
+        ArrayList<PollOptions> arrayListPollOpt = new ArrayList<>();
+
+        int poll_id = arrayListPollData.get(position).getPoll_id();
+
+        arrayListPollOpt = hashMapPollOptions.get(poll_id);
+
+        Intent intent = new Intent(this, GameActivity.class);
+        intent.putExtra(Const.TAG_POLL_OPTION, arrayListPollOpt);
+        startActivity(intent);
+
     }
 }

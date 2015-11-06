@@ -196,7 +196,7 @@ public class CommonAPI {
     }
 
 
-//Asynchronous class to call GET_TIME_OUT API
+    //Asynchronous class to call GET_TIME_OUT API
 
     private class GetActiveUsers extends AsyncTask<String, String, String> {
         int result = -1;
