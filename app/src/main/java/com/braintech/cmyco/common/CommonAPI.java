@@ -288,9 +288,8 @@ public class CommonAPI {
                 if (jsonObject != null) {
                     result = jsonObject.getInt(Const.KEY_RESULT);
                     if (result == 1) {
-                        JSONObject jsonObjectPollData = jsonObject.getJSONObject(Const.KEY_POLL_DATA);
-                        pollsPref.storePoleData(jsonObjectPollData.toString());
 
+                        pollsPref.storePollData(jsonString);
                     }
 
                 } else {
@@ -373,7 +372,7 @@ public class CommonAPI {
                     result = jsonObject.getInt(Const.KEY_RESULT);
                     if (result == 1) {
                         JSONObject jsonObjectPollData = jsonObject.getJSONObject(Const.KEY_POLL_DATA);
-                        pollsPref.storePoleData(jsonObjectPollData.toString());
+                        pollsPref.storePollData(jsonObjectPollData.toString());
                     }
 
                 } else {

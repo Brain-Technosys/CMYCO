@@ -8,12 +8,14 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ListView;
 
 import com.braintech.cmyco.R;
+import com.braintech.cmyco.adapter.CustomAdapterPollData;
 import com.braintech.cmyco.common.CommonAPI;
 import com.braintech.cmyco.my_interface.SnakeOnClick;
 import com.braintech.cmyco.objectclasses.PollData;
@@ -39,8 +41,8 @@ public class MasterPageActivity extends AppCompatActivity {
     @InjectView(R.id.coordinatorLayout)
     CoordinatorLayout coordinatorLayout;
 
-    @InjectView(R.id.listPoll)
-    ListView PollListView;
+    @InjectView(R.id.listViewPoll)
+    ListView listViewPoll;
 
     SnakeOnClick snakeOnClick;
 
@@ -53,6 +55,7 @@ public class MasterPageActivity extends AppCompatActivity {
     HashMap<Integer, ArrayList<PollOptions>> hashMapPollOptions;
 
     ArrayList<PollData> arrayListPollData;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -118,7 +121,7 @@ public class MasterPageActivity extends AppCompatActivity {
 
     private class GetPollData extends AsyncTask<String, String, String> {
 
-        int result = 0;
+        int result = -1;
 
         @Override
         protected void onPreExecute() {
@@ -130,48 +133,56 @@ public class MasterPageActivity extends AppCompatActivity {
         @Override
         protected String doInBackground(String... strings) {
             try {
-                JSONObject jsonObject = new JSONObject(pollsPref.getPoleData().toString());
+                JSONObject jsonObject = new JSONObject(pollsPref.getPollData().toString());
 
-                JSONArray jsonArrayPolLData = jsonObject.getJSONArray(Const.KEY_POLL_DATA);
+                if(jsonObject!=null) {
 
-                arrayListPollData = new ArrayList<PollData>();
+                    result=1;
 
-                hashMapPollOptions = new HashMap<Integer, ArrayList<PollOptions>>();
+                    JSONArray jsonArrayPolLData = jsonObject.getJSONArray(Const.KEY_POLL_DATA);
 
-                for (int i = 0; i < jsonArrayPolLData.length(); i++) {
+                    arrayListPollData = new ArrayList<PollData>();
 
-                    JSONObject jsonObj = jsonArrayPolLData.getJSONObject(i);
-                    int poll_id = jsonObj.getInt(Const.KEY_POLL_ID);
+                    hashMapPollOptions = new HashMap<Integer, ArrayList<PollOptions>>();
 
-                    String poll_name = jsonObj.getString(Const.KEY_POLL_NAME);
-                    String poll_start_time = jsonObj.getString(Const.KEY_START_TIME);
-                    String poll_end_time = jsonObj.getString(Const.KEY_END_TIME);
-                    String poll_duration = jsonObj.getString(Const.KEY_POLL_DURATION);
+                    for (int i = 0; i < jsonArrayPolLData.length(); i++) {
 
-                    PollData pollData = new PollData(poll_id, poll_name, poll_end_time, poll_start_time, poll_duration);
+                        JSONObject jsonObj = jsonArrayPolLData.getJSONObject(i);
+                        int poll_id = jsonObj.getInt(Const.KEY_POLL_ID);
 
-                    arrayListPollData.add(pollData);
+                        String poll_name = jsonObj.getString(Const.KEY_POLL_NAME);
+                        String poll_start_time = jsonObj.getString(Const.KEY_START_TIME);
+                        String poll_end_time = jsonObj.getString(Const.KEY_END_TIME);
+                        String poll_duration = jsonObj.getString(Const.KEY_POLL_DURATION);
 
-                    JSONArray jsonArrayPollOptions = jsonObj.getJSONArray(Const.KEY_POLL_OPTION);
+                        PollData pollData = new PollData(poll_id, poll_name, poll_end_time, poll_start_time, poll_duration);
 
-                    ArrayList<PollOptions> arrayListPollOpt = new ArrayList<PollOptions>();
+                        arrayListPollData.add(pollData);
 
-                    for (int j = 0; j < jsonArrayPollOptions.length(); j++) {
-                        JSONObject jsonObjOpt = jsonArrayPollOptions.getJSONObject(j);
+                        JSONArray jsonArrayPollOptions = jsonObj.getJSONArray(Const.KEY_POLL_OPTION);
 
-                        String pollId = jsonObj.getString(Const.KEY_POLL_ID);
+                        ArrayList<PollOptions> arrayListPollOpt = new ArrayList<PollOptions>();
 
-                        String pollName = jsonObj.getString(Const.KEY_POLL_NAME);
+                        for (int j = 0; j < jsonArrayPollOptions.length(); j++) {
 
-                        PollOptions pollOptions = new PollOptions(pollId, pollName);
+                            JSONObject jsonObjOpt = jsonArrayPollOptions.getJSONObject(j);
 
-                        arrayListPollOpt.add(pollOptions);
+                            String pollId = jsonObjOpt.getString(Const.KEY_POLL_ID);
+
+                            String pollName = jsonObjOpt.getString(Const.KEY_POLL_NAME);
+
+                            PollOptions pollOptions = new PollOptions(pollId, pollName);
+
+                            arrayListPollOpt.add(pollOptions);
+                        }
+
+                        hashMapPollOptions.put(poll_id, arrayListPollOpt);
+
+
                     }
-
-                    hashMapPollOptions.put(poll_id, arrayListPollOpt);
-
-
                 }
+                else
+                    result=0;
 
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -185,6 +196,17 @@ public class MasterPageActivity extends AppCompatActivity {
             super.onPostExecute(s);
 
             Progress.stop();
+
+            if(result==1)
+            {
+                addDataToListView();
+            }
         }
+    }
+
+    private void addDataToListView()
+    {
+        CustomAdapterPollData customAdapterPollData=new CustomAdapterPollData(this,arrayListPollData,hashMapPollOptions);
+        listViewPoll.setAdapter(customAdapterPollData);
     }
 }

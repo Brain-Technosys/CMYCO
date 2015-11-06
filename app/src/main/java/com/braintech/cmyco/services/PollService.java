@@ -128,8 +128,12 @@ public class PollService extends Service {
 
                         //storing data for
                         PollsPref pollsPref = new PollsPref(context);
+<<<<<<< HEAD
                         pollsPref.storePoleData(jsonObjectPollData.toString());
                         JSONArray jsonArrayPolLData = jsonObject.getJSONArray(Const.KEY_POLL_DATA);
+=======
+                        pollsPref.storePollData(jsonObjectPollData.toString());
+>>>>>>> f63c21337969ebebfb8e518e8c2176e0f433abb7
 
                         arrayListPollData = new ArrayList<PollData>();
 

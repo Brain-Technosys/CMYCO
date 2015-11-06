@@ -268,7 +268,7 @@ public class GameActivity extends AppCompatActivity {
         protected String doInBackground(String... strings) {
 
             try {
-                JSONObject jsonObject = new JSONObject(pollsPref.getPoleData().toString());
+                JSONObject jsonObject = new JSONObject(pollsPref.getPollData().toString());
 
                 if (jsonObject != null) {
                     JSONArray jsonArrayPoleData = jsonObject.getJSONArray(Const.KEY_DATA);
