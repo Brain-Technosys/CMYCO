@@ -20,11 +20,8 @@ public class PollsPref {
     private static final String KEY_COACH = "coach";
     private static final String KEY_TEAM = "team";
 
-    private static final String KEY_DEFENCE = "defence";
-    private static final String KEY_OFFENCE = "Offense";
-    private static final String KEY_SUBSTITUTION = "Substitution";
-    private static final String KEY_TIMEOUT = "Time out";
-    private static final String KEY_2MIN_STRATEGY = "2 min late game strategy";
+    private static final String KEY_ACTIVE_USERS = "active_users";
+
 
 
     public PollsPref(Context _context) {
@@ -59,31 +56,11 @@ public class PollsPref {
         editor.commit();
     }
 
-    public void storeDefenceJson(String json) {
-        editor.putString(KEY_DEFENCE, json);
+
+    public void storeActiveUsers(String activeUsers) {
+        editor.putString(Const.KEY_ACTIVE_USER,activeUsers);
         editor.commit();
     }
-
-    public void storeOffenceJson(String json) {
-        editor.putString(KEY_OFFENCE, json);
-        editor.commit();
-    }
-
-    public void storeSubstitutionJson(String json) {
-        editor.putString(KEY_SUBSTITUTION, json);
-        editor.commit();
-    }
-
-    public void storeTimeOutJson(String json) {
-        editor.putString(KEY_TIMEOUT, json);
-        editor.commit();
-    }
-
-    public void store2MinuteLateJson(String json) {
-        editor.putString(KEY_2MIN_STRATEGY, json);
-        editor.commit();
-    }
-
 
     public String getCoachDetail() {
         return pref.getString(KEY_COACH, null);
@@ -91,10 +68,6 @@ public class PollsPref {
 
     public String getTeamDetail() {
         return pref.getString(KEY_TEAM, null);
-    }
-
-    public String getDefenceDetail() {
-        return pref.getString(KEY_DEFENCE, null);
     }
 
     public String getTeam1Detail() {
@@ -107,6 +80,10 @@ public class PollsPref {
 
     public String getPollData() {
         return pref.getString(Const.KEY_POLL_DATA, null);
+    }
+
+    public String getActiveUsers() {
+        return pref.getString(Const.KEY_ACTIVE_USER, null);
     }
 
 

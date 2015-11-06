@@ -223,6 +223,10 @@ public class CommonAPI {
 
                 if (jsonObject != null) {
                     result = jsonObject.getInt(Const.KEY_RESULT);
+
+                    String activeUsers=jsonObject.getString(Const.KEY_ACTIVE_USER);
+
+                    pollsPref.storeActiveUsers(activeUsers);
                 } else {
                     msg = jsonObject.getString(Const.KEY_MSG);
                 }
