@@ -397,20 +397,16 @@ public class GameActivity extends AppCompatActivity {
             defenceRadioGroup.addView(catRadioButtons[i]);
 
             //Applying click Listener on category radio button
-            catRadioButtons[i].setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            catRadioButtons[i].setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener()
+            {
                 @Override
                 public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
 
-<<<<<<< HEAD
-                    for(int i = 0; i < defenceRadioGroup.getChildCount(); i++){
-                        ((RadioButton)defenceRadioGroup.getChildAt(i)).setEnabled(false);
+
+                    for(int i = 0; i < defenceRadioGroup.getChildCount(); i++) {
+                        ((RadioButton) defenceRadioGroup.getChildAt(i)).setEnabled(false);
 
                         txtViewTimer.setVisibility(View.GONE);
-
-=======
-                    for (int i = 0; i < defenceRadioGroup.getChildCount(); i++) {
-                        ((RadioButton) defenceRadioGroup.getChildAt(i)).setEnabled(false);
->>>>>>> 8946abdf627d7287acb27e3817e4dabff20ea93e
                     }
 
                 }
@@ -419,8 +415,4 @@ public class GameActivity extends AppCompatActivity {
         }
     }
 
-    @Override
-    public void onBackPressed() {
-        //super.onBackPressed();
-    }
 }
