@@ -2,6 +2,7 @@ package com.braintech.cmyco.sessions;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.util.Log;
 
 import com.braintech.cmyco.utils.Const;
 
@@ -33,6 +34,8 @@ public class PollsPref {
     public void storeCoachTeamDetail(String coach, String team) {
         editor.putString(KEY_COACH, coach);
         editor.putString(KEY_TEAM, team);
+
+        Log.e("team", team);
         editor.commit();
     }
 
