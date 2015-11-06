@@ -27,26 +27,39 @@
         android:layout_height="match_parent"
         android:layout_below="@+id/lbl_defence">
 
-
-        <RadioGroup
-            android:id="@+id/rg_defence"
+        <LinearLayout
+            android:id="@+id/llCat"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:orientation="vertical">
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:id="@+id/ll_cat_no"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"></LinearLayout>
 
 
-        </RadioGroup>
+            <RadioGroup
+                android:id="@+id/rg_defence"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:orientation="vertical">
+
+
+            </RadioGroup>
+        </LinearLayout>
 
         <TextView
-            android:layout_margin="10dp"
             android:id="@+id/txtViewTimer"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@android:color/white"
-            android:layout_below="@+id/rg_defence"
             android:layout_alignParentRight="true"
-            android:textSize="18sp"/>
+            android:layout_below="@+id/llCat"
+            android:layout_margin="10dp"
+            android:textColor="@android:color/white"
+            android:textSize="18sp" />
 
         <com.github.mikephil.charting.charts.BarChart
             android:id="@+id/chart"
@@ -57,7 +70,6 @@
 
 
     </RelativeLayout>
-
 
 
 </RelativeLayout>

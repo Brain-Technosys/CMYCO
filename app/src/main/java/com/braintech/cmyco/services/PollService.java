@@ -7,12 +7,14 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Binder;
 import android.os.IBinder;
+import android.os.Vibrator;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
 import android.util.Log;
 import android.widget.Toast;
 
 import com.braintech.cmyco.R;
+import com.braintech.cmyco.activity.GameActivity;
 import com.braintech.cmyco.activity.HomeActivity;
 import com.braintech.cmyco.activity.LoginActivity;
 import com.braintech.cmyco.common.CommonAPI;
@@ -106,6 +108,8 @@ public class PollService extends Service {
 
     private class GetPollData extends AsyncTask<String, String, String> {
         int result = -1;
+
+        int burgerTime = 0;
         String msg;
 
         ArrayList<PollData> arrayListPollData;
@@ -136,7 +140,14 @@ public class PollService extends Service {
                 if (jsonObject != null) {
 
                     result = jsonObject.getInt(Const.KEY_RESULT);
-                   // serverTime=jsonObject.getString(Const.)
+
+                    serverTime = jsonObject.getString(Const.KEY_POLL_SERVER_TIME);
+
+                    Log.e("serverTime", serverTime);
+                    Log.e("getTime", Utility.getTime());
+
+                    // serverTime=jsonObject.getString(Const.)
+
 
                     JSONArray jsonArrayPolLData = jsonObject.getJSONArray(Const.KEY_POLL_DATA);
 
@@ -196,7 +207,15 @@ public class PollService extends Service {
             Progress.stop();
 
             if (result == 1) {
-              //  addDataToListView();
+                //  addDataToListView();
+                if (burgerTime == 1) {
+                    Vibrator v = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
+                    v.vibrate(500);
+
+                    Intent intent = new Intent(context, GameActivity.class);
+                    startActivity(intent);
+                }
+
             }
         }
     }

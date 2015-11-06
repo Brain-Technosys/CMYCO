@@ -13,6 +13,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.CompoundButton;
+import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
@@ -62,6 +63,9 @@ public class GameActivity extends AppCompatActivity {
 
     @InjectView(R.id.txtViewTimer)
     TextView txtViewTimer;
+
+    @InjectView(R.id.ll_cat_no)
+    LinearLayout ll_cat_no;
 
     RadioButton[] catRadioButtons;
 
@@ -126,7 +130,7 @@ public class GameActivity extends AppCompatActivity {
             }
 
             public void onFinish() {
-              finish();
+                finish();
             }
         }
                 .start();
@@ -247,7 +251,7 @@ public class GameActivity extends AppCompatActivity {
     private void handleToolbar() {
         toolbar.setTitle(getTitle());
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        // getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
 
@@ -271,9 +275,10 @@ public class GameActivity extends AppCompatActivity {
             logoutAPI.logout(snakeOnClickForLogout, coordinatorLayout);
 
             return true;
-        } else if (id == android.R.id.home) {
-            this.finish();
         }
+//        else if (id == android.R.id.home) {
+//            this.finish();
+//        }
 
         return super.onOptionsItemSelected(item);
     }
@@ -369,6 +374,12 @@ public class GameActivity extends AppCompatActivity {
         //setting radio buttons
         for (int i = 0; i < catDefenceArrayList.size(); i++) {
 
+            //Inflating textView
+            View tvView = getLayoutInflater().inflate(R.layout.textview_layout, null);
+            TextView textView = (TextView) tvView.findViewById(R.id.tvCat);
+            textView.setText(String.valueOf(i + 1));
+            ll_cat_no.addView(tvView);
+
             //Creating Dynamic Radio Button
 
             catRadioButtons[i] = new RadioButton(GameActivity.this);
@@ -390,16 +401,26 @@ public class GameActivity extends AppCompatActivity {
                 @Override
                 public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
 
+<<<<<<< HEAD
                     for(int i = 0; i < defenceRadioGroup.getChildCount(); i++){
                         ((RadioButton)defenceRadioGroup.getChildAt(i)).setEnabled(false);
 
                         txtViewTimer.setVisibility(View.GONE);
 
+=======
+                    for (int i = 0; i < defenceRadioGroup.getChildCount(); i++) {
+                        ((RadioButton) defenceRadioGroup.getChildAt(i)).setEnabled(false);
+>>>>>>> 8946abdf627d7287acb27e3817e4dabff20ea93e
                     }
 
                 }
             });
 
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        //super.onBackPressed();
     }
 }

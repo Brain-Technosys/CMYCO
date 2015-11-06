@@ -57,11 +57,12 @@ public class Const {
     //Poll
     public static String KEY_POLL_OPTION = "poll_options";
     public static String KEY_POLL_DATA = "polldata";
-    public static String KEY_POLL_ID="poll_id";
-    public static String KEY_POLL_NAME="poll_name";
-    public static String KEY_START_TIME="poll_start_time";
-    public static String KEY_END_TIME="poll_end_time";
-    public static String KEY_POLL_DURATION="poll_duration";
+    public static String KEY_POLL_ID = "poll_id";
+    public static String KEY_POLL_NAME = "poll_name";
+    public static String KEY_START_TIME = "poll_start_time";
+    public static String KEY_END_TIME = "poll_end_time";
+    public static String KEY_POLL_DURATION = "poll_duration";
+    public static String KEY_POLL_SERVER_TIME = "server_time";
 
 
     //Rating TAG
@@ -73,8 +74,6 @@ public class Const {
 
     //Active Users
     public static String KEY_ACTIVE_USER = "active_user";
-
-
 
 
 }

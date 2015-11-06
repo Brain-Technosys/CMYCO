@@ -55,7 +55,7 @@ public class InstructionActivityTwo extends AppCompatActivity {
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         logoutAPI = new CommonAPI(this);
 
         alertDialogManager = new AlertDialogManager();
@@ -100,6 +100,8 @@ public class InstructionActivityTwo extends AppCompatActivity {
         if (id == R.id.action_settings) {
             logoutAPI.logout(snakeOnClick, coordinatorLayout);
             return true;
+        }else if (id == android.R.id.home) {
+            this.finish();
         }
 
         return super.onOptionsItemSelected(item);
