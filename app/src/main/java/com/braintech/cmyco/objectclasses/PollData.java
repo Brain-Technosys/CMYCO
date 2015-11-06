@@ -1,0 +1,62 @@
+package com.braintech.cmyco.objectclasses;
+
+/**
+ * Created by Braintech on 11/6/2015.
+ */
+public class PollData {
+
+    int poll_id;
+
+    String poll_name;
+    String poll_start_time;
+    String poll_end_time;
+    String poll_duration;
+
+    public PollData(int poll_id, String poll_name, String poll_start_time, String poll_end_time, String poll_duration) {
+        this.poll_id = poll_id;
+        this.poll_name = poll_name;
+        this.poll_start_time = poll_start_time;
+        this.poll_end_time = poll_end_time;
+        this.poll_duration = poll_duration;
+    }
+
+    public int getPoll_id() {
+        return poll_id;
+    }
+
+    public void setPoll_id(int poll_id) {
+        this.poll_id = poll_id;
+    }
+
+    public String getPoll_name() {
+        return poll_name;
+    }
+
+    public void setPoll_name(String poll_name) {
+        this.poll_name = poll_name;
+    }
+
+    public String getPoll_start_time() {
+        return poll_start_time;
+    }
+
+    public void setPoll_start_time(String poll_start_time) {
+        this.poll_start_time = poll_start_time;
+    }
+
+    public String getPoll_end_time() {
+        return poll_end_time;
+    }
+
+    public void setPoll_end_time(String poll_end_time) {
+        this.poll_end_time = poll_end_time;
+    }
+
+    public String getPoll_duration() {
+        return poll_duration;
+    }
+
+    public void setPoll_duration(String poll_duration) {
+        this.poll_duration = poll_duration;
+    }
+}
