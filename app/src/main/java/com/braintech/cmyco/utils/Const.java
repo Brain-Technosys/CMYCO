@@ -71,6 +71,9 @@ public class Const {
     public static String TAG_POLL_OPTION = "&poll_option=";
     public static String TAG_TEAM_ID = " &team_id=";
 
+    //Active Users
+    public static String KEY_ACTIVE_USER = "active_user";
+
 
 
 

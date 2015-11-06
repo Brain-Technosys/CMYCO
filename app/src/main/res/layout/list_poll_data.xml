@@ -10,6 +10,7 @@
         android:textColor="@android:color/white"
         android:textSize="@dimen/txt_normal_size"
         android:gravity="center_vertical"
+        android:padding="10dp"
         android:layout_alignParentLeft="true"/>
 
 </RelativeLayout>

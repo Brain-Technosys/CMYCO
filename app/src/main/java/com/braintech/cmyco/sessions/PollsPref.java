@@ -20,11 +20,8 @@ public class PollsPref {
     private static final String KEY_COACH = "coach";
     private static final String KEY_TEAM = "team";
 
-    private static final String KEY_DEFENCE = "defence";
-    private static final String KEY_OFFENCE = "Offense";
-    private static final String KEY_SUBSTITUTION = "Substitution";
-    private static final String KEY_TIMEOUT = "Time out";
-    private static final String KEY_2MIN_STRATEGY = "2 min late game strategy";
+    private static final String KEY_ACTIVE_USERS = "active";
+
 
 
     public PollsPref(Context _context) {
