@@ -78,8 +78,6 @@ public class LoginActivity extends AppCompatActivity {
 
     boolean doubleBackToExitPressedOnce = false;
 
-    CommonAPI commonAPI;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,7 +92,6 @@ public class LoginActivity extends AppCompatActivity {
 
         pollsPref = new PollsPref(this);
 
-        commonAPI = new CommonAPI(this);
 
         handleSnakeRetryCall();
 
@@ -196,10 +193,6 @@ public class LoginActivity extends AppCompatActivity {
         int result = -1;
         int activeGame;
         String msg = "";
-        String team1;
-        String team2;
-        String polldata;
-        String game;
         HashMap<String, String> hashMapLoginDetail;
 
 
@@ -276,8 +269,9 @@ public class LoginActivity extends AppCompatActivity {
             super.onPostExecute(s);
             if (result == 1) {
                 if (activeGame != 0) {
-                 //   commonAPI.get
 
+                    CommonAPI commonAPI = new CommonAPI(LoginActivity.this);
+                    commonAPI.getPollData(snakeOnClick, coordinatorLayout);
                     Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
                     startActivity(intent);
                     finish();

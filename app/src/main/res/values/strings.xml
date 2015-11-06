@@ -5,7 +5,9 @@
     <string name="title_activity_login">Login</string>
     <string name="title_activity_forget_password">Forgot Your Password?</string>
     <string name="title_activity_registration">Create An Account</string>
-    <string name="title_activity_instruction">Gaming Instructions</string>
+    <string name="title_activity_instruction"> Game Play Definitions</string>
+    <string name="title_activity_instruction_page_two"> Game Play Definitions</string>
+    <string name="title_activity_master_page">Master Page</string>
     <string name="title_activity_defence">The Game</string>
 
     <!--alert dialog -->
@@ -57,7 +59,6 @@
     <string name="logo_defence">Defence</string>
     <string name="alert_no_data">No data found.</string>
     <string name="alert_no_data_sf">Please try again.</string>
-    <string name="title_activity_instruction_page_two">Instruction</string>
-    <string name="title_activity_master_page">Master Page</string>
+
 
 </resources>

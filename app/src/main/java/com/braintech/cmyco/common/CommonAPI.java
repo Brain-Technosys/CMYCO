@@ -34,6 +34,12 @@ public class CommonAPI {
     UserSession userSession;
     PollsPref pollsPref;
 
+    String gameId;
+    String pollId;
+
+    String pollOption;
+    String teamId;
+
     public CommonAPI(Context context) {
         this.context = context;
         alertDialogManager = new AlertDialogManager();
@@ -51,6 +57,7 @@ public class CommonAPI {
         }
 
     }
+
 
     //Asynchronous class to call logout API
 
@@ -241,105 +248,146 @@ public class CommonAPI {
         }
 
 
-        public void getAPollData(SnakeOnClick snakeOnClick, CoordinatorLayout coordinatorLayout) {
+    }
 
-            if (Utility.isNetworkAvailable(context)) {
-                new GetPollData().execute();
-            } else {
-                SnackNotify.showSnakeBar((Activity) context, snakeOnClick, coordinatorLayout);
-            }
+    public void getPollData(SnakeOnClick snakeOnClick, CoordinatorLayout coordinatorLayout) {
 
+        if (Utility.isNetworkAvailable(context)) {
+            new PollData().execute();
+        } else {
+            SnackNotify.showSnakeBar((Activity) context, snakeOnClick, coordinatorLayout);
+        }
+    }
+
+
+    private class PollData extends AsyncTask<String, String, String> {
+        int result = -1;
+        String msg;
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+
+            Progress.start(context);
         }
 
+        @Override
+        protected String doInBackground(String... strings) {
+            JsonParser jsonParser = new JsonParser(context);
 
-        //Asynchronous class to call GET_POLL_DATA API
+            String url = Const.GET_ACTIVE_GAME_DETAIL;
+            String jsonString = jsonParser.getJSONFromUrl(url);
 
-        private class GetPollData extends AsyncTask<String, String, String> {
-            int result = -1;
-            String msg;
+            Log.e("jsonString", jsonString);
 
-            @Override
-            protected void onPreExecute() {
-                super.onPreExecute();
+            try {
+                JSONObject jsonObject = new JSONObject(jsonString);
 
-                Progress.start(context);
-            }
-
-            @Override
-            protected String doInBackground(String... strings) {
-                JsonParser jsonParser = new JsonParser(context);
-
-                String url = Const.GET_ACTIVE_GAME_DETAIL;
-                String jsonString = jsonParser.getJSONFromUrl(url);
-
-                Log.e("jsonString", jsonString);
-
-                try {
-                    JSONObject jsonObject = new JSONObject(jsonString);
-
-                    if (jsonObject != null) {
-                        result = jsonObject.getInt(Const.KEY_RESULT);
-                        if (result == 1) {
-                            JSONObject jsonObjectPollData = jsonObject.getJSONObject(Const.KEY_POLL_DATA);
-
-                            if (jsonObjectPollData != null) {
-                                JSONArray jsonArrayPoleData = jsonObjectPollData.getJSONArray(Const.KEY_DATA);
-
-//                                for (int i = 0; i < jsonArrayPoleData.length(); i++) {
-//                                    JSONObject jsonObjectPoleOption = jsonArrayPoleData.getJSONObject(i);
-//                                    int id = jsonObjectPoleOption.getInt(Const.KEY_ID);
-//
-////                                    if (id == 1) {
-////                                        pollsPref.storeDefenceJson(jsonObjectPoleOption.toString());
-////                                    }
-////
-////                                    if (id == 2) {
-////
-////                                    }
-////
-////                                    if (id == 3) {
-////
-////                                    }
-////
-////                                    if (id == 4) {
-////
-////                                    }
-////
-////                                    if (id == 5) {
-////
-////                                    }
-//                                }
-                            }
-                        }
-
-                    } else {
-                        msg = jsonObject.getString(Const.KEY_MSG);
+                if (jsonObject != null) {
+                    result = jsonObject.getInt(Const.KEY_RESULT);
+                    if (result == 1) {
+                        JSONObject jsonObjectPollData = jsonObject.getJSONObject(Const.KEY_POLL_DATA);
+                        pollsPref.storePoleData(jsonObjectPollData.toString());
                     }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
 
-                return null;
-            }
-
-            @Override
-            protected void onPostExecute(String s) {
-                super.onPostExecute(s);
-
-                Progress.stop();
-
-                if (result == 1) {
-                    //do something
-
-                } else if (result == 0) {
-                    alertDialogManager.showAlertDialog(context, msg);
                 } else {
-                    alertDialogManager.showAlertDialog(context, context.getString(R.string.server_not_responding));
+                    msg = jsonObject.getString(Const.KEY_MSG);
                 }
+            } catch (JSONException e) {
+                e.printStackTrace();
             }
+
+            return null;
         }
 
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
 
+            Progress.stop();
+
+            if (result == 1) {
+                //do something
+
+            } else if (result == 0) {
+                alertDialogManager.showAlertDialog(context, msg);
+            } else {
+                alertDialogManager.showAlertDialog(context, context.getString(R.string.server_not_responding));
+            }
+        }
+    }
+
+
+    public void doRating(SnakeOnClick snakeOnClick, CoordinatorLayout coordinatorLayout, String gameId, String pollId, String pollOption, String teamId) {
+
+        this.gameId = gameId;
+        this.pollId = pollId;
+        this.pollOption = pollOption;
+        this.teamId = teamId;
+        if (Utility.isNetworkAvailable(context)) {
+            new Rating().execute();
+        } else {
+            SnackNotify.showSnakeBar((Activity) context, snakeOnClick, coordinatorLayout);
+        }
+    }
+
+
+    private class Rating extends AsyncTask<String, String, String> {
+        int result = -1;
+        String msg;
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+
+            Progress.start(context);
+        }
+
+        @Override
+        protected String doInBackground(String... strings) {
+            JsonParser jsonParser = new JsonParser(context);
+
+            String url = Const.RATING + Const.TAG_USER_ID + userSession.getUserID() + Const.TAG_GAME_ID + gameId + Const.TAG_POLL_ID + pollId +
+                    Const.TAG_POLL_OPTION + pollOption + Const.TAG_TEAM_ID + teamId;
+            String jsonString = jsonParser.getJSONFromUrl(url);
+
+            Log.e("jsonString", jsonString);
+
+            try {
+                JSONObject jsonObject = new JSONObject(jsonString);
+
+                if (jsonObject != null) {
+                    result = jsonObject.getInt(Const.KEY_RESULT);
+                    if (result == 1) {
+                        JSONObject jsonObjectPollData = jsonObject.getJSONObject(Const.KEY_POLL_DATA);
+                        pollsPref.storePoleData(jsonObjectPollData.toString());
+                    }
+
+                } else {
+                    msg = jsonObject.getString(Const.KEY_MSG);
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+
+            Progress.stop();
+
+            if (result == 1) {
+                //do something
+
+            } else if (result == 0) {
+                alertDialogManager.showAlertDialog(context, msg);
+            } else {
+                alertDialogManager.showAlertDialog(context, context.getString(R.string.server_not_responding));
+            }
+        }
     }
 
 

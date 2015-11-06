@@ -21,6 +21,7 @@ public class Const {
     public static String GET_PLAY_CALL_TIME = BASE_URL + "users/app_settings1";
     public static String GET_ACTIVE_USERS = BASE_URL + "users/app_active_users1";
     public static String GET_ACTIVE_GAME_DETAIL = BASE_URL + "games/app_active_game1";
+    public static String RATING = BASE_URL + "ratings/app_add1?";
 
     //Tag login activity
     public static String TAG_USERNAME = "username=";
@@ -58,6 +59,13 @@ public class Const {
     //Poll
     public static String KEY_POLL_OPTION = "PollOption";
     public static String KEY_POLL_DATA = "polldata";
+
+    //Rating TAG
+    public static String TAG_USER_ID = "user_id=";
+    public static String TAG_GAME_ID = "&game_id=";
+    public static String TAG_POLL_ID = "&poll_id=";
+    public static String TAG_POLL_OPTION = "&poll_option=";
+    public static String TAG_TEAM_ID = " &team_id=";
 
 
 }
