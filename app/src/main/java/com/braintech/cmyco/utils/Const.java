@@ -31,8 +31,6 @@ public class Const {
     public static String KEY_TEAM1 = "team1";
     public static String KEY_TEAM2 = "team2";
     public static String KEY_GAME_TITLE = "title";
-    public static String KEY_START_TIME = "start_time";
-    public static String KEY_END_TIME = "end_time";
     public static String KEY_COACH = "coach";
     public static String KEY_PLAYERS = "players";
     public static String KEY_GAME_DATA = "gamedata";
@@ -59,7 +57,12 @@ public class Const {
     //Poll
     public static String KEY_POLL_OPTION = "PollOption";
     public static String KEY_POLL_DATA = "polldata";
+    public static String KEY_POLL_ID="poll_id";
     public static String KEY_POLL_NAME="poll_name";
+    public static String KEY_START_TIME="poll_start_time";
+    public static String KEY_END_TIME="poll_end_time";
+    public static String KEY_POLL_DURATION="poll_duration";
+
 
     //Rating TAG
     public static String TAG_USER_ID = "user_id=";
