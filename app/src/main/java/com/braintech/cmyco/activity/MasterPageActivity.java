@@ -16,6 +16,8 @@ import android.widget.ListView;
 import com.braintech.cmyco.R;
 import com.braintech.cmyco.common.CommonAPI;
 import com.braintech.cmyco.my_interface.SnakeOnClick;
+import com.braintech.cmyco.objectclasses.PollData;
+import com.braintech.cmyco.objectclasses.PollOptions;
 import com.braintech.cmyco.sessions.PollsPref;
 import com.braintech.cmyco.utils.Const;
 import com.braintech.cmyco.utils.Progress;
@@ -23,6 +25,10 @@ import com.braintech.cmyco.utils.Progress;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -43,6 +49,10 @@ public class MasterPageActivity extends AppCompatActivity {
     PollsPref pollsPref;
 
     String[] pollName;
+
+    HashMap<Integer, ArrayList<PollOptions>> hashMapPollOptions;
+
+    ArrayList<PollData> arrayListPollData;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,7 +85,7 @@ public class MasterPageActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 
-       // new GetPollData().execute();
+        new GetPollData().execute();
     }
 
     @Override
@@ -106,44 +116,75 @@ public class MasterPageActivity extends AppCompatActivity {
     }
 
 
-//    private class GetPollData extends AsyncTask<String, String, String> {
-//
-//        int result = 0;
-//
-//        @Override
-//        protected void onPreExecute() {
-//            super.onPreExecute();
-//
-//            Progress.start(MasterPageActivity.this);
-//        }
-//
-//        @Override
-//        protected String doInBackground(String... strings) {
-//            try {
-//                JSONObject jsonObject = new JSONObject(pollsPref.getPoleData().toString());
-//
-//                JSONArray jsonArrayPoleData = jsonObject.getJSONArray(Const.KEY_POLL_DATA);
-//
-//                pollName = new String[jsonArrayPoleData.length()];
-//                for (int i = 0; i < jsonArrayPoleData.length(); i++) {
-//
-////                    JSONObject jsonObject=new
-////                    pollName[i] =
-//
-//                }
-//
-//            } catch (JSONException e) {
-//                e.printStackTrace();
-//            }
-//
-//            return null;
-//        }
-//
-//        @Override
-//        protected void onPostExecute(String s) {
-//            super.onPostExecute(s);
-//
-//            Progress.stop();
-//        }
-//    }
+    private class GetPollData extends AsyncTask<String, String, String> {
+
+        int result = 0;
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+
+            Progress.start(MasterPageActivity.this);
+        }
+
+        @Override
+        protected String doInBackground(String... strings) {
+            try {
+                JSONObject jsonObject = new JSONObject(pollsPref.getPoleData().toString());
+
+                JSONArray jsonArrayPolLData = jsonObject.getJSONArray(Const.KEY_POLL_DATA);
+
+                arrayListPollData = new ArrayList<PollData>();
+
+                hashMapPollOptions = new HashMap<Integer, ArrayList<PollOptions>>();
+
+                for (int i = 0; i < jsonArrayPolLData.length(); i++) {
+
+                    JSONObject jsonObj = jsonArrayPolLData.getJSONObject(i);
+                    int poll_id = jsonObj.getInt(Const.KEY_POLL_ID);
+
+                    String poll_name = jsonObj.getString(Const.KEY_POLL_NAME);
+                    String poll_start_time = jsonObj.getString(Const.KEY_START_TIME);
+                    String poll_end_time = jsonObj.getString(Const.KEY_END_TIME);
+                    String poll_duration = jsonObj.getString(Const.KEY_POLL_DURATION);
+
+                    PollData pollData = new PollData(poll_id, poll_name, poll_end_time, poll_start_time, poll_duration);
+
+                    arrayListPollData.add(pollData);
+
+                    JSONArray jsonArrayPollOptions = jsonObj.getJSONArray(Const.KEY_POLL_OPTION);
+
+                    ArrayList<PollOptions> arrayListPollOpt = new ArrayList<PollOptions>();
+
+                    for (int j = 0; j < jsonArrayPollOptions.length(); j++) {
+                        JSONObject jsonObjOpt = jsonArrayPollOptions.getJSONObject(j);
+
+                        String pollId = jsonObj.getString(Const.KEY_POLL_ID);
+
+                        String pollName = jsonObj.getString(Const.KEY_POLL_NAME);
+
+                        PollOptions pollOptions = new PollOptions(pollId, pollName);
+
+                        arrayListPollOpt.add(pollOptions);
+                    }
+
+                    hashMapPollOptions.put(poll_id, arrayListPollOpt);
+
+
+                }
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+
+            Progress.stop();
+        }
+    }
 }
