@@ -289,6 +289,7 @@ public class CommonAPI {
                     if (result == 1) {
                         JSONObject jsonObjectPollData = jsonObject.getJSONObject(Const.KEY_POLL_DATA);
                         pollsPref.storePoleData(jsonObjectPollData.toString());
+
                     }
 
                 } else {
@@ -309,7 +310,7 @@ public class CommonAPI {
 
             if (result == 1) {
 
-                //
+                //Checking Instance of Login Activity, and go to home after successful login
                 if (LoginActivity.class.isInstance(context)) {
                     Intent intent = new Intent(context, HomeActivity.class);
                     context.startActivity(intent);

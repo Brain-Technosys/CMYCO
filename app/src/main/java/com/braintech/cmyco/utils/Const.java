@@ -59,6 +59,7 @@ public class Const {
     //Poll
     public static String KEY_POLL_OPTION = "PollOption";
     public static String KEY_POLL_DATA = "polldata";
+    public static String KEY_POLL_NAME="poll_name";
 
     //Rating TAG
     public static String TAG_USER_ID = "user_id=";
@@ -66,6 +67,8 @@ public class Const {
     public static String TAG_POLL_ID = "&poll_id=";
     public static String TAG_POLL_OPTION = "&poll_option=";
     public static String TAG_TEAM_ID = " &team_id=";
+
+
 
 
 }

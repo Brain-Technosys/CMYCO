@@ -287,9 +287,8 @@ public class LoginActivity extends AppCompatActivity {
             if (result == 1) {
                 if (activeGame != 0) {
 
-
+                    //Calling GetPoll API from Common Class
                     commonAPI.getPollData(snakeOnClickPollRetry, coordinatorLayout);
-
 
                 } else {
                     alertDialogManager.showAlertDialog(LoginActivity.this, getString(R.string.alert_no_active_game));
