@@ -225,12 +225,15 @@ public class HomeActivity extends AppCompatActivity {
             hashMapCoachTitle.put(Const.KEY_ID, "0");
             hashMapCoachTitle.put(Const.KEY_NAME, getString(R.string.spn_coach_title));
 
-            String url = Const.GET_COACH_RESULT;
-            Log.e("url", url);
-            String urlString = jsonParser.getJSONFromUrl(url);
+
             // result = 1;
 
             arrayListCoach.add(hashMapCoachTitle);
+
+            String url = Const.GET_COACH_RESULT;
+            Log.e("url", url);
+            String urlString = jsonParser.getJSONFromUrl(url);
+            Log.e("urlString", urlString);
             try {
 
 //                for (int j = 0; j < 2; j++) {
@@ -252,7 +255,7 @@ public class HomeActivity extends AppCompatActivity {
                         HashMap<String, String> hashMapCoach = new HashMap<>();
 
                         hashMapCoach.put(Const.KEY_ID, jsonObjectCoach.getString(Const.KEY_ID));
-                        hashMapCoach.put(Const.KEY_NAME, jsonObjectCoach.getString(Const.KEY_COACH));
+                        hashMapCoach.put(Const.KEY_NAME, jsonObjectCoach.getString(Const.KEY_NAME));
 
                         arrayListCoach.add(hashMapCoach);
                     }
@@ -363,7 +366,7 @@ public class HomeActivity extends AppCompatActivity {
                 teamAdapter.notifyDataSetChanged();
             } else if (result == 0) {
                 alertDialogManager.showAlertDialog(HomeActivity.this, getString(R.string.empty_fields));
-            }else{
+            } else {
                 alertDialogManager.showAlertDialog(HomeActivity.this, getString(R.string.server_not_responding));
             }
         }
