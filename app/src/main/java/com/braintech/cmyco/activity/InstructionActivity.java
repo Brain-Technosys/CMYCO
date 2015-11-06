@@ -1,9 +1,14 @@
 package com.braintech.cmyco.activity;
 
+import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
+import android.content.ServiceConnection;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.IBinder;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -11,10 +16,12 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.webkit.WebView;
+import android.widget.Toast;
 
 import com.braintech.cmyco.R;
 import com.braintech.cmyco.common.CommonAPI;
 import com.braintech.cmyco.my_interface.SnakeOnClick;
+import com.braintech.cmyco.services.PollService;
 import com.braintech.cmyco.sessions.PollsPref;
 import com.braintech.cmyco.sessions.UserSession;
 import com.braintech.cmyco.utils.AlertDialogManager;
@@ -55,12 +62,48 @@ public class InstructionActivity extends AppCompatActivity {
 
     CommonAPI logoutAPI;
 
+    PollService pollService;
+
+    private boolean mIsBound = false;
+
+
+    private ServiceConnection sCon = new ServiceConnection() {
+        @Override
+        public void onServiceConnected(ComponentName name, IBinder service) {
+            pollService = ((PollService.ServiceBinder) service).getService();
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName name) {
+            pollService = null;
+        }
+    };
+
+    void doBindService() {
+
+        bindService(new Intent(InstructionActivity.this, PollService.class),
+                sCon, Context.BIND_AUTO_CREATE);
+        mIsBound = true;
+    }
+
+    void doUnbindService() {
+        if (mIsBound) {
+            unbindService(sCon);
+            mIsBound = false;
+        }
+    }
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_instruction);
 
         ButterKnife.inject(this);
+
+
+        //Binding service to activity, after this we are able to call all method of PollService from This Activity or any other Activity.
+        handleService();
 
         alertDialogManager = new AlertDialogManager();
 
@@ -75,9 +118,43 @@ public class InstructionActivity extends AppCompatActivity {
         handleSnakeRetryCall();
 
         handleLogoutRetry();
+
         //showing data in webView
         showInstruction();
 
+       // callingPollData();
+
+
+    }
+
+    private void callingPollData() {
+
+        final Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                //Do something after 100ms
+                pollService.getPollData(InstructionActivity.this);
+                handler.postDelayed(this, 20000);
+            }
+        }, 10000);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        //unbinding service when Activity
+        if (pollService != null) {
+            doUnbindService();
+        }
+    }
+
+    private void handleService() {
+        doBindService();
+        Intent poll = new Intent();
+        poll.setClass(InstructionActivity.this, PollService.class);
+        startService(poll);
     }
 
     private void handleLogoutRetry() {
@@ -200,6 +277,8 @@ public class InstructionActivity extends AppCompatActivity {
             } else {
                 alertDialogManager.showAlertDialog(InstructionActivity.this, getString(R.string.server_not_responding));
             }
+
+            callingPollData();
         }
     }
 
@@ -208,9 +287,6 @@ public class InstructionActivity extends AppCompatActivity {
         Intent intent = new Intent(InstructionActivity.this, InstructionActivityTwo.class);
         startActivity(intent);
     }
-
-
-
 
 
 }

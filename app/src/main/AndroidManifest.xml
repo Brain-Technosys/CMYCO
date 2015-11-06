@@ -73,6 +73,12 @@
             android:label="@string/title_activity_master_page"
             android:theme="@style/AppTheme.NoActionBar" >
         </activity>
+
+        <service
+            android:name=".services.PollService"
+            android:enabled="false"
+            android:exported="false" >
+        </service>
     </application>
 
 </manifest>

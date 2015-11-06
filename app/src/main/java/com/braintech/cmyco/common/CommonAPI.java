@@ -256,7 +256,8 @@ public class CommonAPI {
         if (Utility.isNetworkAvailable(context)) {
             new PollData().execute();
         } else {
-            SnackNotify.showSnakeBar((Activity) context, snakeOnClick, coordinatorLayout);
+            if (LoginActivity.class.isInstance(context))
+                SnackNotify.showSnakeBar((Activity) context, snakeOnClick, coordinatorLayout);
         }
     }
 

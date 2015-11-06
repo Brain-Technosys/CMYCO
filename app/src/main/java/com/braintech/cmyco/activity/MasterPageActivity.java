@@ -75,7 +75,7 @@ public class MasterPageActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 
-        new GetPollData().execute();
+       // new GetPollData().execute();
     }
 
     @Override
@@ -106,44 +106,44 @@ public class MasterPageActivity extends AppCompatActivity {
     }
 
 
-    private class GetPollData extends AsyncTask<String, String, String> {
-
-        int result = 0;
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-
-            Progress.start(MasterPageActivity.this);
-        }
-
-        @Override
-        protected String doInBackground(String... strings) {
-            try {
-                JSONObject jsonObject = new JSONObject(pollsPref.getPoleData().toString());
-
-                JSONArray jsonArrayPoleData = jsonObject.getJSONArray(Const.KEY_POLL_DATA);
-
-                pollName = new String[jsonArrayPoleData.length()];
-                for (int i = 0; i < jsonArrayPoleData.length(); i++) {
-
-                    JSONObject jsonObject=new 
-                    pollName[i] =
-
-                }
-
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(String s) {
-            super.onPostExecute(s);
-
-            Progress.stop();
-        }
-    }
+//    private class GetPollData extends AsyncTask<String, String, String> {
+//
+//        int result = 0;
+//
+//        @Override
+//        protected void onPreExecute() {
+//            super.onPreExecute();
+//
+//            Progress.start(MasterPageActivity.this);
+//        }
+//
+//        @Override
+//        protected String doInBackground(String... strings) {
+//            try {
+//                JSONObject jsonObject = new JSONObject(pollsPref.getPoleData().toString());
+//
+//                JSONArray jsonArrayPoleData = jsonObject.getJSONArray(Const.KEY_POLL_DATA);
+//
+//                pollName = new String[jsonArrayPoleData.length()];
+//                for (int i = 0; i < jsonArrayPoleData.length(); i++) {
+//
+////                    JSONObject jsonObject=new
+////                    pollName[i] =
+//
+//                }
+//
+//            } catch (JSONException e) {
+//                e.printStackTrace();
+//            }
+//
+//            return null;
+//        }
+//
+//        @Override
+//        protected void onPostExecute(String s) {
+//            super.onPostExecute(s);
+//
+//            Progress.stop();
+//        }
+//    }
 }
