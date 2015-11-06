@@ -73,8 +73,8 @@ public class Utility {
     }
     public static String changeDateFormat(String OLD_DATE) {
 
-        String old_date_format = "yyyy-mm-dd hh:mm:ss";
-        String new_date_format = " hh:mm:ss a";
+        String old_date_format = "yyyy-mm-dd | hh:mm:ss aa";
+        String new_date_format = " hh:mm:ss";
         String NEW_DATE = null;
 
         try {
