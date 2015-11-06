@@ -134,7 +134,7 @@ public class InstructionActivity extends AppCompatActivity {
             @Override
             public void run() {
                 //Do something after 100ms
-                pollService.getPollData(InstructionActivity.this);
+               pollService.getPollData(InstructionActivity.this);
                 handler.postDelayed(this, 20000);
             }
         }, 10000);

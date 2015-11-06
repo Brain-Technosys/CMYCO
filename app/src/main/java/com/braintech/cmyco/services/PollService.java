@@ -10,6 +10,7 @@ import android.os.IBinder;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.braintech.cmyco.R;
 import com.braintech.cmyco.activity.HomeActivity;
@@ -71,16 +72,22 @@ public class PollService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
+
+        Log.e("Service", "Started");
         return START_STICKY;
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
+
+        Log.e("Service", "Destroyed");
     }
 
 
     public void getPollData(Context context) {
+
+        Toast.makeText(getApplicationContext(), "Poll Service", Toast.LENGTH_LONG);
         this.context = context;
         if (Utility.isNetworkAvailable(getApplicationContext())) {
             new PollData().execute();
