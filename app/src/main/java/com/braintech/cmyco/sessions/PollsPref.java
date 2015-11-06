@@ -82,8 +82,8 @@ public class PollsPref {
         return pref.getString(Const.KEY_POLL_DATA, null);
     }
 
-    public String getActiveUsers() {
-        return pref.getString(Const.KEY_ACTIVE_USER, null);
+    public String getTeam() {
+        return pref.getString(KEY_TEAM, null);
     }
 
 

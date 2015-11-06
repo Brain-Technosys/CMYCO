@@ -69,6 +69,7 @@
 
     <!-- NO GAME ACTIVITY-->
     <string name="txt_no_game">There is no game available at this time.</string>
+    <string name="title_activity_disabled_game">DisabledGameActivity</string>
 
 
 </resources>

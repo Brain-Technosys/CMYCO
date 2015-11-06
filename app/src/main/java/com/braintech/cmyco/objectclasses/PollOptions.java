@@ -1,9 +1,11 @@
 package com.braintech.cmyco.objectclasses;
 
+import java.io.Serializable;
+
 /**
  * Created by Braintech on 11/6/2015.
  */
-public class PollOptions {
+public class PollOptions implements Serializable {
 
     String poll_id;
     String poll_name;

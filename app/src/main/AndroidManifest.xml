@@ -83,11 +83,15 @@
         <activity
             android:name=".activity.NoGameActivity"
             android:label="@string/title_activity_no_game"
-            android:parentActivityName=".activity.LoginActivity"
-             >
+            android:parentActivityName=".activity.LoginActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.braintech.cmyco.activity.LoginActivity" />
+        </activity>
+        <activity
+            android:name=".activity.DisabledGameActivity"
+            android:label="@string/title_activity_disabled_game"
+            android:theme="@style/AppTheme.NoActionBar" >
         </activity>
     </application>
 

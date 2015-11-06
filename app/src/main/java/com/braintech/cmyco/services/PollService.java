@@ -140,10 +140,14 @@ public class PollService extends Service {
                 if (jsonObject != null) {
 
                     result = jsonObject.getInt(Const.KEY_RESULT);
+<<<<<<< HEAD
                     serverTime = Utility.changeDateFormat((jsonObject.getString(Const.KEY_POLL_SERVER_TIME)));
 
                     Log.e("serverTime", serverTime);
                     Log.e("getTime", Utility.getTime());
+=======
+                   // serverTime=jsonObject.getString(Const.)
+>>>>>>> 67cc759c39d370377a221da532753217d7676634
 
                     JSONArray jsonArrayPolLData = jsonObject.getJSONArray(Const.KEY_POLL_DATA);
 

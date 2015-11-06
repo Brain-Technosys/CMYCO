@@ -4,14 +4,16 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.CountDownTimer;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.util.TypedValue;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.CompoundButton;
+import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
@@ -42,7 +44,7 @@ import java.util.HashMap;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
-public class GameActivity extends AppCompatActivity {
+public class DisabledGameActivity extends AppCompatActivity {
 
     @InjectView(R.id.coordinatorLayout)
     CoordinatorLayout coordinatorLayout;
@@ -53,14 +55,11 @@ public class GameActivity extends AppCompatActivity {
     @InjectView(R.id.lbl_defence)
     TextView defenceTextView;
 
-    @InjectView(R.id.rg_defence)
-    RadioGroup defenceRadioGroup;
+    @InjectView(R.id.linLayTextView)
+    LinearLayout linLayTextView;
 
     @InjectView(R.id.chart)
     BarChart chart;
-
-    @InjectView(R.id.txtViewTimer)
-    TextView txtViewTimer;
 
     RadioButton[] catRadioButtons;
 
@@ -69,12 +68,14 @@ public class GameActivity extends AppCompatActivity {
 
     AlertDialogManager alertDialogManager;
 
-    ArrayList<PollOptions> catDefenceArrayList;
+    ArrayList<HashMap<String, String>> catDefenceArrayList;
     ArrayList<String> graphLabelXAxis;
     ArrayList<BarEntry> valueSet;
 
+    ArrayList<PollOptions> arrayListPollOpt;
+
     String[] xTitle = {"1", "2", "3", "4", "5"};
-    String[] barDataStrings = {"750", "600", "300", "450", "500"};
+    String[] barDataStrings = {"0", "0", "0", "0", "0"};
 
     String txtLogo;
 
@@ -90,7 +91,7 @@ public class GameActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_game);
+        setContentView(R.layout.activity_disabled_game);
 
         ButterKnife.inject(this);
 
@@ -104,39 +105,21 @@ public class GameActivity extends AppCompatActivity {
         userSession = new UserSession(this);
         pollsPref = new PollsPref(this);
 
-       /* if (pollsPref.getCoachDetail().equals(null)) {
-            alertDialogManager.showAlertDialog(this, getString(R.string.alert_no_data));
-        } else {
-            new GetDefenceDataForRadioButton().execute();
-        }*/
-
-        if (getIntent().hasExtra(Const.TAG_POLL_OPTION)) {
-            Bundle bundle = getIntent().getExtras();
-            catDefenceArrayList = (ArrayList<PollOptions>) bundle.getSerializable(Const.TAG_POLL_OPTION);
-
-            setDefenceCat();
-        }
-
-        new CountDownTimer(30000, 1000) {//CountDownTimer(edittext1.getText()+edittext2.getText()) also parse it to long
-
-            public void onTick(long millisUntilFinished) {
-                txtViewTimer.setText("Time Left: " + millisUntilFinished / 1000);
-                //here you can have your logic to set text to edittext
-            }
-
-            public void onFinish() {
-              finish();
-            }
-        }
-                .start();
 
         //Preparing data for graph
-        getGraphData(xTitle, barDataStrings);
+        // getGraphData(xTitle, barDataStrings);
 
         handleLogoutRetry();
 
         // here we are Showing graph
-        handleGraph();
+        // handleGraph();
+
+        if (getIntent().hasExtra(Const.TAG_POLL_OPTION)) {
+            Bundle bundle = getIntent().getExtras();
+            arrayListPollOpt = (ArrayList<PollOptions>) bundle.getSerializable(Const.TAG_POLL_OPTION);
+
+            createOptionsTextView();
+        }
     }
 
     private void handleLogoutRetry() {
@@ -149,7 +132,19 @@ public class GameActivity extends AppCompatActivity {
 
     }
 
-    private void getGraphData(String[] xTStrings, String[] barStrings) {
+    private void createOptionsTextView() {
+        if (arrayListPollOpt.size() != 0) {
+            for (int i = 0; i < arrayListPollOpt.size(); i++) {
+                TextView txtView = new TextView(this);
+                txtView.setText(arrayListPollOpt.get(i).getPoll_name());
+                txtView.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 18);
+                txtView.setGravity(Gravity.CENTER_VERTICAL);
+                linLayTextView.addView(txtView);
+            }
+        }
+    }
+
+   private void getGraphData(String[] xTStrings, String[] barStrings) {
 
         //X axis title, currently it is static
         graphLabelXAxis = new ArrayList<>();
@@ -278,124 +273,4 @@ public class GameActivity extends AppCompatActivity {
     }
 
 
-   /* //Asynchronous class to get defence category data from json stored at sheared Preference
-    private class GetDefenceDataForRadioButton extends AsyncTask<String, String, String> {
-        int result = 0;
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-
-            Progress.start(GameActivity.this);
-        }
-
-        @Override
-        protected String doInBackground(String... strings) {
-
-            try {
-                JSONObject jsonObject = new JSONObject(pollsPref.getPollData().toString());
-
-                if (jsonObject != null) {
-                    JSONArray jsonArrayPoleData = jsonObject.getJSONArray(Const.KEY_DATA);
-
-                    for (int j = 0; j < jsonArrayPoleData.length(); j++) {
-                        JSONObject jsonObjectPollOptions = jsonArrayPoleData.getJSONObject(j);
-
-                        int id = jsonObjectPollOptions.getInt(Const.KEY_ID);
-
-                        txtLogo = jsonObjectPollOptions.getString(Const.KEY_NAME);
-
-                        JSONArray jsonArrayPollOptions = jsonObjectPollOptions.getJSONArray(Const.KEY_POLL_OPTION);
-
-                        for (int k = 0; k < jsonArrayPollOptions.length(); k++) {
-                            JSONObject jsonObjectPollCat = jsonArrayPollOptions.getJSONObject(k);
-
-                            result = 0;
-
-                            if (id == 1) {
-                                //Defence Data
-                                HashMap<String, String> defencePollCatStrings = new HashMap<>();
-                                defencePollCatStrings.put(Const.KEY_ID, jsonObjectPollCat.getString(Const.KEY_ID));
-                                defencePollCatStrings.put(Const.KEY_NAME, jsonObjectPollCat.getString(Const.KEY_NAME));
-                                catDefenceArrayList.add(defencePollCatStrings);
-                                result = 1;
-
-
-                            } else if (id == 2) {
-                                result = 1;
-                            } else if (id == 3) {
-                                result = 1;
-                            } else if (id == 4) {
-                                result = 1;
-                            } else if (id == 5) {
-                                result = 1;
-                            }
-                        }
-                    }
-
-
-                } else {
-                    result = 0;
-                }
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(String s) {
-            super.onPostExecute(s);
-
-            Progress.stop();
-            if (result == 1) {
-                setDefenceCat();
-            } else if (result == 0) {
-                alertDialogManager.showAlertDialog(GameActivity.this, getString(R.string.alert_no_data));
-            }
-        }
-    }*/
-
-    //Setting Layout
-    private void setDefenceCat() {
-
-        // setting logo
-        defenceTextView.setText(txtLogo);
-
-        //Inflating category radio button and TextView
-        catRadioButtons = new RadioButton[catDefenceArrayList.size()];
-
-        //setting radio buttons
-        for (int i = 0; i < catDefenceArrayList.size(); i++) {
-
-            //Creating Dynamic Radio Button
-
-            catRadioButtons[i] = new RadioButton(GameActivity.this);
-            catRadioButtons[i].setId(Integer.parseInt(catDefenceArrayList.get(i).getPoll_id()));
-            catRadioButtons[i].setText(catDefenceArrayList.get(i).getPoll_name());
-            catRadioButtons[i].setTextColor(Color.parseColor("#FFFFFF"));
-
-            // setting first radio button checked for the first time
-            if (i == 0 && firstTime) {
-                catRadioButtons[i].setChecked(true);
-                firstTime = false;
-            }
-
-            //Adding Views
-            defenceRadioGroup.addView(catRadioButtons[i]);
-
-            //Applying click Listener on category radio button
-            catRadioButtons[i].setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                @Override
-                public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-
-                    for(int i = 0; i < defenceRadioGroup.getChildCount(); i++){
-                        ((RadioButton)defenceRadioGroup.getChildAt(i)).setEnabled(false);
-                    }
-
-                }
-            });
-
-        }
-    }
 }
