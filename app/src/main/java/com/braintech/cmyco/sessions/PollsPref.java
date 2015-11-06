@@ -44,7 +44,7 @@ public class PollsPref {
         editor.commit();
     }
 
-    public void storePoleData(String json) {
+    public void storePollData(String json) {
         editor.putString(Const.KEY_POLL_DATA, json);
         editor.commit();
     }
@@ -105,7 +105,7 @@ public class PollsPref {
         return pref.getString(Const.KEY_TEAM2, null);
     }
 
-    public String getPoleData() {
+    public String getPollData() {
         return pref.getString(Const.KEY_POLL_DATA, null);
     }
 

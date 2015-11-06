@@ -55,7 +55,7 @@ public class Const {
     public static String TAG_EMAIL = "email=";
 
     //Poll
-    public static String KEY_POLL_OPTION = "PollOption";
+    public static String KEY_POLL_OPTION = "poll_options";
     public static String KEY_POLL_DATA = "polldata";
     public static String KEY_POLL_ID="poll_id";
     public static String KEY_POLL_NAME="poll_name";

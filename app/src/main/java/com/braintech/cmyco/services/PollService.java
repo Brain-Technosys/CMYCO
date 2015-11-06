@@ -126,7 +126,7 @@ public class PollService extends Service {
                     if (result == 1) {
                         JSONObject jsonObjectPollData = jsonObject.getJSONObject(Const.KEY_POLL_DATA);
                         PollsPref pollsPref = new PollsPref(context);
-                        pollsPref.storePoleData(jsonObjectPollData.toString());
+                        pollsPref.storePollData(jsonObjectPollData.toString());
 
                     }
 
