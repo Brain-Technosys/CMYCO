@@ -17,6 +17,8 @@ import com.braintech.cmyco.activity.HomeActivity;
 import com.braintech.cmyco.activity.LoginActivity;
 import com.braintech.cmyco.common.CommonAPI;
 import com.braintech.cmyco.my_interface.SnakeOnClick;
+import com.braintech.cmyco.objectclasses.PollData;
+import com.braintech.cmyco.objectclasses.PollOptions;
 import com.braintech.cmyco.sessions.PollsPref;
 import com.braintech.cmyco.utils.AlertDialogManager;
 import com.braintech.cmyco.utils.Const;
@@ -25,8 +27,12 @@ import com.braintech.cmyco.utils.Progress;
 import com.braintech.cmyco.utils.SnackNotify;
 import com.braintech.cmyco.utils.Utility;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.HashMap;
 
 public class PollService extends Service {
 
@@ -90,7 +96,7 @@ public class PollService extends Service {
         Toast.makeText(getApplicationContext(), "Poll Service", Toast.LENGTH_LONG);
         this.context = context;
         if (Utility.isNetworkAvailable(getApplicationContext())) {
-            new PollData().execute();
+            new GetPollData().execute();
         } else {
 //            if (LoginActivity.class.isInstance(getApplicationContext()))
 //                SnackNotify.showSnakeBar((Activity) context, snakeOnClick, coordinatorLayout);
@@ -98,9 +104,14 @@ public class PollService extends Service {
     }
 
 
-    private class PollData extends AsyncTask<String, String, String> {
+    private class GetPollData extends AsyncTask<String, String, String> {
         int result = -1;
         String msg;
+
+        ArrayList<PollData> arrayListPollData;
+        HashMap<Integer, ArrayList<PollOptions>> hashMapPollOptions;
+
+        String serverTime;
 
         @Override
         protected void onPreExecute() {
@@ -121,80 +132,72 @@ public class PollService extends Service {
             try {
                 JSONObject jsonObject = new JSONObject(jsonString);
 
+
                 if (jsonObject != null) {
+
                     result = jsonObject.getInt(Const.KEY_RESULT);
-                    if (result == 1) {
-                        JSONObject jsonObjectPollData = jsonObject.getJSONObject(Const.KEY_POLL_DATA);
+                    serverTime=jsonObject.getString(Const.)
 
-                        //storing data for
-                        PollsPref pollsPref = new PollsPref(context);
-<<<<<<< HEAD
-                        pollsPref.storePoleData(jsonObjectPollData.toString());
-                        JSONArray jsonArrayPolLData = jsonObject.getJSONArray(Const.KEY_POLL_DATA);
-=======
-                        pollsPref.storePollData(jsonObjectPollData.toString());
->>>>>>> f63c21337969ebebfb8e518e8c2176e0f433abb7
+                    JSONArray jsonArrayPolLData = jsonObject.getJSONArray(Const.KEY_POLL_DATA);
 
-                        arrayListPollData = new ArrayList<PollData>();
+                    arrayListPollData = new ArrayList<PollData>();
 
-                        hashMapPollOptions = new HashMap<Integer, ArrayList<PollOptions>>();
+                    hashMapPollOptions = new HashMap<Integer, ArrayList<PollOptions>>();
 
-                        for (int i = 0; i < jsonArrayPolLData.length(); i++) {
+                    for (int i = 0; i < jsonArrayPolLData.length(); i++) {
 
-                            JSONObject jsonObj = jsonArrayPolLData.getJSONObject(i);
-                            int poll_id = jsonObj.getInt(Const.KEY_POLL_ID);
+                        JSONObject jsonObj = jsonArrayPolLData.getJSONObject(i);
+                        int poll_id = jsonObj.getInt(Const.KEY_POLL_ID);
 
-                            String poll_name = jsonObj.getString(Const.KEY_POLL_NAME);
-                            String poll_start_time = jsonObj.getString(Const.KEY_START_TIME);
-                            String poll_end_time = jsonObj.getString(Const.KEY_END_TIME);
-                            String poll_duration = jsonObj.getString(Const.KEY_POLL_DURATION);
+                        String poll_name = jsonObj.getString(Const.KEY_POLL_NAME);
+                        String poll_start_time = jsonObj.getString(Const.KEY_START_TIME);
+                        String poll_end_time = jsonObj.getString(Const.KEY_END_TIME);
+                        String poll_duration = jsonObj.getString(Const.KEY_POLL_DURATION);
 
-                            PollData pollData = new PollData(poll_id, poll_name, poll_end_time, poll_start_time, poll_duration);
+                        PollData pollData = new PollData(poll_id, poll_name, poll_end_time, poll_start_time, poll_duration);
 
-                            arrayListPollData.add(pollData);
+                        arrayListPollData.add(pollData);
 
-                            JSONArray jsonArrayPollOptions = jsonObj.getJSONArray(Const.KEY_POLL_OPTION);
+                        JSONArray jsonArrayPollOptions = jsonObj.getJSONArray(Const.KEY_POLL_OPTION);
 
-                            ArrayList<PollOptions> arrayListPollOpt = new ArrayList<PollOptions>();
+                        ArrayList<PollOptions> arrayListPollOpt = new ArrayList<PollOptions>();
 
-                            for (int j = 0; j < jsonArrayPollOptions.length(); j++) {
+                        for (int j = 0; j < jsonArrayPollOptions.length(); j++) {
 
-                                JSONObject jsonObjOpt = jsonArrayPollOptions.getJSONObject(j);
+                            JSONObject jsonObjOpt = jsonArrayPollOptions.getJSONObject(j);
 
-                                String pollId = jsonObjOpt.getString(Const.KEY_POLL_ID);
+                            String pollId = jsonObjOpt.getString(Const.KEY_POLL_ID);
 
-                                String pollName = jsonObjOpt.getString(Const.KEY_POLL_NAME);
+                            String pollName = jsonObjOpt.getString(Const.KEY_POLL_NAME);
 
-                                PollOptions pollOptions = new PollOptions(pollId, pollName);
+                            PollOptions pollOptions = new PollOptions(pollId, pollName);
 
-                                arrayListPollOpt.add(pollOptions);
-                            }
-
-                            hashMapPollOptions.put(poll_id, arrayListPollOpt);
-
-
+                            arrayListPollOpt.add(pollOptions);
                         }
+
+                        hashMapPollOptions.put(poll_id, arrayListPollOpt);
+
+
                     }
-                    else
-                        result=0;
+                } else
+                    result = 0;
 
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
-                return null;
+            } catch (JSONException e) {
+                e.printStackTrace();
             }
 
-            @Override
-            protected void onPostExecute(String s) {
-                super.onPostExecute(s);
+            return null;
+        }
 
-                Progress.stop();
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
 
-                if(result==1)
-                {
-                    addDataToListView();
-                }
+            Progress.stop();
+
+            if (result == 1) {
+              //  addDataToListView();
             }
         }
+    }
 }
