@@ -308,9 +308,18 @@ public class MasterPageActivity extends AppCompatActivity {
 
         arrayListPollOpt = hashMapPollOptions.get(poll_id);
 
-        Intent intent = new Intent(this, GameActivity.class);
-        intent.putExtra(Const.TAG_POLL_OPTION, arrayListPollOpt);
-        startActivity(intent);
+        if(position==0) {
+
+            Intent intent = new Intent(this, GameActivity.class);
+            intent.putExtra(Const.TAG_POLL_OPTION, arrayListPollOpt);
+            startActivity(intent);
+        }
+        else
+        {
+            Intent intent = new Intent(this, DisabledGameActivity.class);
+            intent.putExtra(Const.TAG_POLL_OPTION, arrayListPollOpt);
+            startActivity(intent);
+        }
 
     }
 }

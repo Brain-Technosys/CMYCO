@@ -75,7 +75,7 @@ public class DisabledGameActivity extends AppCompatActivity {
     ArrayList<PollOptions> arrayListPollOpt;
 
     String[] xTitle = {"1", "2", "3", "4", "5"};
-    String[] barDataStrings = {"750", "600", "300", "450", "500"};
+    String[] barDataStrings = {"0", "0", "0", "0", "0"};
 
     String txtLogo;
 
@@ -144,7 +144,7 @@ public class DisabledGameActivity extends AppCompatActivity {
         }
     }
 
-  /*  private void getGraphData(String[] xTStrings, String[] barStrings) {
+   private void getGraphData(String[] xTStrings, String[] barStrings) {
 
         //X axis title, currently it is static
         graphLabelXAxis = new ArrayList<>();
@@ -161,10 +161,10 @@ public class DisabledGameActivity extends AppCompatActivity {
 
 
     }
-*/
+
 
     //Handling Graph
-   /* private void handleGraph() {
+    private void handleGraph() {
 
         //Handling graph X axis Content
         XAxis xAxis = chart.getXAxis();
@@ -235,7 +235,7 @@ public class DisabledGameActivity extends AppCompatActivity {
 
         return dataSets;
     }
-*/
+
 
     //method to handle toolbar(custom Action bar)
     private void handleToolbar() {

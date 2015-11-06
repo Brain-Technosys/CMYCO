@@ -120,7 +120,7 @@ public class GameActivity extends AppCompatActivity {
         new CountDownTimer(30000, 1000) {//CountDownTimer(edittext1.getText()+edittext2.getText()) also parse it to long
 
             public void onTick(long millisUntilFinished) {
-                txtViewTimer.setText("seconds remaining: " + millisUntilFinished / 1000);
+                txtViewTimer.setText("Time Left: " + millisUntilFinished / 1000);
                 //here you can have your logic to set text to edittext
             }
 
@@ -388,6 +388,10 @@ public class GameActivity extends AppCompatActivity {
             catRadioButtons[i].setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+
+                    for(int i = 0; i < defenceRadioGroup.getChildCount(); i++){
+                        ((RadioButton)defenceRadioGroup.getChildAt(i)).setEnabled(false);
+                    }
 
                 }
             });
