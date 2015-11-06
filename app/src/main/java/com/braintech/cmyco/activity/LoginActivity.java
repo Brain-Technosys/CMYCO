@@ -291,7 +291,9 @@ public class LoginActivity extends AppCompatActivity {
                     commonAPI.getPollData(snakeOnClickPollRetry, coordinatorLayout);
 
                 } else {
-                    alertDialogManager.showAlertDialog(LoginActivity.this, getString(R.string.alert_no_active_game));
+                    //  alertDialogManager.showAlertDialog(LoginActivity.this, getString(R.string.alert_no_active_game));
+                    Intent intent = new Intent(LoginActivity.this, NoGameActivity.class);
+                    startActivity(intent);
                 }
             } else if (result == 0) {
                 alertDialogManager.showAlertDialog(LoginActivity.this, msg);

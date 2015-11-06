@@ -9,6 +9,9 @@
     <string name="title_activity_instruction_page_two"> Game Play Definitions</string>
     <string name="title_activity_master_page">Master Page</string>
     <string name="title_activity_defence">The Game</string>
+    <string name="title_activity_no_game">CMYCO</string>
+
+
 
     <!--alert dialog -->
     <string name="empty_fields">Please fill all the fields.</string>
@@ -63,6 +66,9 @@
     <!-- master page-->
     <string name="logo_team">TEAM</string>
     <string name="logo_active_game">ACTIVE GAME</string>
+
+    <!-- NO GAME ACTIVITY-->
+    <string name="txt_no_game">There is no game available at this time.</string>
 
 
 </resources>
