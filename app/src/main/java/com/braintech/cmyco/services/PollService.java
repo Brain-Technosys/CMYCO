@@ -241,7 +241,11 @@ public class PollService extends Service {
                             public void run() {
                                 //Do something after 100ms
                                 Intent intent = new Intent(context, GameActivity.class);
-                                intent.putExtra(Const.TAG_POLL_OPTION, arrayListPollOpt);
+                                Bundle bundle = new Bundle();
+                               // bundle.putString(Const.KEY_POLL_NAME, pollName);
+                                bundle.putInt(Const.KEY_POLL_ID,poll_id);
+                                bundle.putSerializable(Const.TAG_POLL_OPTION, arrayListPollOpt);
+                                intent.putExtras(bundle);
                                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                                 startActivity(intent);
 
@@ -249,7 +253,7 @@ public class PollService extends Service {
                                 v.vibrate(500);
 //
 
-                                handler.postDelayed(this, 20000);
+//                                handler.postDelayed(this, 20000);
                             }
                         }, 10000);
                     } else {

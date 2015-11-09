@@ -129,18 +129,18 @@ public class InstructionActivity extends AppCompatActivity {
 
     private void callingPollData() {
 
-        //setting default id
-        pollsPref.storePLAY("KEY");
-
-        final Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                //Do something after 100ms
-                pollService.getPollData(InstructionActivity.this);
-                handler.postDelayed(this, 20000);
-            }
-        }, 10000);
+//        //setting default id
+//      //  pollsPref.storePLAY("KEY");
+//
+//        final Handler handler = new Handler();
+//        handler.postDelayed(new Runnable() {
+//            @Override
+//            public void run() {
+//                //Do something after 100ms
+        pollService.getPollData(InstructionActivity.this);
+//                handler.postDelayed(this, 20000);
+//            }
+//        }, 10000);
     }
 
     @Override
