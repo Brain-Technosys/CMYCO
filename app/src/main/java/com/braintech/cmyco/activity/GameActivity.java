@@ -94,6 +94,8 @@ public class GameActivity extends AppCompatActivity {
     String graphItemColor = "#14DDF9";
     String graphBgColor = "#010f1a";
 
+    String pollName;
+
     SnakeOnClick snakeOnClickForLogout;
 
     CommonAPI logoutAPI;
@@ -133,6 +135,8 @@ public class GameActivity extends AppCompatActivity {
             catDefenceArrayList = (ArrayList<PollOptions>) bundle.getSerializable(Const.TAG_POLL_OPTION);
 
             pollId = bundle.getInt(Const.KEY_POLL_ID);
+            pollName = bundle.getString(Const.KEY_POLL_NAME, pollName);
+            defenceTextView.setText(pollName);
 
             setDefenceCat();
         }
@@ -157,7 +161,9 @@ public class GameActivity extends AppCompatActivity {
                     @Override
                     public void run() {
                         //Do something after 100ms
-                        finish();
+                        Intent intent=new Intent(GameActivity.this,MasterPageActivity.class);
+                        startActivity(intent);
+
                     }
                 }, 4000);
             }
@@ -322,6 +328,9 @@ public class GameActivity extends AppCompatActivity {
 
         if (!TIMER) {
             super.onBackPressed();
+
+            Intent intent=new Intent(GameActivity.this,MasterPageActivity.class);
+            startActivity(intent);
         }
 
     }
@@ -538,5 +547,7 @@ public class GameActivity extends AppCompatActivity {
             Progress.stop();
         }
     }
+
+
 
 }

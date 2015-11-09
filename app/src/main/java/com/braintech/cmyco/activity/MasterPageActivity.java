@@ -312,30 +312,14 @@ public class MasterPageActivity extends AppCompatActivity {
 
         arrayListPollOpt = hashMapPollOptions.get(poll_id);
 
-        if(position==0)
-        {
-            Intent intent = new Intent(this,GameActivity.class);
 
-            Bundle bundle = new Bundle();
-            bundle.putString(Const.KEY_POLL_NAME, pollName);
-            bundle.putInt(Const.KEY_POLL_ID,poll_id);
-            bundle.putSerializable(Const.TAG_POLL_OPTION, arrayListPollOpt);
-            intent.putExtras(bundle);
-            startActivity(intent);
-        }
-        else
-        {
-            Intent intent = new Intent(this, DisabledGameActivity.class);
+        Intent intent = new Intent(this, DisabledGameActivity.class);
 
-            Bundle bundle = new Bundle();
-            bundle.putString(Const.KEY_POLL_NAME, pollName);
-            bundle.putSerializable(Const.TAG_POLL_OPTION, arrayListPollOpt);
-            intent.putExtras(bundle);
-            startActivity(intent);
-        }
-
-
-
+        Bundle bundle = new Bundle();
+        bundle.putString(Const.KEY_POLL_NAME, pollName);
+        bundle.putSerializable(Const.TAG_POLL_OPTION, arrayListPollOpt);
+        intent.putExtras(bundle);
+        startActivity(intent);
 
 
     }
