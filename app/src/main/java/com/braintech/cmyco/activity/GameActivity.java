@@ -111,6 +111,7 @@ public class GameActivity extends AppCompatActivity {
 
         userSession = new UserSession(this);
         pollsPref = new PollsPref(this);
+        //
 
        /* if (pollsPref.getCoachDetail().equals(null)) {
             alertDialogManager.showAlertDialog(this, getString(R.string.alert_no_data));
