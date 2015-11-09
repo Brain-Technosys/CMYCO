@@ -16,6 +16,8 @@ import com.braintech.cmyco.R;
 import com.braintech.cmyco.objectclasses.PollData;
 import com.braintech.cmyco.objectclasses.PollOptions;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -64,6 +66,7 @@ public class CustomAdapterPollData extends BaseAdapter {
             holder = new ViewHolder();
 
             holder.txtViewPollName = (TextView) convertView.findViewById(R.id.txtViewPollName);
+            holder.txtViewPollOptions=(TextView)  convertView.findViewById(R.id.txtViewPollOptions);
 
             convertView.setTag(holder);
         } else {
@@ -74,11 +77,16 @@ public class CustomAdapterPollData extends BaseAdapter {
 
         holder.txtViewPollName.setText(pollData.getPoll_name());
         holder.txtViewPollName.setTag(pollData.getPoll_id());
+        if(position==0)
+        {
+            holder.txtViewPollName.setText("FULL COURT PRESS+2-3 ZONE");
+        }
 
         return convertView;
     }
 
     static class ViewHolder {
         TextView txtViewPollName;
+        TextView txtViewPollOptions;
     }
 }
