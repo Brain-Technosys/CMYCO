@@ -13,64 +13,54 @@
     tools:context="com.braintech.cmyco.activity.MasterPageActivity"
     tools:showIn="@layout/activity_master_page">
 
-    <LinearLayout
-        android:id="@+id/rly_top"
+
+    <TextView
+        android:id="@+id/txt_team_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:layout_margin="10dp"
-        android:orientation="horizontal">
+        android:layout_marginRight="10dp"
+        android:background="@drawable/bg_edittext"
+        android:gravity="left"
+        android:padding="@dimen/padding_size"
+        android:text="TEAM A"
+        android:textColor="@color/white"
+        android:textSize="@dimen/txt_normal_size" />
 
-
-        <TextView
-            android:id="@+id/txt_team_name"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_weight="1"
-            android:background="@drawable/bg_edittext"
-            android:padding="@dimen/padding_size"
-            android:textColor="@color/white"
-            android:layout_marginRight="10dp"
-            android:text="TEAM A"
-            android:gravity="left"
-            android:textSize="@dimen/txt_normal_size" />
-
-
-        <TextView
-            android:id="@+id/txt_active_users"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@drawable/bg_edittext"
-            android:padding="@dimen/padding_size"
-            android:textColor="@color/white"
-            android:layout_marginRight="10dp"
-            android:text="ACTIVE USERS"
-            android:textSize="@dimen/txt_normal_size" />
-
-
-    </LinearLayout>
 
     <ListView
         android:id="@+id/listViewPoll"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/rly_top"
-        android:layout_marginTop="20dp"
-        android:dividerHeight="0dp"
+        android:layout_above="@+id/txt_active_users"
+        android:layout_below="@+id/txt_team_name"
         android:divider="@android:color/white"
+        android:dividerHeight="0dp"
         android:listSelector="@android:color/transparent">
 
     </ListView>
 
+    <TextView
+        android:id="@+id/txt_active_users"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginRight="10dp"
+        android:background="@drawable/bg_edittext"
+        android:padding="@dimen/padding_size"
+        android:text="ACTIVE USERS"
+        android:textColor="@color/white"
+        android:textSize="@dimen/txt_normal_size" />
+
     <!--<Button-->
-        <!--android:id="@+id/btn_continue"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_alignParentBottom="true"-->
-        <!--android:background="@drawable/button_selector"-->
-        <!--android:text="@string/btn_continue"-->
-        <!--android:textColor="@color/white" />-->
+    <!--android:id="@+id/btn_continue"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_alignParentBottom="true"-->
+    <!--android:background="@drawable/button_selector"-->
+    <!--android:text="@string/btn_continue"-->
+    <!--android:textColor="@color/white" />-->
 
 </RelativeLayout>
