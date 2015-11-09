@@ -20,9 +20,9 @@ public class PollsPref {
     private static final String PREF_NAME = "polls_pref";
     private static final String KEY_COACH = "coach";
     private static final String KEY_TEAM = "team";
-<<<<<<< HEAD
+
     private static final String KEY_PLAY = "play";
-=======
+
     private static final String KEY_TEAM_ID = "team_id";
     private static final String KEY_OPTIONS = "options";
 
@@ -33,7 +33,7 @@ public class PollsPref {
     private static final String KEY_EMAIL="email";
 
     private static final String KEY_ACTIVE_GAME="active_game";
->>>>>>> f256a5ec46d91b66fd517f6d9478407e6fb4a525
+
 
     private static final String KEY_ACTIVE_USERS = "active_users";
 
@@ -44,14 +44,14 @@ public class PollsPref {
         editor = pref.edit();
     }
 
-<<<<<<< HEAD
+
 
     public void storePLAY(String playId) {
         editor.putString(KEY_PLAY, playId);
     }
 
-    public void storeCoachTeamDetail(String coach, String team) {
-=======
+  
+
     public void storeUserInfo(String user_id,String username,String email)
     {
         editor.putString(KEY_USER_ID, user_id);
@@ -62,7 +62,7 @@ public class PollsPref {
     }
 
     public void storeCoachTeamDetail(String coach, String team,String teamId) {
->>>>>>> f256a5ec46d91b66fd517f6d9478407e6fb4a525
+
         editor.putString(KEY_COACH, coach);
         editor.putString(KEY_TEAM, team);
         editor.putString(KEY_TEAM_ID, teamId);
@@ -145,13 +145,13 @@ public class PollsPref {
         return pref.getString(KEY_TEAM, null);
     }
 
-<<<<<<< HEAD
+
     public String getPlayOption() {
         return pref.getString(KEY_PLAY, "KEY");
-=======
+    }
     public int getActiveGame() {
         return pref.getInt(KEY_ACTIVE_GAME, 0);
->>>>>>> f256a5ec46d91b66fd517f6d9478407e6fb4a525
+
     }
 
 
