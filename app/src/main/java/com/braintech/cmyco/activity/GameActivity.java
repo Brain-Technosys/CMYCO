@@ -158,9 +158,8 @@ public class GameActivity extends AppCompatActivity {
                     public void run() {
                         //Do something after 100ms
                         finish();
-                        handler.postDelayed(this, 20000);
                     }
-                }, 10000);
+                }, 4000);
             }
         }
                 .start();
