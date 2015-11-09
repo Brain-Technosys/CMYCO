@@ -254,14 +254,14 @@ public class HomeActivity extends AppCompatActivity {
 //                for (int j = 0; j < 2; j++) {
 //                    result = 0;
                 JSONObject jsonObject = new JSONObject(urlString);
-                result = jsonObject.getInt(Const.KEY_RESULT);
+
 //                    if (j == 0) {
 //                        jsonObject = new JSONObject(pollsPref.getTeam1Detail().toString());
 //                    } else {
 //                        jsonObject = new JSONObject(pollsPref.getTeam2Detail().toString());
 //                    }
                 if (jsonObject != null) {
-
+                    result = jsonObject.getInt(Const.KEY_RESULT);
                     JSONArray jsonArrayTeam = jsonObject.getJSONArray(Const.KEY_DATA);
 
                     for (int i = 0; i < jsonArrayTeam.length(); i++) {
@@ -276,6 +276,8 @@ public class HomeActivity extends AppCompatActivity {
                     }
 
 
+                }else{
+                    msg=jsonObject.getString(Const.KEY_MSG);
                 }
 
 //                }
@@ -297,7 +299,7 @@ public class HomeActivity extends AppCompatActivity {
                 coachAdapter = new SpinnerAdapter(HomeActivity.this, arrayListCoach);
                 coachSpinner.setAdapter(coachAdapter);
             } else if (result == 0) {
-                alertDialogManager.showAlertDialog(HomeActivity.this, getString(R.string.alert_no_data));
+                alertDialogManager.showAlertDialog(HomeActivity.this, msg);
             } else {
                 alertDialogManager.showAlertDialog(HomeActivity.this, getString(R.string.server_not_responding));
             }
@@ -335,7 +337,7 @@ public class HomeActivity extends AppCompatActivity {
 //                result = 1;
 
                 JSONObject jsonObject = new JSONObject(urlString);
-                result = jsonObject.getInt(Const.KEY_RESULT);
+
 //                if (Integer.parseInt(strings[0]) == 1) {
 //                    jsonObject = new JSONObject(pollsPref.getTeam1Detail());
 //                } else {
@@ -343,7 +345,7 @@ public class HomeActivity extends AppCompatActivity {
 //                }
 
                 if (jsonObject != null) {
-
+                    result = jsonObject.getInt(Const.KEY_RESULT);
                     JSONArray jsonArrayTeamData = jsonObject.getJSONArray(Const.KEY_DATA);
 
                     for (int i = 0; i < jsonArrayTeamData.length(); i++) {
@@ -360,7 +362,7 @@ public class HomeActivity extends AppCompatActivity {
                     }
 
                 } else {
-
+                    msg=jsonObject.getString(Const.KEY_MSG);
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -380,7 +382,7 @@ public class HomeActivity extends AppCompatActivity {
                 teamSpinner.setAdapter(teamAdapter);
                 teamAdapter.notifyDataSetChanged();
             } else if (result == 0) {
-                alertDialogManager.showAlertDialog(HomeActivity.this, getString(R.string.empty_fields));
+                alertDialogManager.showAlertDialog(HomeActivity.this, msg);
             } else {
                 alertDialogManager.showAlertDialog(HomeActivity.this, getString(R.string.server_not_responding));
             }

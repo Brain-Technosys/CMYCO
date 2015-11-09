@@ -112,6 +112,7 @@ public class PollService extends Service {
         int result = -1;
 
         int burgerTime = 1;
+        String poll_name;
 
         String msg;
 
@@ -182,7 +183,7 @@ public class PollService extends Service {
 
                         //  Utility.getDifferenceTimeZone();
 
-                        String poll_name = jsonObj.getString(Const.KEY_POLL_NAME);
+                         poll_name = jsonObj.getString(Const.KEY_POLL_NAME);
                         String poll_start_time = jsonObj.getString(Const.KEY_START_TIME);
                         String poll_end_time = jsonObj.getString(Const.KEY_END_TIME);
                         String poll_duration = jsonObj.getString(Const.KEY_POLL_DURATION);
@@ -242,7 +243,7 @@ public class PollService extends Service {
                                 //Do something after 100ms
                                 Intent intent = new Intent(context, GameActivity.class);
                                 Bundle bundle = new Bundle();
-                               // bundle.putString(Const.KEY_POLL_NAME, pollName);
+                                bundle.putString(Const.KEY_POLL_NAME, poll_name);
                                 bundle.putInt(Const.KEY_POLL_ID,poll_id);
                                 bundle.putSerializable(Const.TAG_POLL_OPTION, arrayListPollOpt);
                                 intent.putExtras(bundle);
