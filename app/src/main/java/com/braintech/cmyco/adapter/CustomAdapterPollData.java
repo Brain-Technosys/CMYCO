@@ -79,7 +79,7 @@ public class CustomAdapterPollData extends BaseAdapter {
         holder.txtViewPollName.setTag(pollData.getPoll_id());
         if(position==0)
         {
-            holder.txtViewPollOptions.setText("4. FULL COURT PRESS+2-3 ZONE");
+            holder.txtViewPollOptions.setText("4. full court press+2-3 zone");
         }
 
         return convertView;

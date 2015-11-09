@@ -417,9 +417,6 @@ public class GameActivity extends AppCompatActivity {
 
     private void setDefenceCat() {
 
-        // setting logo
-        defenceTextView.setText(txtLogo);
-
         //Inflating category radio button and TextView
         catRadioButtons = new RadioButton[catDefenceArrayList.size()];
 
