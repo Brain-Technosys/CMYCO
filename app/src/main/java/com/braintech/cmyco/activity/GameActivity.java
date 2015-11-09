@@ -361,7 +361,7 @@ public class GameActivity extends AppCompatActivity {
             }
         }
     }*/
-
+// 
     //Setting Layout
     private void setDefenceCat() {
 
