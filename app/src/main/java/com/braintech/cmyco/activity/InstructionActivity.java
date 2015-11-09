@@ -237,6 +237,7 @@ public class InstructionActivity extends AppCompatActivity {
         protected String doInBackground(String... strings) {
             JsonParser jsonParser = new JsonParser(InstructionActivity.this);
 
+            //
             String url = Const.GET_INSTRUCTION + page;
             Log.e(url, url);
             String jsonString = jsonParser.getJSONFromUrl(url);
