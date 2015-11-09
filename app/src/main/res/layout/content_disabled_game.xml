@@ -17,7 +17,6 @@
         android:id="@+id/lbl_defence"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Offence"
         android:textColor="@color/white"
         android:textSize="@dimen/txt_title_size" />
 
@@ -30,6 +29,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
+            android:layout_alignParentLeft="true"
             android:layout_margin="10dp">
 
 

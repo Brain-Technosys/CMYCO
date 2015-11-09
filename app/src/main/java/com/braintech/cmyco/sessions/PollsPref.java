@@ -20,6 +20,16 @@ public class PollsPref {
     private static final String PREF_NAME = "polls_pref";
     private static final String KEY_COACH = "coach";
     private static final String KEY_TEAM = "team";
+    private static final String KEY_TEAM_ID = "team_id";
+    private static final String KEY_OPTIONS = "options";
+
+
+
+    private static final String KEY_USER_ID="user_id";
+    private static final String KEY_UESRNAME="username";
+    private static final String KEY_EMAIL="email";
+
+    private static final String KEY_ACTIVE_GAME="active_game";
 
     private static final String KEY_ACTIVE_USERS = "active_users";
 
@@ -31,9 +41,19 @@ public class PollsPref {
         editor = pref.edit();
     }
 
-    public void storeCoachTeamDetail(String coach, String team) {
+    public void storeUserInfo(String user_id,String username,String email)
+    {
+        editor.putString(KEY_USER_ID, user_id);
+        editor.putString(KEY_UESRNAME, username);
+        editor.putString(KEY_EMAIL, email);
+
+        editor.commit();
+    }
+
+    public void storeCoachTeamDetail(String coach, String team,String teamId) {
         editor.putString(KEY_COACH, coach);
         editor.putString(KEY_TEAM, team);
+        editor.putString(KEY_TEAM_ID, teamId);
 
         Log.e("team", team);
         editor.commit();
@@ -65,8 +85,24 @@ public class PollsPref {
         editor.commit();
     }
 
+    public void saveActiveGame(int activeGame)
+    {
+        editor.putInt(Const.KEY_ACTIVE_GAME, activeGame);
+        editor.commit();
+    }
+
+    public void saveOptions(String options)
+    {
+        editor.putString(KEY_OPTIONS, options);
+        editor.commit();
+    }
+
     public String getCoachDetail() {
         return pref.getString(KEY_COACH, null);
+    }
+
+    public String getUserID() {
+        return pref.getString(KEY_USER_ID, null);
     }
 
     public String getTeamDetail() {
@@ -85,8 +121,20 @@ public class PollsPref {
         return pref.getString(Const.KEY_POLL_DATA, null);
     }
 
+    public String getOptions() {
+        return pref.getString(KEY_OPTIONS, null);
+    }
+
+    public String getTeamId() {
+        return pref.getString(KEY_TEAM_ID, null);
+    }
+
     public String getTeam() {
         return pref.getString(KEY_TEAM, null);
+    }
+
+    public int getActiveGame() {
+        return pref.getInt(KEY_ACTIVE_GAME, 0);
     }
 
 

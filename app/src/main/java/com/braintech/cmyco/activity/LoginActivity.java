@@ -248,6 +248,10 @@ public class LoginActivity extends AppCompatActivity {
 
 
                         activeGame = jsonObject.getInt(Const.KEY_ACTIVE_GAME);
+
+                        pollsPref.saveActiveGame(activeGame);
+                        pollsPref.storeUserInfo(jsonObjectLoginDetail.getString(Const.KEY_ID),jsonObjectLoginDetail.getString(Const.KEY_USERNAME),jsonObjectLoginDetail.getString(Const.KEY_EMAIL));
+
                         if (activeGame != 0) {
 
                             JSONObject jsonObjectGameData = jsonObject.getJSONObject(Const.KEY_GAME_DATA);

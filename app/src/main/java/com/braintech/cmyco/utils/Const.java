@@ -21,7 +21,7 @@ public class Const {
     public static String GET_PLAY_CALL_TIME = BASE_URL + "users/app_settings1";
     public static String GET_ACTIVE_USERS = BASE_URL + "users/app_active_users1";
     public static String GET_ACTIVE_GAME_DETAIL = BASE_URL + "games/app_active_game1";
-    public static String RATING = BASE_URL + "ratings/app_add1?";
+    public static String RATING = BASE_URL + "ratings/app_add1";
 
     //Tag login activity
     public static String TAG_USERNAME = "username=";

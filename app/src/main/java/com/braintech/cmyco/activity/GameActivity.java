@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.os.Handler;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -26,7 +27,9 @@ import com.braintech.cmyco.sessions.PollsPref;
 import com.braintech.cmyco.sessions.UserSession;
 import com.braintech.cmyco.utils.AlertDialogManager;
 import com.braintech.cmyco.utils.Const;
+import com.braintech.cmyco.utils.JsonParser;
 import com.braintech.cmyco.utils.Progress;
+import com.braintech.cmyco.utils.Utility;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.components.XAxis;
@@ -39,6 +42,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -73,8 +78,6 @@ public class GameActivity extends AppCompatActivity {
     UserSession userSession;
     PollsPref pollsPref;
 
-    AlertDialogManager alertDialogManager;
-
     ArrayList<PollOptions> catDefenceArrayList;
     ArrayList<String> graphLabelXAxis;
     ArrayList<BarEntry> valueSet;
@@ -83,6 +86,8 @@ public class GameActivity extends AppCompatActivity {
     String[] barDataStrings = {"750", "600", "300", "450", "500"};
 
     String txtLogo;
+
+    int pollId;
 
     boolean firstTime = true;
 
@@ -94,6 +99,8 @@ public class GameActivity extends AppCompatActivity {
     CommonAPI logoutAPI;
 
     boolean TIMER = true;
+
+    AlertDialogManager alertDialogManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -111,6 +118,8 @@ public class GameActivity extends AppCompatActivity {
 
         userSession = new UserSession(this);
         pollsPref = new PollsPref(this);
+
+        alertDialogManager = new AlertDialogManager();
         //
 
        /* if (pollsPref.getCoachDetail().equals(null)) {
@@ -122,6 +131,8 @@ public class GameActivity extends AppCompatActivity {
         if (getIntent().hasExtra(Const.TAG_POLL_OPTION)) {
             Bundle bundle = getIntent().getExtras();
             catDefenceArrayList = (ArrayList<PollOptions>) bundle.getSerializable(Const.TAG_POLL_OPTION);
+
+            pollId = bundle.getInt(Const.KEY_POLL_ID);
 
             setDefenceCat();
         }
@@ -136,9 +147,20 @@ public class GameActivity extends AppCompatActivity {
             }
 
             public void onFinish() {
+
                 TIMER = false;
-                defenceRadioGroup.setEnabled(false);
-                finish();
+
+                disableRadioButtons();
+
+                final Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        //Do something after 100ms
+                        finish();
+                        handler.postDelayed(this, 20000);
+                    }
+                }, 10000);
             }
         }
                 .start();
@@ -408,6 +430,7 @@ public class GameActivity extends AppCompatActivity {
             catRadioButtons[i].setId(Integer.parseInt(catDefenceArrayList.get(i).getPoll_id()));
             catRadioButtons[i].setText(catDefenceArrayList.get(i).getPoll_name().toUpperCase());
             catRadioButtons[i].setTextColor(Color.parseColor("#FFFFFF"));
+            catRadioButtons[i].setTag(i);
 
             // setting first radio button checked for the first time
 //            if (i == 0 && firstTime) {
@@ -423,16 +446,97 @@ public class GameActivity extends AppCompatActivity {
                 @Override
                 public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
 
+                    disableRadioButtons();
 
-                    for (int i = 0; i < defenceRadioGroup.getChildCount(); i++) {
-                        ((RadioButton) defenceRadioGroup.getChildAt(i)).setEnabled(false);
+                    int tag = Integer.parseInt(compoundButton.getTag().toString());
 
-                        txtViewTimer.setVisibility(View.GONE);
-                    }
+                    pollsPref.saveOptions(tag+catDefenceArrayList.get(tag).getPoll_name());
+
+                    callRatingApi(tag);
 
                 }
             });
 
+        }
+    }
+
+    private void disableRadioButtons() {
+        for (int i = 0; i < defenceRadioGroup.getChildCount(); i++) {
+            ((RadioButton) defenceRadioGroup.getChildAt(i)).setEnabled(false);
+
+            txtViewTimer.setVisibility(View.GONE);
+        }
+    }
+
+    private void callRatingApi(int tag) {
+        if (Utility.isNetworkAvailable(this)) {
+            new PostRating().execute(tag);
+        } else {
+
+        }
+    }
+
+    private class PostRating extends AsyncTask<Integer, String, String> {
+        JsonParser jsonParser;
+        int result = -1;
+        int activeGame;
+        String msg = "";
+        HashMap<String, String> hashMapLoginDetail;
+
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+
+            hashMapLoginDetail = new HashMap<>();
+            Progress.start(GameActivity.this);
+        }
+
+        @Override
+        protected String doInBackground(Integer... params) {
+            jsonParser = new JsonParser(GameActivity.this);
+
+
+            int position = params[0];
+
+            try {
+
+                String url =Const.RATING + "?user_id="+pollsPref.getUserID()+"&game_id="+pollsPref.getActiveGame()+"&poll_id="+pollId+"&poll_option="+catDefenceArrayList.get(position).getPoll_id()+"&team_id="+pollsPref.getTeamId();
+
+                Log.e("url", url);
+
+                String jsonString = jsonParser.getJSONFromUrl(url);
+                JSONObject jsonObject = new JSONObject(jsonString);
+                if (jsonObject != null) {
+                    result = jsonObject.getInt(Const.KEY_RESULT);
+                    msg = jsonObject.getString(Const.KEY_MSG);
+                    if (result == 1) {
+
+
+                    }
+
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            return null;
+
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            if (result == 1) {
+                alertDialogManager.showAlertDialog(GameActivity.this, "Your vote has been submitted successfully");
+            } else if (result == 0) {
+                alertDialogManager.showAlertDialog(GameActivity.this, msg);
+            } else {
+                alertDialogManager.showAlertDialog(GameActivity.this, getString(R.string.server_not_responding));
+            }
+
+
+            Progress.stop();
         }
     }
 
