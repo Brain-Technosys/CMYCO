@@ -94,7 +94,7 @@ public class Utility {
 
 
     public static String convertDateFormat(String dateString) {
-        SimpleDateFormat fmt = new SimpleDateFormat("yyyy-mm-dd | hh:mm:ss aa");
+        SimpleDateFormat fmt = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss aa");
         Date date = null;
         try {
             date = fmt.parse(dateString);

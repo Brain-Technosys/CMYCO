@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Binder;
+import android.os.Bundle;
 import android.os.IBinder;
 import android.os.Vibrator;
 import android.support.design.widget.CoordinatorLayout;
@@ -112,6 +113,7 @@ public class PollService extends Service {
         int burgerTime = 0;
         String msg;
 
+        ArrayList<PollOptions> arrayListPollOpt;
         ArrayList<PollData> arrayListPollData;
         HashMap<Integer, ArrayList<PollOptions>> hashMapPollOptions;
 
@@ -144,7 +146,7 @@ public class PollService extends Service {
                     serverTime = jsonObject.getString(Const.KEY_POLL_SERVER_TIME);
                     serverTime=serverTime.replace("|","");
 
-                    Log.e("serverTime", Utility.convertDateFormat(serverTime));
+                    Log.e("serverTime",(serverTime));
                     Log.e("getTime", Utility.getTime());
 
                     // serverTime=jsonObject.getString(Const.)
@@ -172,7 +174,7 @@ public class PollService extends Service {
 
                         JSONArray jsonArrayPollOptions = jsonObj.getJSONArray(Const.KEY_POLL_OPTION);
 
-                        ArrayList<PollOptions> arrayListPollOpt = new ArrayList<PollOptions>();
+                         arrayListPollOpt = new ArrayList<PollOptions>();
 
                         for (int j = 0; j < jsonArrayPollOptions.length(); j++) {
 
@@ -214,6 +216,7 @@ public class PollService extends Service {
                     v.vibrate(500);
 
                     Intent intent = new Intent(context, GameActivity.class);
+                    intent.putExtra(Const.TAG_POLL_OPTION, arrayListPollOpt);
                     startActivity(intent);
                 }
 
