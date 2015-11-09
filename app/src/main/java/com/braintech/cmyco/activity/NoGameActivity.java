@@ -16,6 +16,7 @@ public class NoGameActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_no_game);
 
+        //add resume
 
     }
 
