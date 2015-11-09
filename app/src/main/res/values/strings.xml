@@ -7,7 +7,7 @@
     <string name="title_activity_registration">Create An Account</string>
     <string name="title_activity_instruction"> Game Instruction</string>
     <string name="title_activity_instruction_page_two"> Game Play Definitions</string>
-    <string name="title_activity_master_page">Master Page</string>
+    <string name="title_activity_master_page">Game Play Strategy</string>
     <string name="title_activity_defence">The Game</string>
     <string name="title_activity_no_game">CMYCO</string>
 
@@ -69,7 +69,7 @@
 
     <!-- NO GAME ACTIVITY-->
     <string name="txt_no_game">There is no game available at this time.</string>
-    <string name="title_activity_disabled_game">DisabledGameActivity</string>
+    <string name="title_activity_disabled_game">The Game</string>
 
 
 </resources>

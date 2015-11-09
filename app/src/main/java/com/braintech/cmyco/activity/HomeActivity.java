@@ -73,6 +73,7 @@ public class HomeActivity extends AppCompatActivity {
     AlertDialogManager alertDialogManager;
 
     SnakeOnClick snakeOnClick;
+    SnakeOnClick snakeRetryCoach;
 
     CommonAPI logoutAPI;
 
@@ -102,6 +103,7 @@ public class HomeActivity extends AppCompatActivity {
 
         handleSnakeRetryCall();
 
+
     }
 
     private void handleSnakeRetryCall() {
@@ -109,6 +111,13 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public void onRetryClick() {
                 logoutAPI.logout(snakeOnClick, coordinatorLayout);
+            }
+        };
+
+        snakeRetryCoach = new SnakeOnClick() {
+            @Override
+            public void onRetryClick() {
+                callGetCoachDataAPI();
             }
         };
     }
@@ -162,7 +171,10 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     private void callGetCoachDataAPI() {
-        new GetCoachData().execute();
+        if (Utility.isNetworkAvailable(this))
+            new GetCoachData().execute();
+        else
+            SnackNotify.showSnakeBar(this, snakeRetryCoach, coordinatorLayout);
     }
 
     @Override
@@ -342,7 +354,7 @@ public class HomeActivity extends AppCompatActivity {
                         hashMapTeam.put(Const.KEY_ID, jsonObjectGetTeamData.getString(Const.KEY_ID));
                         hashMapTeam.put(Const.KEY_NAME, jsonObjectGetTeamData.getString(Const.KEY_NAME));
 
-                        teamName=jsonObjectGetTeamData.getString(Const.KEY_NAME);
+                        teamName = jsonObjectGetTeamData.getString(Const.KEY_NAME);
 
                         arrayListTeam.add(hashMapTeam);
 
@@ -384,7 +396,11 @@ public class HomeActivity extends AppCompatActivity {
         if (pos == 0) {
             //do nothing
         } else {
-            new GetTeamData().execute(String.valueOf(pos));
+            if (Utility.isNetworkAvailable(this))
+                new GetTeamData().execute(String.valueOf(pos));
+            else {
+                SnackNotify.showSnakeBar(this, snakeRetryCoach, coordinatorLayout);
+            }
         }
     }
 
@@ -412,7 +428,7 @@ public class HomeActivity extends AppCompatActivity {
             alertDialogManager.showAlertDialog(HomeActivity.this, getString(R.string.alert_no_team_selected));
         } else {
             PollsPref pollsPref = new PollsPref(HomeActivity.this);
-            pollsPref.storeCoachTeamDetail(arrayListCoach.get(coachSpinner.getSelectedItemPosition()).get(Const.KEY_NAME),teamName);
+            pollsPref.storeCoachTeamDetail(arrayListCoach.get(coachSpinner.getSelectedItemPosition()).get(Const.KEY_NAME), teamName);
 
             Intent intent = new Intent(HomeActivity.this, InstructionActivity.class);
             startActivity(intent);

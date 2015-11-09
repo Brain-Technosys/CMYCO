@@ -30,6 +30,7 @@ import com.braintech.cmyco.utils.AlertDialogManager;
 import com.braintech.cmyco.utils.Const;
 import com.braintech.cmyco.utils.Progress;
 import com.github.mikephil.charting.charts.BarChart;
+import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.BarData;
@@ -141,7 +142,7 @@ public class DisabledGameActivity extends AppCompatActivity {
                 //Inflating textView
                 View tvView = getLayoutInflater().inflate(R.layout.textview_layout, null);
                 TextView textView = (TextView) tvView.findViewById(R.id.tvCat);
-                textView.setText(String.valueOf(i + 1)+"."+arrayListPollOpt.get(i).getPoll_name());
+                textView.setText(String.valueOf(i + 1)+"."+arrayListPollOpt.get(i).getPoll_name().toUpperCase());
                 linLayTextView.addView(tvView);
             }
         }
@@ -221,6 +222,11 @@ public class DisabledGameActivity extends AppCompatActivity {
         chart.setDrawGridBackground(false);
         chart.animateXY(2000, 2000);
         chart.invalidate();
+
+
+        //hide information chart from bottom
+        Legend legend = chart.getLegend();
+        legend.setEnabled(false);
     }
 
 

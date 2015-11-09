@@ -28,6 +28,7 @@ import com.braintech.cmyco.utils.AlertDialogManager;
 import com.braintech.cmyco.utils.Const;
 import com.braintech.cmyco.utils.Progress;
 import com.github.mikephil.charting.charts.BarChart;
+import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.BarData;
@@ -92,6 +93,8 @@ public class GameActivity extends AppCompatActivity {
 
     CommonAPI logoutAPI;
 
+    boolean TIMER = true;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -122,14 +125,18 @@ public class GameActivity extends AppCompatActivity {
             setDefenceCat();
         }
 
-        new CountDownTimer(30000, 1000) {//CountDownTimer(edittext1.getText()+edittext2.getText()) also parse it to long
+        new CountDownTimer(10000, 1000) {//CountDownTimer(edittext1.getText()+edittext2.getText()) also parse it to long
 
             public void onTick(long millisUntilFinished) {
                 txtViewTimer.setText("Time Left: " + millisUntilFinished / 1000);
                 //here you can have your logic to set text to edittext
+
+                // if(txtViewTimer.getText().)
             }
 
             public void onFinish() {
+                TIMER = false;
+                defenceRadioGroup.setEnabled(false);
                 finish();
             }
         }
@@ -228,6 +235,10 @@ public class GameActivity extends AppCompatActivity {
         chart.setDrawGridBackground(false);
         chart.animateXY(2000, 2000);
         chart.invalidate();
+
+        //hide information chart from bottom
+        Legend legend = chart.getLegend();
+        legend.setEnabled(false);
     }
 
 
@@ -284,85 +295,95 @@ public class GameActivity extends AppCompatActivity {
     }
 
 
-   /* //Asynchronous class to get defence category data from json stored at sheared Preference
-    private class GetDefenceDataForRadioButton extends AsyncTask<String, String, String> {
-        int result = 0;
+    @Override
+    public void onBackPressed() {
 
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-
-            Progress.start(GameActivity.this);
+        if (!TIMER) {
+            super.onBackPressed();
         }
 
-        @Override
-        protected String doInBackground(String... strings) {
+    }
 
-            try {
-                JSONObject jsonObject = new JSONObject(pollsPref.getPollData().toString());
+    /* //Asynchronous class to get defence category data from json stored at sheared Preference
+        private class GetDefenceDataForRadioButton extends AsyncTask<String, String, String> {
+            int result = 0;
 
-                if (jsonObject != null) {
-                    JSONArray jsonArrayPoleData = jsonObject.getJSONArray(Const.KEY_DATA);
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
 
-                    for (int j = 0; j < jsonArrayPoleData.length(); j++) {
-                        JSONObject jsonObjectPollOptions = jsonArrayPoleData.getJSONObject(j);
+                Progress.start(GameActivity.this);
+            }
 
-                        int id = jsonObjectPollOptions.getInt(Const.KEY_ID);
+            @Override
+            protected String doInBackground(String... strings) {
 
-                        txtLogo = jsonObjectPollOptions.getString(Const.KEY_NAME);
+                try {
+                    JSONObject jsonObject = new JSONObject(pollsPref.getPollData().toString());
 
-                        JSONArray jsonArrayPollOptions = jsonObjectPollOptions.getJSONArray(Const.KEY_POLL_OPTION);
+                    if (jsonObject != null) {
+                        JSONArray jsonArrayPoleData = jsonObject.getJSONArray(Const.KEY_DATA);
 
-                        for (int k = 0; k < jsonArrayPollOptions.length(); k++) {
-                            JSONObject jsonObjectPollCat = jsonArrayPollOptions.getJSONObject(k);
+                        for (int j = 0; j < jsonArrayPoleData.length(); j++) {
+                            JSONObject jsonObjectPollOptions = jsonArrayPoleData.getJSONObject(j);
 
-                            result = 0;
+                            int id = jsonObjectPollOptions.getInt(Const.KEY_ID);
 
-                            if (id == 1) {
-                                //Defence Data
-                                HashMap<String, String> defencePollCatStrings = new HashMap<>();
-                                defencePollCatStrings.put(Const.KEY_ID, jsonObjectPollCat.getString(Const.KEY_ID));
-                                defencePollCatStrings.put(Const.KEY_NAME, jsonObjectPollCat.getString(Const.KEY_NAME));
-                                catDefenceArrayList.add(defencePollCatStrings);
-                                result = 1;
+                            txtLogo = jsonObjectPollOptions.getString(Const.KEY_NAME);
+
+                            JSONArray jsonArrayPollOptions = jsonObjectPollOptions.getJSONArray(Const.KEY_POLL_OPTION);
+
+                            for (int k = 0; k < jsonArrayPollOptions.length(); k++) {
+                                JSONObject jsonObjectPollCat = jsonArrayPollOptions.getJSONObject(k);
+
+                                result = 0;
+
+                                if (id == 1) {
+                                    //Defence Data
+                                    HashMap<String, String> defencePollCatStrings = new HashMap<>();
+                                    defencePollCatStrings.put(Const.KEY_ID, jsonObjectPollCat.getString(Const.KEY_ID));
+                                    defencePollCatStrings.put(Const.KEY_NAME, jsonObjectPollCat.getString(Const.KEY_NAME));
+                                    catDefenceArrayList.add(defencePollCatStrings);
+                                    result = 1;
 
 
-                            } else if (id == 2) {
-                                result = 1;
-                            } else if (id == 3) {
-                                result = 1;
-                            } else if (id == 4) {
-                                result = 1;
-                            } else if (id == 5) {
-                                result = 1;
+                                } else if (id == 2) {
+                                    result = 1;
+                                } else if (id == 3) {
+                                    result = 1;
+                                } else if (id == 4) {
+                                    result = 1;
+                                } else if (id == 5) {
+                                    result = 1;
+                                }
                             }
                         }
+
+
+                    } else {
+                        result = 0;
                     }
-
-
-                } else {
-                    result = 0;
+                } catch (JSONException e) {
+                    e.printStackTrace();
                 }
-            } catch (JSONException e) {
-                e.printStackTrace();
+                return null;
             }
-            return null;
-        }
 
-        @Override
-        protected void onPostExecute(String s) {
-            super.onPostExecute(s);
+            @Override
+            protected void onPostExecute(String s) {
+                super.onPostExecute(s);
 
-            Progress.stop();
-            if (result == 1) {
-                setDefenceCat();
-            } else if (result == 0) {
-                alertDialogManager.showAlertDialog(GameActivity.this, getString(R.string.alert_no_data));
+                Progress.stop();
+                if (result == 1) {
+                    setDefenceCat();
+                } else if (result == 0) {
+                    alertDialogManager.showAlertDialog(GameActivity.this, getString(R.string.alert_no_data));
+                }
             }
-        }
-    }*/
-// 
+        }*/
+//
     //Setting Layout
+
     private void setDefenceCat() {
 
         // setting logo
@@ -384,26 +405,25 @@ public class GameActivity extends AppCompatActivity {
 
             catRadioButtons[i] = new RadioButton(GameActivity.this);
             catRadioButtons[i].setId(Integer.parseInt(catDefenceArrayList.get(i).getPoll_id()));
-            catRadioButtons[i].setText(catDefenceArrayList.get(i).getPoll_name());
+            catRadioButtons[i].setText(catDefenceArrayList.get(i).getPoll_name().toUpperCase());
             catRadioButtons[i].setTextColor(Color.parseColor("#FFFFFF"));
 
             // setting first radio button checked for the first time
-            if (i == 0 && firstTime) {
-                catRadioButtons[i].setChecked(true);
-                firstTime = false;
-            }
+//            if (i == 0 && firstTime) {
+//                catRadioButtons[i].setChecked(true);
+//                firstTime = false;
+//            }
 
             //Adding Views
             defenceRadioGroup.addView(catRadioButtons[i]);
 
             //Applying click Listener on category radio button
-            catRadioButtons[i].setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener()
-            {
+            catRadioButtons[i].setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
 
 
-                    for(int i = 0; i < defenceRadioGroup.getChildCount(); i++) {
+                    for (int i = 0; i < defenceRadioGroup.getChildCount(); i++) {
                         ((RadioButton) defenceRadioGroup.getChildAt(i)).setEnabled(false);
 
                         txtViewTimer.setVisibility(View.GONE);

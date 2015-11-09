@@ -166,7 +166,6 @@ public class InstructionActivityTwo extends AppCompatActivity {
                 //showing justify text in webView
                 String text = "<html><body style=\"text-align:justify\"> %s </body></Html>";
                 instructionWebView.loadData(String.format(text, instruction), "text/html", "UTF-8");
-
                 instructionWebView.setBackgroundColor(Color.TRANSPARENT);
 
             } else if (result == 0) {

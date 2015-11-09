@@ -138,12 +138,12 @@ public class MasterPageActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
-
-    @OnClick(R.id.btn_continue)
-    void goNext() {
-        Intent intent = new Intent(this, GameActivity.class);
-        startActivity(intent);
-    }
+//
+//    @OnClick(R.id.btn_continue)
+//    void goNext() {
+//        Intent intent = new Intent(this, GameActivity.class);
+//        startActivity(intent);
+//    }
 
 
     private class GetPollData extends AsyncTask<String, String, String> {
@@ -286,7 +286,7 @@ public class MasterPageActivity extends AppCompatActivity {
             Progress.stop();
 
             if (pollsPref.getTeam() != null) {
-                txt_active_users.setText("TEAM: " + pollsPref.getTeam());
+                txt_team_name.setText(pollsPref.getTeamDetail().toUpperCase());
             }
             if (result == 1) {
 
