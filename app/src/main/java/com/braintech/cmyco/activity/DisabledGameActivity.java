@@ -149,7 +149,7 @@ public class DisabledGameActivity extends AppCompatActivity {
                 //Inflating textView
                 View tvView = getLayoutInflater().inflate(R.layout.textview_layout, null);
                 TextView textView = (TextView) tvView.findViewById(R.id.tvCat);
-                textView.setText(String.valueOf(i + 1) + ".  " + arrayListPollOpt.get(i).getPoll_name().toUpperCase());
+                textView.setText(String.valueOf(i + 1) + ".  " + arrayListPollOpt.get(i).getPoll_name());
                 linLayTextView.addView(tvView);
             }
         }

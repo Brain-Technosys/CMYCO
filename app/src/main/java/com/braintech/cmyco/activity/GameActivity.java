@@ -436,7 +436,7 @@ public class GameActivity extends AppCompatActivity {
 
             catRadioButtons[i] = new RadioButton(GameActivity.this);
             catRadioButtons[i].setId(Integer.parseInt(catDefenceArrayList.get(i).getPoll_id()));
-            catRadioButtons[i].setText(catDefenceArrayList.get(i).getPoll_name().toUpperCase());
+            catRadioButtons[i].setText(catDefenceArrayList.get(i).getPoll_name());
             catRadioButtons[i].setTextColor(Color.parseColor("#FFFFFF"));
             catRadioButtons[i].setTag(i);
 
