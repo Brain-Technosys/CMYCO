@@ -132,7 +132,7 @@ public class MasterPageActivity extends AppCompatActivity {
         if (id == R.id.action_settings) {
             logoutAPI.logout(snakeOnClick, coordinatorLayout);
             return true;
-        }else if (id == android.R.id.home) {
+        } else if (id == android.R.id.home) {
             this.finish();
         }
 
@@ -308,20 +308,35 @@ public class MasterPageActivity extends AppCompatActivity {
 
         int poll_id = arrayListPollData.get(position).getPoll_id();
 
+        String pollName = arrayListPollData.get(position).getPoll_name();
+
         arrayListPollOpt = hashMapPollOptions.get(poll_id);
 
-        if(position==0) {
+        if(position==0)
+        {
+            Intent intent = new Intent(this,GameActivity.class);
 
-            Intent intent = new Intent(this, GameActivity.class);
-            intent.putExtra(Const.TAG_POLL_OPTION, arrayListPollOpt);
+            Bundle bundle = new Bundle();
+            bundle.putString(Const.KEY_POLL_NAME, pollName);
+            bundle.putInt(Const.KEY_POLL_ID,poll_id);
+            bundle.putSerializable(Const.TAG_POLL_OPTION, arrayListPollOpt);
+            intent.putExtras(bundle);
             startActivity(intent);
         }
         else
         {
             Intent intent = new Intent(this, DisabledGameActivity.class);
-            intent.putExtra(Const.TAG_POLL_OPTION, arrayListPollOpt);
+
+            Bundle bundle = new Bundle();
+            bundle.putString(Const.KEY_POLL_NAME, pollName);
+            bundle.putSerializable(Const.TAG_POLL_OPTION, arrayListPollOpt);
+            intent.putExtras(bundle);
             startActivity(intent);
         }
+
+
+
+
 
     }
 }

@@ -80,6 +80,8 @@ public class DisabledGameActivity extends AppCompatActivity {
     String[] xTitle = {"1", "2", "3", "4", "5"};
     String[] barDataStrings = {"0", "0", "0", "0", "0"};
 
+    String pollName;
+
     String txtLogo;
 
     boolean firstTime = true;
@@ -110,7 +112,7 @@ public class DisabledGameActivity extends AppCompatActivity {
 
 
         //Preparing data for graph
-         getGraphData(xTitle, barDataStrings);
+        getGraphData(xTitle, barDataStrings);
 
         handleLogoutRetry();
 
@@ -118,8 +120,13 @@ public class DisabledGameActivity extends AppCompatActivity {
         // handleGraph();
 
         if (getIntent().hasExtra(Const.TAG_POLL_OPTION)) {
+
             Bundle bundle = getIntent().getExtras();
+
             arrayListPollOpt = (ArrayList<PollOptions>) bundle.getSerializable(Const.TAG_POLL_OPTION);
+            pollName = bundle.getString(Const.KEY_POLL_NAME, pollName);
+
+            defenceTextView.setText(pollName);
 
             createOptionsTextView();
         }
@@ -142,13 +149,13 @@ public class DisabledGameActivity extends AppCompatActivity {
                 //Inflating textView
                 View tvView = getLayoutInflater().inflate(R.layout.textview_layout, null);
                 TextView textView = (TextView) tvView.findViewById(R.id.tvCat);
-                textView.setText(String.valueOf(i + 1)+"."+arrayListPollOpt.get(i).getPoll_name().toUpperCase());
+                textView.setText(String.valueOf(i + 1) + ".  " + arrayListPollOpt.get(i).getPoll_name().toUpperCase());
                 linLayTextView.addView(tvView);
             }
         }
     }
 
-   private void getGraphData(String[] xTStrings, String[] barStrings) {
+    private void getGraphData(String[] xTStrings, String[] barStrings) {
 
         //X axis title, currently it is static
         graphLabelXAxis = new ArrayList<>();

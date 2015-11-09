@@ -78,6 +78,7 @@ public class HomeActivity extends AppCompatActivity {
     CommonAPI logoutAPI;
 
     String teamName;
+    String teamId;
 
 
     @Override
@@ -354,8 +355,6 @@ public class HomeActivity extends AppCompatActivity {
                         hashMapTeam.put(Const.KEY_ID, jsonObjectGetTeamData.getString(Const.KEY_ID));
                         hashMapTeam.put(Const.KEY_NAME, jsonObjectGetTeamData.getString(Const.KEY_NAME));
 
-                        teamName = jsonObjectGetTeamData.getString(Const.KEY_NAME);
-
                         arrayListTeam.add(hashMapTeam);
 
                     }
@@ -415,6 +414,10 @@ public class HomeActivity extends AppCompatActivity {
         } else {
             teamSpinner.setEnabled(true);
 
+            teamName=arrayListTeam.get(pos).get(Const.KEY_NAME);
+
+            teamId=arrayListTeam.get(pos).get(Const.KEY_ID);
+
         }
 
     }
@@ -428,7 +431,7 @@ public class HomeActivity extends AppCompatActivity {
             alertDialogManager.showAlertDialog(HomeActivity.this, getString(R.string.alert_no_team_selected));
         } else {
             PollsPref pollsPref = new PollsPref(HomeActivity.this);
-            pollsPref.storeCoachTeamDetail(arrayListCoach.get(coachSpinner.getSelectedItemPosition()).get(Const.KEY_NAME), teamName);
+            pollsPref.storeCoachTeamDetail(arrayListCoach.get(coachSpinner.getSelectedItemPosition()).get(Const.KEY_NAME), teamName,teamId);
 
             Intent intent = new Intent(HomeActivity.this, InstructionActivity.class);
             startActivity(intent);
