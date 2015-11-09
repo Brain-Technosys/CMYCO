@@ -20,15 +20,20 @@ public class PollsPref {
     private static final String PREF_NAME = "polls_pref";
     private static final String KEY_COACH = "coach";
     private static final String KEY_TEAM = "team";
+    private static final String KEY_PLAY = "play";
 
     private static final String KEY_ACTIVE_USERS = "active_users";
-
 
 
     public PollsPref(Context _context) {
         this.context = _context;
         pref = _context.getSharedPreferences(PREF_NAME, PRIVATE_MODE);
         editor = pref.edit();
+    }
+
+
+    public void storePLAY(String playId) {
+        editor.putString(KEY_PLAY, playId);
     }
 
     public void storeCoachTeamDetail(String coach, String team) {
@@ -61,7 +66,7 @@ public class PollsPref {
 
 
     public void storeActiveUsers(String activeUsers) {
-        editor.putString(Const.KEY_ACTIVE_USER,activeUsers);
+        editor.putString(Const.KEY_ACTIVE_USER, activeUsers);
         editor.commit();
     }
 
@@ -87,6 +92,10 @@ public class PollsPref {
 
     public String getTeam() {
         return pref.getString(KEY_TEAM, null);
+    }
+
+    public String getPlayOption() {
+        return pref.getString(KEY_PLAY, "KEY");
     }
 
 

@@ -301,7 +301,7 @@ public class LoginActivity extends AppCompatActivity {
                 alertDialogManager.showAlertDialog(LoginActivity.this, getString(R.string.server_not_responding));
             }
 
-
+//
             Progress.stop();
         }
     }

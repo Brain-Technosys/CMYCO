@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Binder;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.IBinder;
 import android.os.Vibrator;
 import android.support.design.widget.CoordinatorLayout;
@@ -110,8 +111,11 @@ public class PollService extends Service {
     private class GetPollData extends AsyncTask<String, String, String> {
         int result = -1;
 
-        int burgerTime = 0;
+        int burgerTime = 1;
+
         String msg;
+
+        int poll_id;
 
         ArrayList<PollOptions> arrayListPollOpt;
         ArrayList<PollData> arrayListPollData;
@@ -133,6 +137,7 @@ public class PollService extends Service {
             String url = Const.GET_ACTIVE_GAME_DETAIL;
             String jsonString = jsonParser.getJSONFromUrl(url);
 
+
             Log.e("jsonString", jsonString);
 
             try {
@@ -144,10 +149,22 @@ public class PollService extends Service {
                     result = jsonObject.getInt(Const.KEY_RESULT);
 
                     serverTime = jsonObject.getString(Const.KEY_POLL_SERVER_TIME);
-                    serverTime=serverTime.replace("|","");
 
-                    Log.e("serverTime",(serverTime));
+
+//                    serverTime = serverTime.replace(" | ", " ");
+//                    serverTime = serverTime.replace("am", "");
+//                    serverTime = serverTime.replace("pm", "");
+
+                    // Log.e("serverTime", (Utility.getNYTime()));
+                    Log.e("serverTime", serverTime);
                     Log.e("getTime", Utility.getTime());
+
+                    String sTime = "2015-11-09 03:30:06";
+                    String eTime = "2015-11-09 04:30:06";
+
+//                    burgerTime = Utility.compareTimes(sTime, eTime);
+
+                    Log.d("burgerTime", String.valueOf(burgerTime));
 
                     // serverTime=jsonObject.getString(Const.)
 
@@ -158,10 +175,12 @@ public class PollService extends Service {
 
                     hashMapPollOptions = new HashMap<Integer, ArrayList<PollOptions>>();
 
-                    for (int i = 0; i < jsonArrayPolLData.length(); i++) {
+                    for (int i = 0; i < 1; i++) {
 
                         JSONObject jsonObj = jsonArrayPolLData.getJSONObject(i);
-                        int poll_id = jsonObj.getInt(Const.KEY_POLL_ID);
+                        poll_id = jsonObj.getInt(Const.KEY_POLL_ID);
+
+                        //  Utility.getDifferenceTimeZone();
 
                         String poll_name = jsonObj.getString(Const.KEY_POLL_NAME);
                         String poll_start_time = jsonObj.getString(Const.KEY_START_TIME);
@@ -174,7 +193,7 @@ public class PollService extends Service {
 
                         JSONArray jsonArrayPollOptions = jsonObj.getJSONArray(Const.KEY_POLL_OPTION);
 
-                         arrayListPollOpt = new ArrayList<PollOptions>();
+                        arrayListPollOpt = new ArrayList<PollOptions>();
 
                         for (int j = 0; j < jsonArrayPollOptions.length(); j++) {
 
@@ -212,12 +231,35 @@ public class PollService extends Service {
             if (result == 1) {
                 //  addDataToListView();
                 if (burgerTime == 1) {
-                    Vibrator v = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
-                    v.vibrate(500);
 
-                    Intent intent = new Intent(context, GameActivity.class);
-                    intent.putExtra(Const.TAG_POLL_OPTION, arrayListPollOpt);
-                    startActivity(intent);
+                    PollsPref pollsPref = new PollsPref(context);
+
+                    final Handler handler = new Handler();
+                    if (!pollsPref.getPlayOption().equals(poll_id)) {
+                        handler.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                //Do something after 100ms
+                                Intent intent = new Intent(context, GameActivity.class);
+                                intent.putExtra(Const.TAG_POLL_OPTION, arrayListPollOpt);
+                                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                startActivity(intent);
+
+                                Vibrator v = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
+                                v.vibrate(500);
+//
+
+                                handler.postDelayed(this, 20000);
+                            }
+                        }, 10000);
+                    } else {
+                        //do nothng
+                    }
+
+
+//                    Intent intent = new Intent(context, GameActivity.class);
+//                    intent.putExtra(Const.TAG_POLL_OPTION, arrayListPollOpt);
+//                    startActivity(intent);
                 }
 
             }

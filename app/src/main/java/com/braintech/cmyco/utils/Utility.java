@@ -1,17 +1,21 @@
 package com.braintech.cmyco.utils;
 
+import android.app.Activity;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.text.format.DateFormat;
 import android.util.Log;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.TimePicker;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.Locale;
+import java.util.TimeZone;
 import java.util.regex.Pattern;
 
 /**
@@ -35,6 +39,15 @@ public class Utility {
     }
 
 
+    // Method to hide soft keyboard
+    public static void hideSoftKeyboard(Activity activity) {
+        InputMethodManager inputManager = (InputMethodManager)
+                activity.getSystemService(Context.INPUT_METHOD_SERVICE);
+
+        inputManager.hideSoftInputFromWindow(activity.getCurrentFocus().getWindowToken(),
+                InputMethodManager.HIDE_NOT_ALWAYS);
+    }
+
     public static String getCurrentTime() {
         Date date = new Date(System.currentTimeMillis());
 
@@ -49,6 +62,9 @@ public class Utility {
         Calendar c = Calendar.getInstance();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String strDate = sdf.format(c.getTime());
+
+//        Calendar cal = Calendar.getInstance();
+//        TimeZone tz = cal.getTimeZone();
 
         return strDate;
     }
@@ -71,6 +87,7 @@ public class Utility {
 //        String strDate = sdf.format(time);
         return FORMATTER.format(date).toString();
     }
+
     public static String changeDateFormat(String OLD_DATE) {
 
         String old_date_format = "yyyy-mm-dd | hh:mm:ss aa";
@@ -94,7 +111,7 @@ public class Utility {
 
 
     public static String convertDateFormat(String dateString) {
-        SimpleDateFormat fmt = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss aa");
+        SimpleDateFormat fmt = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
         Date date = null;
         try {
             date = fmt.parse(dateString);
@@ -105,6 +122,74 @@ public class Utility {
 
         SimpleDateFormat fmtOut = new SimpleDateFormat("hh:mm:ss");
         return fmtOut.format(date);
+
+    }
+
+    public static String getNYTime() {
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss aa");
+        TimeZone utc = TimeZone.getTimeZone("America/New_York");
+        System.out.println(utc.getID());
+        GregorianCalendar gc = new GregorianCalendar(utc);
+        Date now = gc.getTime();
+        System.out.println(format.format(now));
+        return format.format(now);
+    }
+
+    public static String getDifferenceTimeZone() {
+        long currentTime = System.currentTimeMillis();
+        int edtOffset = TimeZone.getTimeZone("EST").getOffset(currentTime);
+
+
+        int gmtOffset = TimeZone.getTimeZone("IST").getOffset(currentTime);
+
+        Log.e("edtOffset", String.valueOf(edtOffset));
+
+        Log.e("gmtOffset", String.valueOf(gmtOffset));
+        int hourDifference = (gmtOffset - edtOffset) / (1000 * 60 * 60);
+        String diff = hourDifference + " hours";
+        Log.e("diff", diff);
+        return diff;
+    }
+
+    public static String convertIntoSec(String time)//mm:ss
+    {
+
+        String[] units = time.split(":"); //will break the string up into an array
+        int minutes = Integer.parseInt(units[0]); //first element
+        int seconds = Integer.parseInt(units[1]); //second element
+        int duration = 60 * minutes + seconds; //add up our values
+        return String.valueOf(duration);
+    }
+
+
+    public static Integer compareTimes(String startTime, String endTime) {
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
+        Date date = null;
+        Date startDate = null;
+        Date endDate = null;
+        try {
+            date = formatter.parse(getTime());
+            startDate = formatter.parse(startTime);
+            endDate = formatter.parse(endTime);
+
+
+            Log.e("startDate + endDate", String.valueOf(startDate) + String.valueOf(endDate));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        int difference = 0;
+        if (date.after(startDate) && date.before(endDate)) {
+            difference = 1;
+        } else {
+            difference = 0;
+        }
+
+
+//                difference = date.compareTo(formatter.parse(data));
+
+        return difference;
+
 
     }
 }

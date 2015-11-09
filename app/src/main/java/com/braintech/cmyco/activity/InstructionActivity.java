@@ -122,19 +122,22 @@ public class InstructionActivity extends AppCompatActivity {
         //showing data in webView
         showInstruction();
 
-       // callingPollData();
+        // callingPollData();
 
 
     }
 
     private void callingPollData() {
 
+        //setting default id
+        pollsPref.storePLAY("KEY");
+
         final Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
                 //Do something after 100ms
-               pollService.getPollData(InstructionActivity.this);
+                pollService.getPollData(InstructionActivity.this);
                 handler.postDelayed(this, 20000);
             }
         }, 10000);
