@@ -434,7 +434,7 @@ public class HomeActivity extends AppCompatActivity {
         } else {
             PollsPref pollsPref = new PollsPref(HomeActivity.this);
             pollsPref.storeCoachTeamDetail(arrayListCoach.get(coachSpinner.getSelectedItemPosition()).get(Const.KEY_NAME), teamName,teamId);
-
+//
             Intent intent = new Intent(HomeActivity.this, InstructionActivity.class);
             startActivity(intent);
         }
