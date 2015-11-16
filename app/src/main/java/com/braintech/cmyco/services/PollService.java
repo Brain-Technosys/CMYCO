@@ -184,8 +184,9 @@ public class PollService extends Service {
                         //  Utility.getDifferenceTimeZone();
 
                          poll_name = jsonObj.getString(Const.KEY_POLL_NAME);
-                        String poll_start_time = jsonObj.getString(Const.KEY_START_TIME);
-                        String poll_end_time = jsonObj.getString(Const.KEY_END_TIME);
+
+                        String poll_start_time = Utility.getCurrentTime(jsonObj.getString(Const.KEY_START_TIME));
+                        String poll_end_time = Utility.getCurrentTime(jsonObj.getString(Const.KEY_END_TIME));
                         String poll_duration = jsonObj.getString(Const.KEY_POLL_DURATION);
 
                         PollData pollData = new PollData(poll_id, poll_name, poll_end_time, poll_start_time, poll_duration);
@@ -230,7 +231,21 @@ public class PollService extends Service {
             Progress.stop();
 
             if (result == 1) {
-                //  addDataToListView();
+
+                String server_time=Utility.convertDateFormat(serverTime);
+
+               String currentTime= Utility.getCurrentTime(server_time);
+
+                Log.e("server",server_time);
+                Log.e("currentTime",currentTime);
+
+                for(int i=0;i<arrayListPollData.size();i++)
+                {
+                    String startTime=arrayListPollData.get(i).getPoll_start_time();
+                    String endTime=arrayListPollData.get(i).getPoll_end_time();
+
+                }
+               /* //  addDataToListView();
                 if (burgerTime == 1) {
 
                     PollsPref pollsPref = new PollsPref(context);
@@ -259,13 +274,13 @@ public class PollService extends Service {
                         }, 10000);
                     } else {
                         //do nothng
-                    }
+                    }*/
 
 
 //                    Intent intent = new Intent(context, GameActivity.class);
 //                    intent.putExtra(Const.TAG_POLL_OPTION, arrayListPollOpt);
 //                    startActivity(intent);
-                }
+
 
             }
         }

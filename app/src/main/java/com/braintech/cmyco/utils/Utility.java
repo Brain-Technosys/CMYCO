@@ -111,7 +111,7 @@ public class Utility {
 
 
     public static String convertDateFormat(String dateString) {
-        SimpleDateFormat fmt = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        SimpleDateFormat fmt = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss aa");
         Date date = null;
         try {
             date = fmt.parse(dateString);
@@ -120,22 +120,13 @@ public class Utility {
             e.printStackTrace();
         }
 
-        SimpleDateFormat fmtOut = new SimpleDateFormat("hh:mm:ss");
+        SimpleDateFormat fmtOut = new SimpleDateFormat("hh:mm:ss aa");
         return fmtOut.format(date);
 
     }
 
-    public static String getNYTime() {
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss aa");
-        TimeZone utc = TimeZone.getTimeZone("America/New_York");
-        System.out.println(utc.getID());
-        GregorianCalendar gc = new GregorianCalendar(utc);
-        Date now = gc.getTime();
-        System.out.println(format.format(now));
-        return format.format(now);
-    }
 
-    public static String getDifferenceTimeZone() {
+  /*  public static String getDifferenceTimeZone() {
         long currentTime = System.currentTimeMillis();
         int edtOffset = TimeZone.getTimeZone("EST").getOffset(currentTime);
 
@@ -149,7 +140,7 @@ public class Utility {
         String diff = hourDifference + " hours";
         Log.e("diff", diff);
         return diff;
-    }
+    }*/
 
     public static String convertIntoSec(String time)//mm:ss
     {
@@ -162,7 +153,7 @@ public class Utility {
     }
 
 
-    public static Integer compareTimes(String startTime, String endTime) {
+   /* public static Integer compareTimes(String startTime, String endTime) {
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
         Date date = null;
@@ -191,5 +182,24 @@ public class Utility {
         return difference;
 
 
+    }*/
+
+    public static String getCurrentTime(String time) {
+
+        Date myDate=null;
+
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("hh:mm:ss aa");
+        TimeZone utcZone = TimeZone.getTimeZone("UTC");
+        simpleDateFormat.setTimeZone(utcZone);
+        try {
+           myDate = simpleDateFormat.parse(time);
+        } catch (ParseException ex) {
+            ex.printStackTrace();
+        }
+
+        simpleDateFormat.setTimeZone(TimeZone.getDefault());
+        String formattedDate = simpleDateFormat.format(myDate);
+
+        return formattedDate;
     }
 }
