@@ -43,8 +43,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -93,6 +91,7 @@ public class GameActivity extends AppCompatActivity {
 
     int pollId;
     int tag; //for rating
+    int maxY = 1000;
 
     boolean firstTime = true;
 
@@ -167,18 +166,6 @@ public class GameActivity extends AppCompatActivity {
                 TIMER = false;
 
                 disableRadioButtons();
-
-                final Handler handler = new Handler();
-                handler.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        //Do something after 100ms
-                        Intent intent = new Intent(GameActivity.this, MasterPageActivity.class);
-                        startActivity(intent);
-
-                    }
-                }, 4000);
-
             }
         }
                 .start();
@@ -191,9 +178,8 @@ public class GameActivity extends AppCompatActivity {
         handleGraphRetry();
 
         // here we are Showing graph
-        handleGraph();
+        handleGraph(maxY);
     }
-
 
 
     private void handleLogoutRetry() {
@@ -206,7 +192,7 @@ public class GameActivity extends AppCompatActivity {
 
     }
 
-    //-------------------------------------------------- Handle with graph ------------------------------------
+    //-------------------------------------------------- Handle graph ------------------------------------
 
     private void getGraphData(String[] xTStrings, String[] barStrings) {
 
@@ -228,7 +214,7 @@ public class GameActivity extends AppCompatActivity {
 
 
     //Handling Graph
-    private void handleGraph() {
+    private void handleGraph(int maxY) {
 
         //Handling graph X axis Content
         XAxis xAxis = chart.getXAxis();
@@ -286,6 +272,12 @@ public class GameActivity extends AppCompatActivity {
         //hide information chart from bottom
         Legend legend = chart.getLegend();
         legend.setEnabled(false);
+
+        //set text for no play data
+        chart.setDescription("");
+        chart.setNoDataText("No chart data available."); // this is the top line
+        chart.setNoDataTextDescription("..."); // this is one line below the no-data-text
+        chart.invalidate();
     }
 
 
@@ -644,7 +636,7 @@ public class GameActivity extends AppCompatActivity {
                                     JSONObject jsonObjectData = jsonArrayGraph.getJSONObject(i);
 
                                     xTitle[j] = String.valueOf(j + 1);
-                                  //  barDataStrings[j] = jsonObjectData.getString();
+                                    //  barDataStrings[j] = jsonObjectData.getString();
 
                                 }
 
@@ -670,7 +662,7 @@ public class GameActivity extends AppCompatActivity {
 
             if (result == 1) {
                 getGraphData(xTitle, barDataStrings);
-                handleGraph();
+                handleGraph(maxY);
                 // show play call
 
             } else if (result == 0) {

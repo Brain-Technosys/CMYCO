@@ -1,7 +1,5 @@
 package com.braintech.cmyco.activity;
 
-import android.content.Intent;
-import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -9,15 +7,11 @@ import android.support.design.widget.CoordinatorLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.util.TypedValue;
-import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
-import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.braintech.cmyco.R;
@@ -88,6 +82,7 @@ public class DisabledGameActivity extends AppCompatActivity {
 
     String pollName;
     int pollId;
+    int maxY=1000;
 
     String txtLogo;
 
@@ -129,7 +124,7 @@ public class DisabledGameActivity extends AppCompatActivity {
         handleGraphRetry();
 
         // here we are Showing graph
-        // handleGraph();
+         handleGraph(maxY);
 
         if (getIntent().hasExtra(Const.TAG_POLL_OPTION)) {
 
@@ -168,6 +163,7 @@ public class DisabledGameActivity extends AppCompatActivity {
         }
     }
 
+    //-------------------------------------------------- Handle graph ------------------------------------
     private void getGraphData(String[] xTStrings, String[] barStrings) {
 
         //X axis title, currently it is static
@@ -188,7 +184,7 @@ public class DisabledGameActivity extends AppCompatActivity {
 
 
     //Handling Graph
-    private void handleGraph() {
+    private void handleGraph(int maxY) {
 
         //Handling graph X axis Content
         XAxis xAxis = chart.getXAxis();
@@ -212,7 +208,7 @@ public class DisabledGameActivity extends AppCompatActivity {
         leftAxis.setEnabled(true);
         leftAxis.setAxisLineColor(Color.parseColor(graphItemColor));
         leftAxis.setAxisMinValue(0);
-        leftAxis.setAxisMaxValue(1000);
+        leftAxis.setAxisMaxValue(maxY);
 
         //Handling graph Y axis(Right) Content. making it invisible
 
@@ -247,6 +243,12 @@ public class DisabledGameActivity extends AppCompatActivity {
         //hide information chart from bottom
         Legend legend = chart.getLegend();
         legend.setEnabled(false);
+
+        //set text for no play data
+        chart.setDescription("");
+        chart.setNoDataText("No chart data available."); // this is the top line
+        chart.setNoDataTextDescription("..."); // this is one line below the no-data-text
+        chart.invalidate();
     }
 
 
@@ -397,7 +399,7 @@ public class DisabledGameActivity extends AppCompatActivity {
 
             if (result == 1) {
                 getGraphData(xTitle, barDataStrings);
-                handleGraph();
+                handleGraph(maxY);
 
             } else if (result == 0) {
                 alertDialogManager.showAlertDialog(DisabledGameActivity.this, msg);
