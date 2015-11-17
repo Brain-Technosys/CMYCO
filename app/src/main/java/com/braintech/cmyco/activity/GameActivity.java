@@ -165,8 +165,7 @@ public class GameActivity extends AppCompatActivity {
 
                 disableRadioButtons();
 
-<<<<<<< HEAD
-=======
+
                 //getting graph data
                 if (Utility.isNetworkAvailable(GameActivity.this)) {
                     new GetGraphData().execute();
@@ -184,7 +183,7 @@ public class GameActivity extends AppCompatActivity {
 
                     }
                 }, 4000);
->>>>>>> 63fd8007c08b083a6ec6f261e2628cc6daa91112
+
             }
         }
                 .start();
