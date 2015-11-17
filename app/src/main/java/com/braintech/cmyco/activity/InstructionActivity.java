@@ -141,7 +141,7 @@ public class InstructionActivity extends AppCompatActivity {
             pollService.getPollData(InstructionActivity.this);
         }
 
-                handler.postDelayed(this, 20000);
+                handler.postDelayed(this, 40000);
            }
         }, 10000);
     }

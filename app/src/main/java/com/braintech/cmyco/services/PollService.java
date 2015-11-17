@@ -29,12 +29,15 @@ import com.braintech.cmyco.utils.Const;
 import com.braintech.cmyco.utils.JsonParser;
 import com.braintech.cmyco.utils.Progress;
 import com.braintech.cmyco.utils.SnackNotify;
+import com.braintech.cmyco.utils.TimeCheck;
 import com.braintech.cmyco.utils.Utility;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.sql.Time;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -111,12 +114,13 @@ public class PollService extends Service {
     private class GetPollData extends AsyncTask<String, String, String> {
         int result = -1;
 
-        int burgerTime = 1;
-        String poll_name;
+        String poll_end_time;
+        String poll_start_time;
+
+
 
         String msg;
 
-        int poll_id;
 
         ArrayList<PollOptions> arrayListPollOpt;
         ArrayList<PollData> arrayListPollData;
@@ -152,44 +156,34 @@ public class PollService extends Service {
                     serverTime = jsonObject.getString(Const.KEY_POLL_SERVER_TIME);
 
 
-//                    serverTime = serverTime.replace(" | ", " ");
-//                    serverTime = serverTime.replace("am", "");
-//                    serverTime = serverTime.replace("pm", "");
-
-                    // Log.e("serverTime", (Utility.getNYTime()));
-                    Log.e("serverTime", serverTime);
-                    Log.e("getTime", Utility.getTime());
-
-                    String sTime = "2015-11-09 03:30:06";
-                    String eTime = "2015-11-09 04:30:06";
-
-//                    burgerTime = Utility.compareTimes(sTime, eTime);
-
-                    Log.d("burgerTime", String.valueOf(burgerTime));
-
-                    // serverTime=jsonObject.getString(Const.)
-
-
                     JSONArray jsonArrayPolLData = jsonObject.getJSONArray(Const.KEY_POLL_DATA);
 
                     arrayListPollData = new ArrayList<PollData>();
 
                     hashMapPollOptions = new HashMap<Integer, ArrayList<PollOptions>>();
 
-                    for (int i = 0; i < 1; i++) {
+                    for (int i = 0; i < jsonArrayPolLData.length(); i++) {
 
                         JSONObject jsonObj = jsonArrayPolLData.getJSONObject(i);
-                        poll_id = jsonObj.getInt(Const.KEY_POLL_ID);
 
-                        //  Utility.getDifferenceTimeZone();
+                        int poll_id = jsonObj.getInt(Const.KEY_POLL_ID);
 
-                         poll_name = jsonObj.getString(Const.KEY_POLL_NAME);
+                        String poll_name = jsonObj.getString(Const.KEY_POLL_NAME);
 
-                        String poll_start_time = Utility.getCurrentTime(jsonObj.getString(Const.KEY_START_TIME));
-                        String poll_end_time = Utility.getCurrentTime(jsonObj.getString(Const.KEY_END_TIME));
+                        String startTime = jsonObj.getString(Const.KEY_START_TIME);
+                        String endTime = jsonObj.getString(Const.KEY_END_TIME);
+
+                        if(!startTime.equals("null")) {
+                           poll_start_time = Utility.getCurrentTime(startTime);
+                        }
+
+                        if(!endTime.equals("null")) {
+                            poll_end_time = Utility.getCurrentTime(endTime);
+                        }
+
                         String poll_duration = jsonObj.getString(Const.KEY_POLL_DURATION);
 
-                        PollData pollData = new PollData(poll_id, poll_name, poll_end_time, poll_start_time, poll_duration);
+                        PollData pollData = new PollData(poll_id, poll_name, poll_start_time, poll_end_time, poll_duration);
 
                         arrayListPollData.add(pollData);
 
@@ -232,34 +226,34 @@ public class PollService extends Service {
 
             if (result == 1) {
 
-                String server_time=Utility.convertDateFormat(serverTime);
+                String server_time = Utility.convertDateFormat(serverTime);
 
-               String currentTime= Utility.getCurrentTime(server_time);
+                String currentTime = Utility.getCurrentTime(server_time);
 
-                Log.e("server",server_time);
-                Log.e("currentTime",currentTime);
+                Log.e("server", server_time);
+                Log.e("currentTime", currentTime);
 
-                for(int i=0;i<arrayListPollData.size();i++)
-                {
-                    String startTime=arrayListPollData.get(i).getPoll_start_time();
-                    String endTime=arrayListPollData.get(i).getPoll_end_time();
 
-                }
-               /* //  addDataToListView();
-                if (burgerTime == 1) {
+                for (int i = 0; i < arrayListPollData.size(); i++) {
+                    String startTime = arrayListPollData.get(i).getPoll_start_time();
+                    String endTime = arrayListPollData.get(i).getPoll_end_time();
 
-                    PollsPref pollsPref = new PollsPref(context);
+                    int poll_id = arrayListPollData.get(i).getPoll_id();
 
-                    final Handler handler = new Handler();
-                    if (!pollsPref.getPlayOption().equals(poll_id)) {
-                        handler.postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                //Do something after 100ms
+                    String poll_name = arrayListPollData.get(i).getPoll_name();
+
+                    if(startTime!=null) {
+
+                        try {
+                            if (TimeCheck.isTimeBetweenTwoTime(startTime, endTime, currentTime)) {
+
+                                arrayListPollOpt.clear();
+
+                                arrayListPollOpt = hashMapPollOptions.get(poll_id);
                                 Intent intent = new Intent(context, GameActivity.class);
                                 Bundle bundle = new Bundle();
                                 bundle.putString(Const.KEY_POLL_NAME, poll_name);
-                                bundle.putInt(Const.KEY_POLL_ID,poll_id);
+                                bundle.putInt(Const.KEY_POLL_ID, poll_id);
                                 bundle.putSerializable(Const.TAG_POLL_OPTION, arrayListPollOpt);
                                 intent.putExtras(bundle);
                                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -267,20 +261,16 @@ public class PollService extends Service {
 
                                 Vibrator v = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
                                 v.vibrate(500);
-//
+                                break;
+                            } else
+                                System.out.println("Given time doesn't lies between two times");
+                        } catch (ParseException ex) {
 
-//                                handler.postDelayed(this, 20000);
-                            }
-                        }, 10000);
-                    } else {
-                        //do nothng
-                    }*/
+                            ex.printStackTrace();
+                        }
+                    }
 
-
-//                    Intent intent = new Intent(context, GameActivity.class);
-//                    intent.putExtra(Const.TAG_POLL_OPTION, arrayListPollOpt);
-//                    startActivity(intent);
-
+                }
 
             }
         }

@@ -196,9 +196,9 @@ public class Utility {
         } catch (ParseException ex) {
             ex.printStackTrace();
         }
-
-        simpleDateFormat.setTimeZone(TimeZone.getDefault());
-        String formattedDate = simpleDateFormat.format(myDate);
+        SimpleDateFormat outDateFormat = new SimpleDateFormat("HH:mm:ss");
+        outDateFormat.setTimeZone(TimeZone.getDefault());
+        String formattedDate = outDateFormat.format(myDate);
 
         return formattedDate;
     }
