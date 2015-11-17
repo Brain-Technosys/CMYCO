@@ -202,4 +202,33 @@ public class Utility {
 
         return formattedDate;
     }
+
+    public static long findTimeDifference(String endTime,String startTime)
+    {
+        long mills=0;
+
+        SimpleDateFormat format = new SimpleDateFormat("HH:mm:ss");
+        try {
+            Date Date1 = format.parse(endTime);
+            Date Date2 = format.parse(startTime);
+            mills = Date1.getTime() - Date2.getTime();
+
+           /* Log.v("Data1", "" + Date1.getTime());
+            Log.v("Data2", "" + Date2.getTime());
+            int Hours = (int) (mills / (1000 * 60 * 60));
+            int Mins = (int) (mills / (1000 * 60)) % 60;
+            int seconds=(int)(mills/1000)%60;
+
+            diff = Hours*3600+Mins*60+seconds;
+
+            Log.e("diff",""+diff);*/
+            Log.e("mills",""+mills);
+        } catch(ParseException ex)
+        {
+            ex.printStackTrace();
+        }
+
+        return mills;
+
+    }
 }
