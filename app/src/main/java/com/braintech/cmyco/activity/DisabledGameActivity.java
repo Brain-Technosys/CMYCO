@@ -210,6 +210,7 @@ public class DisabledGameActivity extends AppCompatActivity {
         leftAxis.setAxisMinValue(0);
         leftAxis.setAxisMaxValue(maxY);
 
+
         //Handling graph Y axis(Right) Content. making it invisible
 
         YAxis rightAxis = chart.getAxisRight();
