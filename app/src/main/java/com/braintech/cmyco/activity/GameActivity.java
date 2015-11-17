@@ -92,6 +92,7 @@ public class GameActivity extends AppCompatActivity {
     String txtLogo;
 
     int pollId;
+    int tag; //for rating
 
     boolean firstTime = true;
 
@@ -103,6 +104,8 @@ public class GameActivity extends AppCompatActivity {
     long pollDuration;
 
     SnakeOnClick snakeOnClickForLogout;
+    SnakeOnClick snakeOnClickGetGraph;
+    SnakeOnClick snakeOnClickDoRating;
 
     CommonAPI logoutAPI;
 
@@ -165,14 +168,6 @@ public class GameActivity extends AppCompatActivity {
 
                 disableRadioButtons();
 
-
-                //getting graph data
-                if (Utility.isNetworkAvailable(GameActivity.this)) {
-                    new GetGraphData().execute();
-                } else {
-//show snake bar
-                }
-
                 final Handler handler = new Handler();
                 handler.postDelayed(new Runnable() {
                     @Override
@@ -192,10 +187,14 @@ public class GameActivity extends AppCompatActivity {
         getGraphData(xTitle, barDataStrings);
 
         handleLogoutRetry();
+        handleRatingRetry();
+        handleGraphRetry();
 
         // here we are Showing graph
         handleGraph();
     }
+
+
 
     private void handleLogoutRetry() {
         snakeOnClickForLogout = new SnakeOnClick() {
@@ -206,6 +205,8 @@ public class GameActivity extends AppCompatActivity {
         };
 
     }
+
+    //-------------------------------------------------- Handle with graph ------------------------------------
 
     private void getGraphData(String[] xTStrings, String[] barStrings) {
 
@@ -471,7 +472,7 @@ public class GameActivity extends AppCompatActivity {
 
                     disableRadioButtons();
 
-                    int tag = Integer.parseInt(compoundButton.getTag().toString());
+                    tag = Integer.parseInt(compoundButton.getTag().toString());
 
                     pollsPref.saveOptions(tag + catDefenceArrayList.get(tag).getPoll_name());
 
@@ -484,16 +485,28 @@ public class GameActivity extends AppCompatActivity {
     }
 
     private void disableRadioButtons() {
+        callgraphAPI();
         for (int i = 0; i < defenceRadioGroup.getChildCount(); i++) {
             ((RadioButton) defenceRadioGroup.getChildAt(i)).setEnabled(false);
         }
+    }
+
+
+    //---------------------------------------------  Rating API-----------------------------------------------
+    private void handleRatingRetry() {
+        snakeOnClickDoRating = new SnakeOnClick() {
+            @Override
+            public void onRetryClick() {
+                callRatingApi(tag);
+            }
+        };
     }
 
     private void callRatingApi(int tag) {
         if (Utility.isNetworkAvailable(this)) {
             new PostRating().execute(tag);
         } else {
-            SnackNotify.showSnakeBar(this,,coordinatorLayout);
+            SnackNotify.showSnakeBar(GameActivity.this, snakeOnClickDoRating, coordinatorLayout);
         }
     }
 
@@ -561,10 +574,30 @@ public class GameActivity extends AppCompatActivity {
         }
     }
 
+    //----------------------------------------------Start handling graph API ---------------------------------------
 
+    private void callgraphAPI() {
+        //getting graph data
+        if (Utility.isNetworkAvailable(GameActivity.this)) {
+            new GetGraph().execute();
+        } else {
+            //show snake bar
+            SnackNotify.showSnakeBar(GameActivity.this, snakeOnClickGetGraph, coordinatorLayout);
+        }
+    }
+
+
+    private void handleGraphRetry() {
+        snakeOnClickGetGraph = new SnakeOnClick() {
+            @Override
+            public void onRetryClick() {
+                callgraphAPI();
+            }
+        };
+    }
 
     //Getting graph Data from API
-    private class GetGraphData extends AsyncTask<String, String, String> {
+    private class GetGraph extends AsyncTask<String, String, String> {
 
         int result = -1;
         String msg;
@@ -611,7 +644,7 @@ public class GameActivity extends AppCompatActivity {
                                     JSONObject jsonObjectData = jsonArrayGraph.getJSONObject(i);
 
                                     xTitle[j] = String.valueOf(j + 1);
-                                    barDataStrings[j]= jsonObjectData.getString();
+                                  //  barDataStrings[j] = jsonObjectData.getString();
 
                                 }
 

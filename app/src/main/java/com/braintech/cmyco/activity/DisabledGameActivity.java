@@ -28,7 +28,10 @@ import com.braintech.cmyco.sessions.PollsPref;
 import com.braintech.cmyco.sessions.UserSession;
 import com.braintech.cmyco.utils.AlertDialogManager;
 import com.braintech.cmyco.utils.Const;
+import com.braintech.cmyco.utils.JsonParser;
 import com.braintech.cmyco.utils.Progress;
+import com.braintech.cmyco.utils.SnackNotify;
+import com.braintech.cmyco.utils.Utility;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.components.XAxis;
@@ -64,6 +67,9 @@ public class DisabledGameActivity extends AppCompatActivity {
     @InjectView(R.id.chart)
     BarChart chart;
 
+    @InjectView(R.id.playCallLayout)
+    LinearLayout playCallLayout;
+
     RadioButton[] catRadioButtons;
 
     UserSession userSession;
@@ -81,6 +87,7 @@ public class DisabledGameActivity extends AppCompatActivity {
     String[] barDataStrings = {"0", "0", "0", "0", "0"};
 
     String pollName;
+    int pollId;
 
     String txtLogo;
 
@@ -90,6 +97,7 @@ public class DisabledGameActivity extends AppCompatActivity {
     String graphBgColor = "#010f1a";
 
     SnakeOnClick snakeOnClickForLogout;
+    SnakeOnClick snakeOnClickGetGraph;
 
     CommonAPI logoutAPI;
 
@@ -101,6 +109,9 @@ public class DisabledGameActivity extends AppCompatActivity {
         ButterKnife.inject(this);
 
         handleToolbar();
+
+        playCallLayout.setVisibility(View.GONE);
+
         alertDialogManager = new AlertDialogManager();
 
         catDefenceArrayList = new ArrayList<>();
@@ -115,6 +126,7 @@ public class DisabledGameActivity extends AppCompatActivity {
         getGraphData(xTitle, barDataStrings);
 
         handleLogoutRetry();
+        handleGraphRetry();
 
         // here we are Showing graph
         // handleGraph();
@@ -124,6 +136,7 @@ public class DisabledGameActivity extends AppCompatActivity {
             Bundle bundle = getIntent().getExtras();
 
             arrayListPollOpt = (ArrayList<PollOptions>) bundle.getSerializable(Const.TAG_POLL_OPTION);
+            pollId = bundle.getInt(Const.KEY_POLL_ID);
             pollName = bundle.getString(Const.KEY_POLL_NAME, pollName);
 
             defenceTextView.setText(pollName);
@@ -288,5 +301,110 @@ public class DisabledGameActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    //---------------------------------------------- Start handling graph API ---------------------------------------
+
+
+    private void callgraphAPI() {
+        //getting graph data
+        if (Utility.isNetworkAvailable(DisabledGameActivity.this)) {
+            new GetGraph().execute();
+        } else {
+            //show snake bar
+            SnackNotify.showSnakeBar(DisabledGameActivity.this, snakeOnClickGetGraph, coordinatorLayout);
+        }
+    }
+
+    private void handleGraphRetry() {
+        snakeOnClickGetGraph = new SnakeOnClick() {
+            @Override
+            public void onRetryClick() {
+                callgraphAPI();
+            }
+        };
+    }
+
+    //Getting graph Data from API
+    private class GetGraph extends AsyncTask<String, String, String> {
+
+        int result = -1;
+        String msg;
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+
+            Progress.start(DisabledGameActivity.this);
+        }
+
+        @Override
+        protected String doInBackground(String... strings) {
+
+            JsonParser jsonParser = new JsonParser(DisabledGameActivity.this);
+
+            String url = Const.GET_GRAPH + "team_id=" + pollsPref.getTeamId() + Const.TAG_GAME_ID + pollsPref.getActiveGame() + Const.TAG_POLL_ID + pollId;
+
+            Log.e("url", url);
+
+            String jsonString = jsonParser.getJSONFromUrl(url);
+
+            Log.e("jsonString", jsonString);
+
+            try {
+                JSONObject jsonObject = new JSONObject(jsonString);
+
+                if (jsonObject != null) {
+                    result = jsonObject.getInt(Const.KEY_RESULT);
+                    if (result == 1) {
+                        JSONArray jsonArrayGraphData = jsonObject.getJSONArray(Const.KEY_DATA);
+
+
+                        for (int i = 0; i < jsonArrayGraphData.length(); i++) {
+                            JSONObject jsonObjectPoleOption = jsonArrayGraphData.getJSONObject(i);
+
+                            if (jsonObjectPoleOption != null) {
+                                JSONArray jsonArrayGraph = jsonObjectPoleOption.getJSONArray("PollOption");
+
+                                xTitle = new String[jsonArrayGraph.length()];
+                                barDataStrings = new String[jsonArrayGraph.length()];
+
+                                for (int j = 0; j < jsonArrayGraph.length(); j++) {
+                                    JSONObject jsonObjectData = jsonArrayGraph.getJSONObject(i);
+
+                                    xTitle[j] = String.valueOf(j + 1);
+                                 //   barDataStrings[j] = jsonObjectData.getString();
+
+                                }
+
+                                //   barDataStrings[i] = jsonObjectGraph.getString()
+                            }
+                        }
+                    } else {
+                        msg = jsonObject.getString(Const.KEY_MSG);
+                    }
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+
+            Progress.stop();
+
+            if (result == 1) {
+                getGraphData(xTitle, barDataStrings);
+                handleGraph();
+
+            } else if (result == 0) {
+                alertDialogManager.showAlertDialog(DisabledGameActivity.this, msg);
+            } else {
+                alertDialogManager.showAlertDialog(DisabledGameActivity.this, getString(R.string.server_not_responding));
+            }
+        }
+    }
 
 }
