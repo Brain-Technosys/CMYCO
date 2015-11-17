@@ -22,6 +22,7 @@ public class Const {
     public static String GET_ACTIVE_USERS = BASE_URL + "users/app_active_users1";
     public static String GET_ACTIVE_GAME_DETAIL = BASE_URL + "games/app_active_game1";
     public static String RATING = BASE_URL + "ratings/app_add1";
+    public static String GET_GRAPH=BASE_URL+ "ratings/app_ratings1?";
 
     //Tag login activity
     public static String TAG_USERNAME = "username=";
@@ -74,6 +75,11 @@ public class Const {
 
     //Active Users
     public static String KEY_ACTIVE_USER = "active_user";
+
+    //Rating
+//    public static String KEY_ACTIVE_USER
+//    public static String KEY_ACTIVE_USER
+//    public static String KEY_ACTIVE_USER
 
 
 }
