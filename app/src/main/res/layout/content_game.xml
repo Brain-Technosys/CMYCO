@@ -21,18 +21,24 @@
         android:textColor="@color/white"
         android:textSize="@dimen/txt_title_size" />
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/lbl_defence">
+
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="5dp"
-        android:layout_below="@+id/lbl_defence">
+        android:layout_marginTop="5dp">
+
 
         <LinearLayout
             android:id="@+id/llCat"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            >
 
             <LinearLayout
                 android:id="@+id/ll_cat_no"
@@ -52,13 +58,14 @@
             </RadioGroup>
         </LinearLayout>
 
+
         <TextView
             android:id="@+id/txtViewTimer"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
             android:layout_below="@+id/llCat"
-            android:layout_margin="10dp"
+            android:layout_alignParentRight="true"
+            android:layout_margin="5dp"
             android:textColor="@android:color/white"
             android:textSize="18sp" />
 
@@ -67,10 +74,29 @@
             android:layout_width="match_parent"
             android:layout_height="200dp"
             android:layout_below="@+id/txtViewTimer"
-            android:layout_marginTop="15dp" />
+            android:layout_marginBottom="5dp"
+            android:layout_marginTop="5dp" />
+
+        <LinearLayout
+            android:id="@+id/playCallLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/chart"
+            android:background="@color/play_call_bg"
+            android:gravity="center_horizontal"
+            android:padding="10dp">
+
+            <TextView
+                android:id="@+id/txtPlayCall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/play_btn"
+                android:textAppearance="?android:attr/textAppearanceLarge" />
+
+        </LinearLayout>
 
 
     </RelativeLayout>
-
+    </ScrollView>
 
 </RelativeLayout>

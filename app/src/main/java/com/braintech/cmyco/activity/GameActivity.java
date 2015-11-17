@@ -29,6 +29,7 @@ import com.braintech.cmyco.utils.AlertDialogManager;
 import com.braintech.cmyco.utils.Const;
 import com.braintech.cmyco.utils.JsonParser;
 import com.braintech.cmyco.utils.Progress;
+import com.braintech.cmyco.utils.SnackNotify;
 import com.braintech.cmyco.utils.Utility;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.components.Legend;
@@ -72,6 +73,9 @@ public class GameActivity extends AppCompatActivity {
 
     @InjectView(R.id.ll_cat_no)
     LinearLayout ll_cat_no;
+
+    @InjectView(R.id.txtPlayCall)
+    TextView txtPlayCall;
 
     RadioButton[] catRadioButtons;
 
@@ -138,7 +142,7 @@ public class GameActivity extends AppCompatActivity {
 
             pollId = bundle.getInt(Const.KEY_POLL_ID);
             pollName = bundle.getString(Const.KEY_POLL_NAME, pollName);
-            pollDuration=bundle.getLong(Const.KEY_POLL_DURATION);
+            pollDuration = bundle.getLong(Const.KEY_POLL_DURATION);
             defenceTextView.setText(pollName);
 
             setDefenceCat();
@@ -151,6 +155,8 @@ public class GameActivity extends AppCompatActivity {
                 //here you can have your logic to set text to edittext
 
                 // if(txtViewTimer.getText().)
+
+
             }
 
             public void onFinish() {
@@ -159,6 +165,26 @@ public class GameActivity extends AppCompatActivity {
 
                 disableRadioButtons();
 
+<<<<<<< HEAD
+=======
+                //getting graph data
+                if (Utility.isNetworkAvailable(GameActivity.this)) {
+                    new GetGraphData().execute();
+                } else {
+//show snake bar
+                }
+
+                final Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        //Do something after 100ms
+                        Intent intent = new Intent(GameActivity.this, MasterPageActivity.class);
+                        startActivity(intent);
+
+                    }
+                }, 4000);
+>>>>>>> 63fd8007c08b083a6ec6f261e2628cc6daa91112
             }
         }
                 .start();
@@ -322,7 +348,7 @@ public class GameActivity extends AppCompatActivity {
         if (!TIMER) {
             super.onBackPressed();
 
-            Intent intent=new Intent(GameActivity.this,MasterPageActivity.class);
+            Intent intent = new Intent(GameActivity.this, MasterPageActivity.class);
             startActivity(intent);
         }
 
@@ -448,7 +474,7 @@ public class GameActivity extends AppCompatActivity {
 
                     int tag = Integer.parseInt(compoundButton.getTag().toString());
 
-                    pollsPref.saveOptions(tag+catDefenceArrayList.get(tag).getPoll_name());
+                    pollsPref.saveOptions(tag + catDefenceArrayList.get(tag).getPoll_name());
 
                     callRatingApi(tag);
 
@@ -468,7 +494,7 @@ public class GameActivity extends AppCompatActivity {
         if (Utility.isNetworkAvailable(this)) {
             new PostRating().execute(tag);
         } else {
-
+            SnackNotify.showSnakeBar(this,,coordinatorLayout);
         }
     }
 
@@ -497,7 +523,7 @@ public class GameActivity extends AppCompatActivity {
 
             try {
 
-                String url =Const.RATING + "?user_id="+pollsPref.getUserID()+"&game_id="+pollsPref.getActiveGame()+"&poll_id="+pollId+"&poll_option="+catDefenceArrayList.get(position).getPoll_id()+"&team_id="+pollsPref.getTeamId();
+                String url = Const.RATING + "?user_id=" + pollsPref.getUserID() + "&game_id=" + pollsPref.getActiveGame() + "&poll_id=" + pollId + "&poll_option=" + catDefenceArrayList.get(position).getPoll_id() + "&team_id=" + pollsPref.getTeamId();
 
                 Log.e("url", url);
 
@@ -538,4 +564,88 @@ public class GameActivity extends AppCompatActivity {
 
 
 
+    //Getting graph Data from API
+    private class GetGraphData extends AsyncTask<String, String, String> {
+
+        int result = -1;
+        String msg;
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+
+            Progress.start(GameActivity.this);
+        }
+
+        @Override
+        protected String doInBackground(String... strings) {
+
+            JsonParser jsonParser = new JsonParser(GameActivity.this);
+
+            String url = Const.GET_GRAPH + "team_id=" + pollsPref.getTeamId() + Const.TAG_GAME_ID + pollsPref.getActiveGame() + Const.TAG_POLL_ID + pollId;
+
+            Log.e("url", url);
+
+            String jsonString = jsonParser.getJSONFromUrl(url);
+
+            Log.e("jsonString", jsonString);
+
+            try {
+                JSONObject jsonObject = new JSONObject(jsonString);
+
+                if (jsonObject != null) {
+                    result = jsonObject.getInt(Const.KEY_RESULT);
+                    if (result == 1) {
+                        JSONArray jsonArrayGraphData = jsonObject.getJSONArray(Const.KEY_DATA);
+
+
+                        for (int i = 0; i < jsonArrayGraphData.length(); i++) {
+                            JSONObject jsonObjectPoleOption = jsonArrayGraphData.getJSONObject(i);
+
+                            if (jsonObjectPoleOption != null) {
+                                JSONArray jsonArrayGraph = jsonObjectPoleOption.getJSONArray("PollOption");
+
+                                xTitle = new String[jsonArrayGraph.length()];
+                                barDataStrings = new String[jsonArrayGraph.length()];
+
+                                for (int j = 0; j < jsonArrayGraph.length(); j++) {
+                                    JSONObject jsonObjectData = jsonArrayGraph.getJSONObject(i);
+
+                                    xTitle[j] = String.valueOf(j + 1);
+                                    barDataStrings[j]= jsonObjectData.getString();
+
+                                }
+
+                                //   barDataStrings[i] = jsonObjectGraph.getString()
+                            }
+                        }
+                    } else {
+                        msg = jsonObject.getString(Const.KEY_MSG);
+                    }
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+
+            Progress.stop();
+
+            if (result == 1) {
+                getGraphData(xTitle, barDataStrings);
+                handleGraph();
+                // show play call
+
+            } else if (result == 0) {
+                alertDialogManager.showAlertDialog(GameActivity.this, msg);
+            } else {
+                alertDialogManager.showAlertDialog(GameActivity.this, getString(R.string.server_not_responding));
+            }
+        }
+    }
 }
