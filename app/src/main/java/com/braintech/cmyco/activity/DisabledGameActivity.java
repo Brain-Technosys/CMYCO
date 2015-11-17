@@ -235,9 +235,10 @@ public class DisabledGameActivity extends AppCompatActivity {
         //  chart.setGridBackgroundColor(Color.parseColor("#010f1a"));
 
         chart.setPinchZoom(false);
+        chart.setScaleMinima(2f, 1f);
         chart.setDrawBarShadow(false);
         chart.setDrawGridBackground(false);
-        chart.animateXY(2000, 2000);
+        //chart.animateXY(2000, 2000);
         chart.invalidate();
 
 

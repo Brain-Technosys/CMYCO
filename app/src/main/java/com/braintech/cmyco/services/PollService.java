@@ -4,6 +4,9 @@ import android.app.Activity;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
+import android.media.Ringtone;
+import android.media.RingtoneManager;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Binder;
 import android.os.Bundle;
@@ -270,6 +273,15 @@ public class PollService extends Service {
 
                                 Vibrator v = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
                                 v.vibrate(500);
+
+                                //playing default notification
+                                try {
+                                    Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+                                    Ringtone r = RingtoneManager.getRingtone(getApplicationContext(), notification);
+                                    r.play();
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
                                 break;
                             } else
                                 System.out.println("Given time doesn't lies between two times");
