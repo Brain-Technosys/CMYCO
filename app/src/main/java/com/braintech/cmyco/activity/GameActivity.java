@@ -73,6 +73,9 @@ public class GameActivity extends AppCompatActivity {
     @InjectView(R.id.ll_cat_no)
     LinearLayout ll_cat_no;
 
+    @InjectView(R.id.txtPlayCall)
+    TextView txtPlayCall;
+
     RadioButton[] catRadioButtons;
 
     UserSession userSession;
@@ -138,7 +141,7 @@ public class GameActivity extends AppCompatActivity {
 
             pollId = bundle.getInt(Const.KEY_POLL_ID);
             pollName = bundle.getString(Const.KEY_POLL_NAME, pollName);
-            pollDuration=bundle.getLong(Const.KEY_POLL_DURATION);
+            pollDuration = bundle.getLong(Const.KEY_POLL_DURATION);
             defenceTextView.setText(pollName);
 
             setDefenceCat();
@@ -561,6 +564,7 @@ public class GameActivity extends AppCompatActivity {
     private class GetGraphData extends AsyncTask<String, String, String> {
 
         int result = -1;
+        String msg;
 
         @Override
         protected void onPreExecute() {
@@ -599,6 +603,8 @@ public class GameActivity extends AppCompatActivity {
 //                                barDataStrings[i] = jsonObjectGraph.getString()
 //                            }
 //                        }
+                    } else {
+                        msg = jsonObject.getString(Const.KEY_MSG);
                     }
                 }
             } catch (JSONException e) {
@@ -613,6 +619,15 @@ public class GameActivity extends AppCompatActivity {
             super.onPostExecute(s);
 
             Progress.stop();
+
+            if (result == 1) {
+
+                //
+            } else if (result == 0) {
+                alertDialogManager.showAlertDialog(GameActivity.this, msg);
+            } else {
+                alertDialogManager.showAlertDialog(GameActivity.this, getString(R.string.server_not_responding));
+            }
         }
     }
 }

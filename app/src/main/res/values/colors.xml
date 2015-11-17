@@ -14,5 +14,7 @@
 
     <color name="defence_graph_color">#14DDF9</color>
 
+    <color name="play_call_bg">#0C1E2C</color>
+
 
 </resources>
