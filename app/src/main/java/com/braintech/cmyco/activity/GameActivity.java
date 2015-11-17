@@ -29,6 +29,7 @@ import com.braintech.cmyco.utils.AlertDialogManager;
 import com.braintech.cmyco.utils.Const;
 import com.braintech.cmyco.utils.JsonParser;
 import com.braintech.cmyco.utils.Progress;
+import com.braintech.cmyco.utils.SnackNotify;
 import com.braintech.cmyco.utils.Utility;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.components.Legend;
@@ -492,7 +493,7 @@ public class GameActivity extends AppCompatActivity {
         if (Utility.isNetworkAvailable(this)) {
             new PostRating().execute(tag);
         } else {
-
+            SnackNotify.showSnakeBar(this,,coordinatorLayout);
         }
     }
 
@@ -561,6 +562,8 @@ public class GameActivity extends AppCompatActivity {
     }
 
 
+
+    //Getting graph Data from API
     private class GetGraphData extends AsyncTask<String, String, String> {
 
         int result = -1;
@@ -593,16 +596,28 @@ public class GameActivity extends AppCompatActivity {
                     result = jsonObject.getInt(Const.KEY_RESULT);
                     if (result == 1) {
                         JSONArray jsonArrayGraphData = jsonObject.getJSONArray(Const.KEY_DATA);
-//                        barDataStrings = new String[jsonArrayGraphData.length()];
-//
-//                        for (int i = 0; i < jsonArrayGraphData.length(); i++) {
-//                            JSONObject jsonObjectPoleOption = jsonArrayGraphData.getJSONObject(i);
-//
-//                            if (jsonObjectPoleOption != null) {
-//                                JSONObject jsonObjectGraph = jsonObjectPoleOption.getJSONObject("PollOption");
-//                                barDataStrings[i] = jsonObjectGraph.getString()
-//                            }
-//                        }
+
+
+                        for (int i = 0; i < jsonArrayGraphData.length(); i++) {
+                            JSONObject jsonObjectPoleOption = jsonArrayGraphData.getJSONObject(i);
+
+                            if (jsonObjectPoleOption != null) {
+                                JSONArray jsonArrayGraph = jsonObjectPoleOption.getJSONArray("PollOption");
+
+                                xTitle = new String[jsonArrayGraph.length()];
+                                barDataStrings = new String[jsonArrayGraph.length()];
+
+                                for (int j = 0; j < jsonArrayGraph.length(); j++) {
+                                    JSONObject jsonObjectData = jsonArrayGraph.getJSONObject(i);
+
+                                    xTitle[j] = String.valueOf(j + 1);
+                                    barDataStrings[j]= jsonObjectData.getString();
+
+                                }
+
+                                //   barDataStrings[i] = jsonObjectGraph.getString()
+                            }
+                        }
                     } else {
                         msg = jsonObject.getString(Const.KEY_MSG);
                     }
@@ -621,8 +636,10 @@ public class GameActivity extends AppCompatActivity {
             Progress.stop();
 
             if (result == 1) {
+                getGraphData(xTitle, barDataStrings);
+                handleGraph();
+                // show play call
 
-                //
             } else if (result == 0) {
                 alertDialogManager.showAlertDialog(GameActivity.this, msg);
             } else {
