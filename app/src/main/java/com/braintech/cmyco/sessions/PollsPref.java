@@ -37,6 +37,8 @@ public class PollsPref {
 
     private static final String KEY_ACTIVE_USERS = "active_users";
 
+    public static final String KEY_POLL_ACTIVATED = "pollActivated";
+
 
     public PollsPref(Context _context) {
         this.context = _context;
@@ -109,6 +111,15 @@ public class PollsPref {
         editor.commit();
     }
 
+    public void pollActivated(Boolean value)
+    {
+        editor.putBoolean(KEY_POLL_ACTIVATED, value);
+        editor.commit();
+    }
+
+
+
+
     public String getCoachDetail() {
         return pref.getString(KEY_COACH, null);
     }
@@ -149,9 +160,15 @@ public class PollsPref {
     public String getPlayOption() {
         return pref.getString(KEY_PLAY, "KEY");
     }
+
     public int getActiveGame() {
         return pref.getInt(KEY_ACTIVE_GAME, 0);
 
+    }
+
+    public boolean isPollActivated()
+    {
+        return pref.getBoolean(KEY_POLL_ACTIVATED, false);
     }
 
 

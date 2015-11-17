@@ -48,6 +48,8 @@ public class PollService extends Service {
 
     Context context;
 
+    PollsPref pollsPref;
+
 
     //Class ServiceBinder: As this service is private to the application and runs
     //in the same process as the client, you should create your interface by extending
@@ -79,6 +81,9 @@ public class PollService extends Service {
         super.onCreate();
 
         commonAPI = new CommonAPI(getApplicationContext());
+
+        pollsPref = new PollsPref(this);
+
 
     }
 
@@ -116,7 +121,6 @@ public class PollService extends Service {
 
         String poll_end_time;
         String poll_start_time;
-
 
 
         String msg;
@@ -173,11 +177,11 @@ public class PollService extends Service {
                         String startTime = jsonObj.getString(Const.KEY_START_TIME);
                         String endTime = jsonObj.getString(Const.KEY_END_TIME);
 
-                        if(!startTime.equals("null")) {
-                           poll_start_time = Utility.getCurrentTime(startTime);
+                        if (!startTime.equals("null")) {
+                            poll_start_time = Utility.getCurrentTime(startTime);
                         }
 
-                        if(!endTime.equals("null")) {
+                        if (!endTime.equals("null")) {
                             poll_end_time = Utility.getCurrentTime(endTime);
                         }
 
@@ -242,14 +246,16 @@ public class PollService extends Service {
 
                     String poll_name = arrayListPollData.get(i).getPoll_name();
 
-                    if(startTime!=null) {
+                    if (startTime != null) {
 
                         try {
                             if (TimeCheck.isTimeBetweenTwoTime(startTime, endTime, currentTime)) {
 
+                                pollsPref.pollActivated(true);
+
                                 arrayListPollOpt.clear();
 
-                                long poll_duration=Utility.findTimeDifference(endTime,startTime);
+                                long poll_duration = Utility.findTimeDifference(endTime, startTime);
 
                                 arrayListPollOpt = hashMapPollOptions.get(poll_id);
                                 Intent intent = new Intent(context, GameActivity.class);

@@ -159,16 +159,6 @@ public class GameActivity extends AppCompatActivity {
 
                 disableRadioButtons();
 
-                final Handler handler = new Handler();
-                handler.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        //Do something after 100ms
-                        Intent intent=new Intent(GameActivity.this,MasterPageActivity.class);
-                        startActivity(intent);
-
-                    }
-                }, 4000);
             }
         }
                 .start();
@@ -471,8 +461,6 @@ public class GameActivity extends AppCompatActivity {
     private void disableRadioButtons() {
         for (int i = 0; i < defenceRadioGroup.getChildCount(); i++) {
             ((RadioButton) defenceRadioGroup.getChildAt(i)).setEnabled(false);
-
-            txtViewTimer.setVisibility(View.GONE);
         }
     }
 

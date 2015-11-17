@@ -25,6 +25,7 @@ public class UserSession {
     public static final String KEY_NAME = "name";
     public static final String KEY_PROFILE_IMAGE = "profile_image";
 
+
     //Search Tab fragment get users location permission
     public static final String KEY_LOCATION_PERM = "location_permission";
     public static final String KEY_APP_LAUNCH = "launch";
@@ -67,6 +68,7 @@ public class UserSession {
     }
 
     public String getKeyName(){return pref.getString(KEY_NAME, null);}
+
     public String getKeyProfileImage(){return pref.getString(KEY_PROFILE_IMAGE, null);}
 
     public void saveUserPassword(String password) {
@@ -74,6 +76,7 @@ public class UserSession {
         editor.putBoolean(IS_REMEMBERED, true);
         editor.commit();
     }
+
 
 
     /**
