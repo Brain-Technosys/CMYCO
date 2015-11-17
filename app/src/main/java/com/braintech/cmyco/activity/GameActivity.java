@@ -109,6 +109,7 @@ public class GameActivity extends AppCompatActivity {
     CommonAPI logoutAPI;
 
     boolean TIMER = true;
+    boolean showPlayCall = false;
 
     AlertDialogManager alertDialogManager;
 
@@ -154,6 +155,7 @@ public class GameActivity extends AppCompatActivity {
 
             public void onTick(long millisUntilFinished) {
                 txtViewTimer.setText("Time Left: " + millisUntilFinished / 1000);
+
                 //here you can have your logic to set text to edittext
 
                 // if(txtViewTimer.getText().)
@@ -164,21 +166,21 @@ public class GameActivity extends AppCompatActivity {
             public void onFinish() {
 
                 TIMER = false;
-
+                showPlayCall = true;
                 disableRadioButtons();
             }
         }
                 .start();
 
         //Preparing data for graph
-        getGraphData(xTitle, barDataStrings);
+     //   getGraphData(xTitle, barDataStrings);
 
         handleLogoutRetry();
         handleRatingRetry();
         handleGraphRetry();
 
         // here we are Showing graph
-        handleGraph(maxY);
+      //  handleGraph(maxY);
     }
 
 
@@ -264,10 +266,10 @@ public class GameActivity extends AppCompatActivity {
         //  chart.setGridBackgroundColor(Color.parseColor("#010f1a"));
 
         chart.setPinchZoom(false);
-        chart.setScaleMinima(2f, 1f);
+       // chart.setScaleMinima(2f, 1f);
         chart.setDrawBarShadow(false);
         chart.setDrawGridBackground(false);
-        //chart.animateXY(2000, 2000);
+        chart.animateXY(2000, 2000);
         chart.invalidate();
 
         //hide information chart from bottom
@@ -467,7 +469,6 @@ public class GameActivity extends AppCompatActivity {
 
                     tag = Integer.parseInt(compoundButton.getTag().toString());
 
-                    pollsPref.saveOptions(tag + catDefenceArrayList.get(tag).getPoll_name());
 
                     callRatingApi(tag);
 
@@ -594,6 +595,10 @@ public class GameActivity extends AppCompatActivity {
 
         int result = -1;
         String msg;
+        String resultMaxPoll;
+        Long playCallDur;
+        String maxId;
+
 
         @Override
         protected void onPreExecute() {
@@ -621,30 +626,61 @@ public class GameActivity extends AppCompatActivity {
                 if (jsonObject != null) {
                     result = jsonObject.getInt(Const.KEY_RESULT);
                     if (result == 1) {
-                        JSONArray jsonArrayGraphData = jsonObject.getJSONArray(Const.KEY_DATA);
+                        JSONObject jsonObjectData = jsonObject.getJSONObject(Const.KEY_DATA);
 
+                        if (jsonObjectData != null) {
 
-                        for (int i = 0; i < jsonArrayGraphData.length(); i++) {
-                            JSONObject jsonObjectPoleOption = jsonArrayGraphData.getJSONObject(i);
+                            //Getting data for graph
+                            JSONObject jsonObjectPollOption = jsonObjectData.getJSONObject("PollOption");
 
-                            if (jsonObjectPoleOption != null) {
-                                JSONArray jsonArrayGraph = jsonObjectPoleOption.getJSONArray("PollOption");
+                            if (jsonObjectPollOption != null) {
+                                int pollLength = jsonObjectPollOption.length();
 
-                                xTitle = new String[jsonArrayGraph.length()];
-                                barDataStrings = new String[jsonArrayGraph.length()];
+                                xTitle = new String[pollLength];
+                                barDataStrings = new String[pollLength];
 
-                                for (int j = 0; j < jsonArrayGraph.length(); j++) {
-                                    JSONObject jsonObjectData = jsonArrayGraph.getJSONObject(i);
-
-                                    xTitle[j] = String.valueOf(j + 1);
-                                    //  barDataStrings[j] = jsonObjectData.getString();
+                                for (int i = 0; i < pollLength; i++) {
+                                    xTitle[i] = String.valueOf(i + 1);
+                                    barDataStrings[i] = jsonObjectData.getString(String.valueOf(i + 1));
 
                                 }
-
-                                //   barDataStrings[i] = jsonObjectGraph.getString()
                             }
+
+                            //getting max Poll result
+                            resultMaxPoll = "PLAY CALL :" + jsonObjectData.getString(String.valueOf("max_id"));
+                            maxId = jsonObjectData.getString(String.valueOf("max_id"))+"."+jsonObjectData.getString(String.valueOf("max"));
+
+                            //set max value for Graph Y axis
+                            maxY = jsonObjectData.getInt("max_value");
+
+                            //set duration
+                            playCallDur = Long.parseLong(jsonObjectData.getString("playcall_time"));
+
                         }
-                    } else {
+                        //  JSONArray jsonArrayGraphData = jsonObject.getJSONArray(Const.KEY_DATA);
+
+
+//                        for (int i = 0; i < jsonArrayGraphData.length(); i++) {
+//                            JSONObject jsonObjectPoleOption = jsonArrayGraphData.getJSONObject(i);
+//
+//                            if (jsonObjectPoleOption != null) {
+//                                JSONArray jsonArrayGraph = jsonObjectPoleOption.getJSONArray("PollOption");
+//
+//                                xTitle = new String[jsonArrayGraph.length()];
+//                                barDataStrings = new String[jsonArrayGraph.length()];
+//
+//                                for (int j = 0; j < jsonArrayGraph.length(); j++) {
+//                                    JSONObject jsonObjectData = jsonArrayGraph.getJSONObject(i);
+//
+//                                    xTitle[j] = String.valueOf(j + 1);
+//                                    //  barDataStrings[j] = jsonObjectData.getString();
+//
+//                                }
+//
+//                                //   barDataStrings[i] = jsonObjectGraph.getString()
+//                            }
+//                        }
+//                    } else {
                         msg = jsonObject.getString(Const.KEY_MSG);
                     }
                 }
@@ -665,6 +701,23 @@ public class GameActivity extends AppCompatActivity {
                 getGraphData(xTitle, barDataStrings);
                 handleGraph(maxY);
                 // show play call
+
+                if (showPlayCall) {
+                    txtPlayCall.setVisibility(View.VISIBLE);
+                    txtPlayCall.setText(resultMaxPoll);
+
+                    final Handler handler = new Handler();
+                    handler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            //Do something after 100ms
+
+                            pollsPref.saveOptions(maxId);
+                            Intent intent = new Intent(GameActivity.this, MasterPageActivity.class);
+                            startActivity(intent);
+                        }
+                    }, playCallDur);
+                }
 
             } else if (result == 0) {
                 alertDialogManager.showAlertDialog(GameActivity.this, msg);

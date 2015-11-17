@@ -82,7 +82,7 @@ public class DisabledGameActivity extends AppCompatActivity {
 
     String pollName;
     int pollId;
-    int maxY=1000;
+    int maxY = 1000;
 
     String txtLogo;
 
@@ -118,13 +118,13 @@ public class DisabledGameActivity extends AppCompatActivity {
 
 
         //Preparing data for graph
-        getGraphData(xTitle, barDataStrings);
+        // getGraphData(xTitle, barDataStrings);
 
         handleLogoutRetry();
         handleGraphRetry();
 
         // here we are Showing graph
-         handleGraph(maxY);
+        //  handleGraph(maxY);
 
         if (getIntent().hasExtra(Const.TAG_POLL_OPTION)) {
 
@@ -138,6 +138,8 @@ public class DisabledGameActivity extends AppCompatActivity {
 
             createOptionsTextView();
         }
+
+        callgraphAPI();
     }
 
     private void handleLogoutRetry() {
@@ -235,10 +237,10 @@ public class DisabledGameActivity extends AppCompatActivity {
         //  chart.setGridBackgroundColor(Color.parseColor("#010f1a"));
 
         chart.setPinchZoom(false);
-        chart.setScaleMinima(2f, 1f);
+        // chart.setScaleMinima(2f, 1f);
         chart.setDrawBarShadow(false);
         chart.setDrawGridBackground(false);
-        //chart.animateXY(2000, 2000);
+        chart.animateXY(2000, 2000);
         chart.invalidate();
 
 
@@ -332,6 +334,10 @@ public class DisabledGameActivity extends AppCompatActivity {
 
         int result = -1;
         String msg;
+        String resultMaxPoll;
+        Long playCallDur;
+        String maxId;
+
 
         @Override
         protected void onPreExecute() {
@@ -357,30 +363,40 @@ public class DisabledGameActivity extends AppCompatActivity {
                 JSONObject jsonObject = new JSONObject(jsonString);
 
                 if (jsonObject != null) {
+
+
                     result = jsonObject.getInt(Const.KEY_RESULT);
                     if (result == 1) {
-                        JSONArray jsonArrayGraphData = jsonObject.getJSONArray(Const.KEY_DATA);
+                        JSONObject jsonObjectData = jsonObject.getJSONObject(Const.KEY_DATA);
 
+                        if (jsonObjectData != null) {
 
-                        for (int i = 0; i < jsonArrayGraphData.length(); i++) {
-                            JSONObject jsonObjectPoleOption = jsonArrayGraphData.getJSONObject(i);
+                            //Getting data for graph
+                            JSONObject jsonObjectPollOption = jsonObjectData.getJSONObject("PollOption");
 
-                            if (jsonObjectPoleOption != null) {
-                                JSONArray jsonArrayGraph = jsonObjectPoleOption.getJSONArray("PollOption");
+                            if (jsonObjectPollOption != null) {
+                                int pollLength = jsonObjectPollOption.length();
 
-                                xTitle = new String[jsonArrayGraph.length()];
-                                barDataStrings = new String[jsonArrayGraph.length()];
+                                xTitle = new String[pollLength];
+                                barDataStrings = new String[pollLength];
 
-                                for (int j = 0; j < jsonArrayGraph.length(); j++) {
-                                    JSONObject jsonObjectData = jsonArrayGraph.getJSONObject(i);
-
-                                    xTitle[j] = String.valueOf(j + 1);
-                                 //   barDataStrings[j] = jsonObjectData.getString();
+                                for (int i = 0; i < pollLength; i++) {
+                                    xTitle[i] = String.valueOf(i + 1);
+                                    barDataStrings[i] = jsonObjectData.getString(String.valueOf(i + 1));
 
                                 }
-
-                                //   barDataStrings[i] = jsonObjectGraph.getString()
                             }
+
+                            //getting max Poll result
+                            resultMaxPoll = "PLAY CALL :" + jsonObjectData.getString(String.valueOf("max_id"));
+                            maxId = jsonObjectData.getString(String.valueOf("max_id")) + "." + jsonObjectData.getString(String.valueOf("max"));
+
+                            //set max value for Graph Y axis
+                            maxY = jsonObjectData.getInt("max_value");
+
+                            //set duration
+                            playCallDur = Long.parseLong(jsonObjectData.getString("playcall_time"));
+
                         }
                     } else {
                         msg = jsonObject.getString(Const.KEY_MSG);
