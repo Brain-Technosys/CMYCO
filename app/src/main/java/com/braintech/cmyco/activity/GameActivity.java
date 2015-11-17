@@ -96,6 +96,8 @@ public class GameActivity extends AppCompatActivity {
 
     String pollName;
 
+    long pollDuration;
+
     SnakeOnClick snakeOnClickForLogout;
 
     CommonAPI logoutAPI;
@@ -136,12 +138,13 @@ public class GameActivity extends AppCompatActivity {
 
             pollId = bundle.getInt(Const.KEY_POLL_ID);
             pollName = bundle.getString(Const.KEY_POLL_NAME, pollName);
+            pollDuration=bundle.getLong(Const.KEY_POLL_DURATION);
             defenceTextView.setText(pollName);
 
             setDefenceCat();
         }
 
-        new CountDownTimer(10000, 1000) {//CountDownTimer(edittext1.getText()+edittext2.getText()) also parse it to long
+        new CountDownTimer(pollDuration, 1000) {//CountDownTimer(edittext1.getText()+edittext2.getText()) also parse it to long
 
             public void onTick(long millisUntilFinished) {
                 txtViewTimer.setText("Time Left: " + millisUntilFinished / 1000);

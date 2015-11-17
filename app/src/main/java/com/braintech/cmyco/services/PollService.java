@@ -249,11 +249,14 @@ public class PollService extends Service {
 
                                 arrayListPollOpt.clear();
 
+                                long poll_duration=Utility.findTimeDifference(endTime,startTime);
+
                                 arrayListPollOpt = hashMapPollOptions.get(poll_id);
                                 Intent intent = new Intent(context, GameActivity.class);
                                 Bundle bundle = new Bundle();
                                 bundle.putString(Const.KEY_POLL_NAME, poll_name);
                                 bundle.putInt(Const.KEY_POLL_ID, poll_id);
+                                bundle.putLong(Const.KEY_POLL_DURATION, poll_duration);
                                 bundle.putSerializable(Const.TAG_POLL_OPTION, arrayListPollOpt);
                                 intent.putExtras(bundle);
                                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -275,4 +278,6 @@ public class PollService extends Service {
             }
         }
     }
+
+
 }
