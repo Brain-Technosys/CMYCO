@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
+import android.media.AudioManager;
+import android.media.MediaPlayer;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
@@ -256,6 +258,22 @@ public class PollService extends Service {
                         try {
                             if (TimeCheck.isTimeBetweenTwoTime(startTime, endTime, currentTime)) {
 
+                                Vibrator v = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
+                                v.vibrate(500);
+
+                                Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+                                MediaPlayer mp = MediaPlayer.create(getApplicationContext(), notification);
+                                mp.start();
+
+                                /*//playing default notification
+                                try {
+                                    Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+                                    Ringtone r = RingtoneManager.getRingtone(getApplicationContext(), notification);
+                                    r.play();
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }*/
+
                                 pollsPref.pollActivated(true);
 
                                 arrayListPollOpt.clear();
@@ -273,17 +291,7 @@ public class PollService extends Service {
                                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                                 startActivity(intent);
 
-                                Vibrator v = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
-                                v.vibrate(500);
 
-                                //playing default notification
-                                try {
-                                    Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-                                    Ringtone r = RingtoneManager.getRingtone(getApplicationContext(), notification);
-                                    r.play();
-                                } catch (Exception e) {
-                                    e.printStackTrace();
-                                }
                                 break;
                             } else
                                 System.out.println("Given time doesn't lies between two times");
