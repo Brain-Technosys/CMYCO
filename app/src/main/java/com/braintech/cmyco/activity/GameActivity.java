@@ -162,6 +162,7 @@ public class GameActivity extends AppCompatActivity {
                 //here you can have your logic to set text to edittext
 
                 // if(txtViewTimer.getText().)
+                //
 
 
             }
