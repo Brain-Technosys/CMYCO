@@ -1,5 +1,6 @@
 package com.braintech.cmyco.activity;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -38,6 +39,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -94,6 +97,16 @@ public class DisabledGameActivity extends AppCompatActivity {
     SnakeOnClick snakeOnClickForLogout;
     SnakeOnClick snakeOnClickGetGraph;
 
+    // graph colors
+    String blue = "#14DDF9";
+    String violet = "#800080";
+    String darkPink = "#e75480";
+    String green = "#7CFC00";
+    String yellow = "#FFFF00";
+    String orange = "#FFA500";
+    String red = "#DC143C";
+
+
     CommonAPI logoutAPI;
 
     @Override
@@ -139,7 +152,28 @@ public class DisabledGameActivity extends AppCompatActivity {
             createOptionsTextView();
         }
 
+        setGraphColor();
         callgraphAPI();
+    }
+
+    private void setGraphColor() {
+        if (pollId == 1) {
+            graphItemColor = blue;
+        } else if (pollId == 2) {
+            graphItemColor = violet;
+        } else if (pollId == 3) {
+            graphItemColor = darkPink;
+        } else if (pollId == 4) {
+            graphItemColor = green;
+        } else if (pollId == 5) {
+            graphItemColor = yellow;
+        } else if (pollId == 6) {
+            graphItemColor = orange;
+        } else if (pollId == 7) {
+            graphItemColor = red;
+        } else {
+            graphItemColor = blue;
+        }
     }
 
     private void handleLogoutRetry() {
@@ -426,5 +460,6 @@ public class DisabledGameActivity extends AppCompatActivity {
             }
         }
     }
+
 
 }

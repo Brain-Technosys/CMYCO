@@ -101,6 +101,15 @@ public class GameActivity extends AppCompatActivity {
     String graphItemColor = "#14DDF9";
     String graphBgColor = "#010f1a";
 
+    // graph colors
+    String blue = "#14DDF9";
+    String violet = "#800080";
+    String darkPink = "#e75480";
+    String green = "#7CFC00";
+    String yellow = "#FFFF00";
+    String orange = "#FFA500";
+    String red = "#DC143C";
+
     String pollName;
 
     long pollDuration;
@@ -124,6 +133,7 @@ public class GameActivity extends AppCompatActivity {
         ButterKnife.inject(this);
 
         handleToolbar();
+
         alertDialogManager = new AlertDialogManager();
 
         catDefenceArrayList = new ArrayList<>();
@@ -150,6 +160,8 @@ public class GameActivity extends AppCompatActivity {
             pollName = bundle.getString(Const.KEY_POLL_NAME, pollName);
             pollDuration = bundle.getLong(Const.KEY_POLL_DURATION);
             defenceTextView.setText(pollName);
+
+            setGraphColor();
 
             setDefenceCat();
         }
@@ -187,6 +199,26 @@ public class GameActivity extends AppCompatActivity {
 
         // here we are Showing graph
         //  handleGraph(maxY);
+    }
+
+    private void setGraphColor() {
+        if (pollId == 1) {
+            graphItemColor = blue;
+        } else if (pollId == 2) {
+            graphItemColor = violet;
+        } else if (pollId == 3) {
+            graphItemColor = darkPink;
+        } else if (pollId == 4) {
+            graphItemColor = green;
+        } else if (pollId == 5) {
+            graphItemColor = yellow;
+        } else if (pollId == 6) {
+            graphItemColor = orange;
+        } else if (pollId == 7) {
+            graphItemColor = red;
+        } else {
+            graphItemColor = blue;
+        }
     }
 
 

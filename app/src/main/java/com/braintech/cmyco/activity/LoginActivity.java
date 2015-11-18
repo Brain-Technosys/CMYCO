@@ -250,7 +250,7 @@ public class LoginActivity extends AppCompatActivity {
                         activeGame = jsonObject.getInt(Const.KEY_ACTIVE_GAME);
 
                         pollsPref.saveActiveGame(activeGame);
-                        pollsPref.storeUserInfo(jsonObjectLoginDetail.getString(Const.KEY_ID),jsonObjectLoginDetail.getString(Const.KEY_USERNAME),jsonObjectLoginDetail.getString(Const.KEY_EMAIL));
+                        pollsPref.storeUserInfo(jsonObjectLoginDetail.getString(Const.KEY_ID), jsonObjectLoginDetail.getString(Const.KEY_USERNAME), jsonObjectLoginDetail.getString(Const.KEY_EMAIL));
 
                         if (activeGame != 0) {
 
@@ -260,13 +260,13 @@ public class LoginActivity extends AppCompatActivity {
                             JSONObject jsonObjectGame = jsonObjectGameData.getJSONObject(Const.KEY_GAME);
                             pollsPref.storeGameJson(jsonObjectGame.toString());
 
-                            //Storing team1 json in sheared pref
-                            JSONObject jsonObjectTeam1 = jsonObjectGameData.getJSONObject(Const.KEY_TEAM1);
-                            pollsPref.storeTeam1Json(jsonObjectTeam1.toString());
-
-                            //Storing team2 json in sheared pref
-                            JSONObject jsonObjectTeam2 = jsonObjectGameData.getJSONObject(Const.KEY_TEAM2);
-                            pollsPref.storeTeam2Json(jsonObjectTeam2.toString());
+//                            //Storing team1 json in sheared pref
+//                            JSONObject jsonObjectTeam1 = jsonObjectGameData.getJSONObject(Const.KEY_TEAM1);
+//                            pollsPref.storeTeam1Json(jsonObjectTeam1.toString());
+//
+//                            //Storing team2 json in sheared pref
+//                            JSONObject jsonObjectTeam2 = jsonObjectGameData.getJSONObject(Const.KEY_TEAM2);
+//                            pollsPref.storeTeam2Json(jsonObjectTeam2.toString());
 
                         }
 
@@ -292,11 +292,20 @@ public class LoginActivity extends AppCompatActivity {
                 if (activeGame != 0) {
 
                     //Calling GetPoll API from Common Class
-                    commonAPI.getPollData(snakeOnClickPollRetry, coordinatorLayout);
+                    //commonAPI.getPollData(snakeOnClickPollRetry, coordinatorLayout);
+                    Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
+                    startActivity(intent);
+                    finish();
+
 
                 } else {
                     //  alertDialogManager.showAlertDialog(LoginActivity.this, getString(R.string.alert_no_active_game));
                     Intent intent = new Intent(LoginActivity.this, NoGameActivity.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putString("email", email);
+                    bundle.putString("password", password);
+                    intent.putExtras(bundle);
+
                     startActivity(intent);
                 }
             } else if (result == 0) {
