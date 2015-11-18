@@ -146,6 +146,7 @@ public class GameActivity extends AppCompatActivity {
 
         alertDialogManager = new AlertDialogManager();
 
+
         setFonts();
 
         if (getIntent().hasExtra(Const.TAG_POLL_OPTION)) {
@@ -193,11 +194,10 @@ public class GameActivity extends AppCompatActivity {
         //  handleGraph(maxY);
     }
 
-    public void setFonts()
-    {
+    public void setFonts() {
         Fonts.robotoRegular(this, defenceTextView);
-        Fonts.robotoRegular(this,txtPlayCall);
-        Fonts.robotoRegular(this,txtViewTimer);
+        Fonts.robotoRegular(this, txtPlayCall);
+        Fonts.robotoRegular(this, txtViewTimer);
     }
 
     private void setGraphColor() {
@@ -349,8 +349,10 @@ public class GameActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.setting_menu, menu);
+        if (!TIMER) {
+            // Inflate the menu; this adds items to the action bar if it is present.
+            getMenuInflater().inflate(R.menu.setting_menu, menu);
+        }
         return true;
     }
 
@@ -412,7 +414,7 @@ public class GameActivity extends AppCompatActivity {
             catRadioButtons[i].setTextColor(Color.parseColor("#FFFFFF"));
             catRadioButtons[i].setTag(i);
 
-            Fonts.robotoRegular(this,catRadioButtons[i]);
+            Fonts.robotoRegular(this, catRadioButtons[i]);
 
             // setting first radio button checked for the first time
 //            if (i == 0 && firstTime) {

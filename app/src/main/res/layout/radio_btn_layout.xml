@@ -3,7 +3,7 @@
 <RadioButton xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/rbCat"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="60px"
     android:textColor="@color/white">
 
 </RadioButton>
