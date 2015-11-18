@@ -24,6 +24,9 @@ public class Const {
     public static String RATING = BASE_URL + "ratings/app_add1";
     public static String GET_GRAPH=BASE_URL+ "ratings/app_ratings1?";
 
+
+
+
     //Tag login activity
     public static String TAG_USERNAME = "username=";
     public static String TAG_PASSWORD = "&password=";
