@@ -22,6 +22,8 @@ public class PollData {
         this.poll_start_time = poll_start_time;
         this.poll_end_time = poll_end_time;
         this.poll_duration = poll_duration;
+        this.maxId=maxId;
+        this.maxValue=maxValue;
     }
 
     public int getPoll_id() {
@@ -62,5 +64,21 @@ public class PollData {
 
     public void setPoll_duration(String poll_duration) {
         this.poll_duration = poll_duration;
+    }
+
+    public String getMaxId() {
+        return maxId;
+    }
+
+    public void setMaxId(String maxId) {
+        this.maxId = maxId;
+    }
+
+    public String getMaxValue() {
+        return maxValue;
+    }
+
+    public void setMaxValue(String maxValue) {
+        this.maxValue = maxValue;
     }
 }

@@ -163,7 +163,13 @@ public class MasterPageActivity extends AppCompatActivity {
         @Override
         protected String doInBackground(String... strings) {
             try {
-                JSONObject jsonObject = new JSONObject(pollsPref.getPollData().toString());
+
+                JsonParser jsonParser = new JsonParser(MasterPageActivity.this);
+
+                String url = Const.GET_ACTIVE_GAME_DETAIL+"?"+Const.TAG_TEAMID+"="+pollsPref.getTeamId();
+                String jsonString = jsonParser.getJSONFromUrl(url);
+
+                JSONObject jsonObject = new JSONObject(jsonString);
 
                 if (jsonObject != null) {
 
@@ -185,7 +191,11 @@ public class MasterPageActivity extends AppCompatActivity {
                         String poll_end_time = jsonObj.getString(Const.KEY_END_TIME);
                         String poll_duration = jsonObj.getString(Const.KEY_POLL_DURATION);
 
-                        PollData pollData = new PollData(poll_id, poll_name, poll_end_time, poll_start_time, poll_duration);
+                        String maxValue=jsonObj.getString(Const.KEY_MAX);
+
+                        String maxId=jsonObj.getString(Const.KEY_MAX_ID);
+
+                        PollData pollData = new PollData(poll_id, poll_name, poll_end_time, poll_start_time, poll_duration,maxId,maxValue);
 
                         arrayListPollData.add(pollData);
 
@@ -213,7 +223,11 @@ public class MasterPageActivity extends AppCompatActivity {
                 } else
                     result = 0;
 
-            } catch (JSONException e) {
+            }
+            catch(NullPointerException ex)
+            {
+                ex.printStackTrace();
+            } catch(JSONException e) {
                 e.printStackTrace();
             }
 
