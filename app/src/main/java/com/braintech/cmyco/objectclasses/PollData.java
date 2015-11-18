@@ -12,7 +12,11 @@ public class PollData {
     String poll_end_time;
     String poll_duration;
 
-    public PollData(int poll_id, String poll_name, String poll_start_time, String poll_end_time, String poll_duration) {
+    String maxId;
+    String maxValue;
+
+    public PollData(int poll_id, String poll_name, String poll_start_time, String poll_end_time, String poll_duration,String maxId,String maxValue)
+    {
         this.poll_id = poll_id;
         this.poll_name = poll_name;
         this.poll_start_time = poll_start_time;

@@ -25,6 +25,7 @@ import com.braintech.cmyco.objectclasses.PollOptions;
 import com.braintech.cmyco.sessions.PollsPref;
 import com.braintech.cmyco.utils.AlertDialogManager;
 import com.braintech.cmyco.utils.Const;
+import com.braintech.cmyco.utils.Fonts;
 import com.braintech.cmyco.utils.JsonParser;
 import com.braintech.cmyco.utils.Progress;
 import com.braintech.cmyco.utils.SnackNotify;
@@ -88,6 +89,9 @@ public class MasterPageActivity extends AppCompatActivity {
         alertDialogManager = new AlertDialogManager();
 
         handleSnakeRetryCall();
+
+        setFont();
+
     }
 
     private void handleSnakeRetryCall() {
@@ -138,13 +142,12 @@ public class MasterPageActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
-//
-//    @OnClick(R.id.btn_continue)
-//    void goNext() {
-//        Intent intent = new Intent(this, GameActivity.class);
-//        startActivity(intent);
-//    }
 
+
+    private void setFont() {
+        Fonts.robotoRegular(this, txt_active_users);
+        Fonts.robotoRegular(this, txt_team_name);
+    }
 
     private class GetPollData extends AsyncTask<String, String, String> {
 
@@ -308,20 +311,23 @@ public class MasterPageActivity extends AppCompatActivity {
 
         int poll_id = arrayListPollData.get(position).getPoll_id();
 
-        String pollName = arrayListPollData.get(position).getPoll_name();
+        if (poll_id == 7) {
+            //do not navigate
+        } else {
+            String pollName = arrayListPollData.get(position).getPoll_name();
 
-        arrayListPollOpt = hashMapPollOptions.get(poll_id);
+            arrayListPollOpt = hashMapPollOptions.get(poll_id);
 
 
-        Intent intent = new Intent(this, DisabledGameActivity.class);
+            Intent intent = new Intent(this, DisabledGameActivity.class);
 
-        Bundle bundle = new Bundle();
-        bundle.putString(Const.KEY_POLL_NAME, pollName);
-        bundle.putSerializable(Const.TAG_POLL_OPTION, arrayListPollOpt);
-        bundle.putInt(Const.KEY_POLL_ID, poll_id);
-        intent.putExtras(bundle);
-        startActivity(intent);
-
+            Bundle bundle = new Bundle();
+            bundle.putString(Const.KEY_POLL_NAME, pollName);
+            bundle.putSerializable(Const.TAG_POLL_OPTION, arrayListPollOpt);
+            bundle.putInt(Const.KEY_POLL_ID, poll_id);
+            intent.putExtras(bundle);
+            startActivity(intent);
+        }
 
     }
 }

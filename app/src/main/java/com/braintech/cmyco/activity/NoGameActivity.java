@@ -45,6 +45,7 @@ public class NoGameActivity extends AppCompatActivity {
 
     @InjectView(R.id.txt_sign_up)
     TextView txt_sign_up;
+
     String email;
     String password;
 
@@ -68,6 +69,8 @@ public class NoGameActivity extends AppCompatActivity {
         alertDialogManager = new AlertDialogManager();
 
         handleSnakeRetryCall();
+
+        getIntentData();
 
     }
 
@@ -93,6 +96,16 @@ public class NoGameActivity extends AppCompatActivity {
 //        };
     }
 
+    public void getIntentData()
+    {
+        if(getIntent().hasExtra("email"))
+        {
+            Bundle bundle=getIntent().getExtras();
+            email=bundle.getString("email");
+            password=bundle.getString("password");
+        }
+    }
+
     @OnClick(R.id.btn_refresh)
     void doRefresh() {
         //add resume
@@ -101,11 +114,8 @@ public class NoGameActivity extends AppCompatActivity {
     }
 
     public void doLogin() {
-        if (email.length() == 0 || password.length() == 0) {
-            alertDialogManager.showAlertDialog(NoGameActivity.this, getString(R.string.empty_fields));
-        } else if (!Utility.isValidEmailAddress(email)) {
-            alertDialogManager.showAlertDialog(NoGameActivity.this, getString(R.string.invalid_email));
-        } else if (!Utility.isNetworkAvailable(NoGameActivity.this)) {
+
+        if (!Utility.isNetworkAvailable(NoGameActivity.this)) {
 
             SnackNotify.showSnakeBar(this, snakeOnClick, coordinatorLayout);
         } else {

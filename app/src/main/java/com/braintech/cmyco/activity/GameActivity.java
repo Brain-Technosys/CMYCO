@@ -27,6 +27,7 @@ import com.braintech.cmyco.sessions.PollsPref;
 import com.braintech.cmyco.sessions.UserSession;
 import com.braintech.cmyco.utils.AlertDialogManager;
 import com.braintech.cmyco.utils.Const;
+import com.braintech.cmyco.utils.Fonts;
 import com.braintech.cmyco.utils.JsonParser;
 import com.braintech.cmyco.utils.Progress;
 import com.braintech.cmyco.utils.SnackNotify;
@@ -144,13 +145,8 @@ public class GameActivity extends AppCompatActivity {
         pollsPref = new PollsPref(this);
 
         alertDialogManager = new AlertDialogManager();
-        //
 
-       /* if (pollsPref.getCoachDetail().equals(null)) {
-            alertDialogManager.showAlertDialog(this, getString(R.string.alert_no_data));
-        } else {
-            new GetDefenceDataForRadioButton().execute();
-        }*/
+        setFonts();
 
         if (getIntent().hasExtra(Const.TAG_POLL_OPTION)) {
             Bundle bundle = getIntent().getExtras();
@@ -159,6 +155,8 @@ public class GameActivity extends AppCompatActivity {
             pollId = bundle.getInt(Const.KEY_POLL_ID);
             pollName = bundle.getString(Const.KEY_POLL_NAME, pollName);
             pollDuration = bundle.getLong(Const.KEY_POLL_DURATION);
+
+
             defenceTextView.setText(pollName);
 
             setGraphColor();
@@ -170,12 +168,6 @@ public class GameActivity extends AppCompatActivity {
 
             public void onTick(long millisUntilFinished) {
                 txtViewTimer.setText("Time Left: " + millisUntilFinished / 1000);
-
-                //here you can have your logic to set text to edittext
-
-                // if(txtViewTimer.getText().)
-                //
-
 
             }
 
@@ -199,6 +191,13 @@ public class GameActivity extends AppCompatActivity {
 
         // here we are Showing graph
         //  handleGraph(maxY);
+    }
+
+    public void setFonts()
+    {
+        Fonts.robotoRegular(this, defenceTextView);
+        Fonts.robotoRegular(this,txtPlayCall);
+        Fonts.robotoRegular(this,txtViewTimer);
     }
 
     private void setGraphColor() {
@@ -389,84 +388,6 @@ public class GameActivity extends AppCompatActivity {
 
     }
 
-    /* //Asynchronous class to get defence category data from json stored at sheared Preference
-        private class GetDefenceDataForRadioButton extends AsyncTask<String, String, String> {
-            int result = 0;
-
-            @Override
-            protected void onPreExecute() {
-                super.onPreExecute();
-
-                Progress.start(GameActivity.this);
-            }
-
-            @Override
-            protected String doInBackground(String... strings) {
-
-                try {
-                    JSONObject jsonObject = new JSONObject(pollsPref.getPollData().toString());
-
-                    if (jsonObject != null) {
-                        JSONArray jsonArrayPoleData = jsonObject.getJSONArray(Const.KEY_DATA);
-
-                        for (int j = 0; j < jsonArrayPoleData.length(); j++) {
-                            JSONObject jsonObjectPollOptions = jsonArrayPoleData.getJSONObject(j);
-
-                            int id = jsonObjectPollOptions.getInt(Const.KEY_ID);
-
-                            txtLogo = jsonObjectPollOptions.getString(Const.KEY_NAME);
-
-                            JSONArray jsonArrayPollOptions = jsonObjectPollOptions.getJSONArray(Const.KEY_POLL_OPTION);
-
-                            for (int k = 0; k < jsonArrayPollOptions.length(); k++) {
-                                JSONObject jsonObjectPollCat = jsonArrayPollOptions.getJSONObject(k);
-
-                                result = 0;
-
-                                if (id == 1) {
-                                    //Defence Data
-                                    HashMap<String, String> defencePollCatStrings = new HashMap<>();
-                                    defencePollCatStrings.put(Const.KEY_ID, jsonObjectPollCat.getString(Const.KEY_ID));
-                                    defencePollCatStrings.put(Const.KEY_NAME, jsonObjectPollCat.getString(Const.KEY_NAME));
-                                    catDefenceArrayList.add(defencePollCatStrings);
-                                    result = 1;
-
-
-                                } else if (id == 2) {
-                                    result = 1;
-                                } else if (id == 3) {
-                                    result = 1;
-                                } else if (id == 4) {
-                                    result = 1;
-                                } else if (id == 5) {
-                                    result = 1;
-                                }
-                            }
-                        }
-
-
-                    } else {
-                        result = 0;
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-                return null;
-            }
-
-            @Override
-            protected void onPostExecute(String s) {
-                super.onPostExecute(s);
-
-                Progress.stop();
-                if (result == 1) {
-                    setDefenceCat();
-                } else if (result == 0) {
-                    alertDialogManager.showAlertDialog(GameActivity.this, getString(R.string.alert_no_data));
-                }
-            }
-        }*/
-//
     //Setting Layout
 
     private void setDefenceCat() {
@@ -490,6 +411,8 @@ public class GameActivity extends AppCompatActivity {
             catRadioButtons[i].setText(catDefenceArrayList.get(i).getPoll_name());
             catRadioButtons[i].setTextColor(Color.parseColor("#FFFFFF"));
             catRadioButtons[i].setTag(i);
+
+            Fonts.robotoRegular(this,catRadioButtons[i]);
 
             // setting first radio button checked for the first time
 //            if (i == 0 && firstTime) {

@@ -55,7 +55,9 @@ public class Const {
     public static String TAG_REG_CONFIRM_PASSWORD = "&cpassword=";
     public static String TAG_EMAIL = "email=";
 
-    //Poll
+    //Active game
+    public static String TAG_TEAMID = "team_id=";
+
     public static String KEY_POLL_OPTION = "poll_options";
     public static String KEY_POLL_DATA = "polldata";
     public static String KEY_POLL_ID = "poll_id";
@@ -64,6 +66,8 @@ public class Const {
     public static String KEY_END_TIME = "poll_end_time";
     public static String KEY_POLL_DURATION = "poll_duration";
     public static String KEY_POLL_SERVER_TIME = "server_time";
+    public static String KEY_MAX_ID = "max_id";
+    public static String KEY_MAX = "max";
 
 
     //Rating TAG
@@ -76,10 +80,7 @@ public class Const {
     //Active Users
     public static String KEY_ACTIVE_USER = "active_user";
 
-    //Rating
-//    public static String KEY_ACTIVE_USER
-//    public static String KEY_ACTIVE_USER
-//    public static String KEY_ACTIVE_USER
+
 
 
 }

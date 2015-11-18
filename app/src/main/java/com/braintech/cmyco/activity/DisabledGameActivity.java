@@ -23,6 +23,7 @@ import com.braintech.cmyco.sessions.PollsPref;
 import com.braintech.cmyco.sessions.UserSession;
 import com.braintech.cmyco.utils.AlertDialogManager;
 import com.braintech.cmyco.utils.Const;
+import com.braintech.cmyco.utils.Fonts;
 import com.braintech.cmyco.utils.JsonParser;
 import com.braintech.cmyco.utils.Progress;
 import com.braintech.cmyco.utils.SnackNotify;
@@ -194,6 +195,10 @@ public class DisabledGameActivity extends AppCompatActivity {
                 View tvView = getLayoutInflater().inflate(R.layout.textview_layout, null);
                 TextView textView = (TextView) tvView.findViewById(R.id.tvCat);
                 textView.setText(String.valueOf(i + 1) + ".  " + arrayListPollOpt.get(i).getPoll_name());
+
+                //apply font
+                Fonts.robotoRegular(this,textView);
+
                 linLayTextView.addView(tvView);
             }
         }

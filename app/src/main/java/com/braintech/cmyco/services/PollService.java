@@ -150,7 +150,7 @@ public class PollService extends Service {
         protected String doInBackground(String... strings) {
             JsonParser jsonParser = new JsonParser(context);
 
-            String url = Const.GET_ACTIVE_GAME_DETAIL;
+            String url = Const.GET_ACTIVE_GAME_DETAIL+"?"+Const.TAG_TEAMID+"="+pollsPref.getTeamId();
             String jsonString = jsonParser.getJSONFromUrl(url);
 
 
@@ -182,7 +182,13 @@ public class PollService extends Service {
                         String poll_name = jsonObj.getString(Const.KEY_POLL_NAME);
 
                         String startTime = jsonObj.getString(Const.KEY_START_TIME);
+
                         String endTime = jsonObj.getString(Const.KEY_END_TIME);
+
+                        String maxValue=jsonObj.getString(Const.KEY_MAX);
+
+                        String maxId=jsonObj.getString(Const.KEY_MAX_ID);
+
 
                         if (!startTime.equals("null")) {
                             poll_start_time = Utility.getCurrentTime(startTime);
@@ -194,7 +200,7 @@ public class PollService extends Service {
 
                         String poll_duration = jsonObj.getString(Const.KEY_POLL_DURATION);
 
-                        PollData pollData = new PollData(poll_id, poll_name, poll_start_time, poll_end_time, poll_duration);
+                        PollData pollData = new PollData(poll_id, poll_name, poll_start_time, poll_end_time, poll_duration,maxId,maxValue);
 
                         arrayListPollData.add(pollData);
 

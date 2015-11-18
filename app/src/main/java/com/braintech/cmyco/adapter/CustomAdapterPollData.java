@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.braintech.cmyco.R;
 import com.braintech.cmyco.objectclasses.PollData;
 import com.braintech.cmyco.objectclasses.PollOptions;
+import com.braintech.cmyco.utils.Fonts;
 
 import org.w3c.dom.Text;
 
@@ -67,6 +68,9 @@ public class CustomAdapterPollData extends BaseAdapter {
 
             holder.txtViewPollName = (TextView) convertView.findViewById(R.id.txtViewPollName);
             holder.txtViewPollOptions=(TextView)  convertView.findViewById(R.id.txtViewPollOptions);
+
+            Fonts.robotoRegular(context, holder.txtViewPollName);
+            Fonts.robotoRegular(context,  holder.txtViewPollOptions);
 
             convertView.setTag(holder);
         } else {
