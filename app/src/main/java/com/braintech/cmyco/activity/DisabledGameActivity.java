@@ -382,7 +382,7 @@ public class DisabledGameActivity extends AppCompatActivity {
 
                                 for (int i = 0; i < pollLength; i++) {
                                     xTitle[i] = String.valueOf(i + 1);
-                                    barDataStrings[i] = jsonObjectData.getString(String.valueOf(i + 1));
+                                    barDataStrings[i] = jsonObjectPollOption.getString(String.valueOf(i + 1));
 
                                 }
                             }
