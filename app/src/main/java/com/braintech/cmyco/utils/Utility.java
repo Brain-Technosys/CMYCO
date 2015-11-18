@@ -222,7 +222,7 @@ public class Utility {
             diff = Hours*3600+Mins*60+seconds;
 
             Log.e("diff",""+diff);*/
-            Log.e("mills",""+mills);
+           // Log.e("mills",""+mills);
         } catch(ParseException ex)
         {
             ex.printStackTrace();

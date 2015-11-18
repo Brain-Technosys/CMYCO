@@ -98,7 +98,7 @@ public class PollService extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
 
-        Log.e("Service", "Started");
+        //Log.e("Service", "Started");
         return START_STICKY;
     }
 
@@ -106,7 +106,7 @@ public class PollService extends Service {
     public void onDestroy() {
         super.onDestroy();
 
-        Log.e("Service", "Destroyed");
+       // Log.e("Service", "Destroyed");
     }
 
 
@@ -154,7 +154,7 @@ public class PollService extends Service {
             String jsonString = jsonParser.getJSONFromUrl(url);
 
 
-            Log.e("jsonString", jsonString);
+            //Log.e("jsonString", jsonString);
 
             try {
                 JSONObject jsonObject = new JSONObject(jsonString);
@@ -247,8 +247,8 @@ public class PollService extends Service {
 
                 String currentTime = Utility.getCurrentTime(server_time);
 
-                Log.e("server", server_time);
-                Log.e("currentTime", currentTime);
+                /*Log.e("server", server_time);
+                Log.e("currentTime", currentTime);*/
 
 
                 for (int i = 0; i < arrayListPollData.size(); i++) {

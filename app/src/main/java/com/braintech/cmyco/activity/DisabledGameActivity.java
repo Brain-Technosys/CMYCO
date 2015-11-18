@@ -392,11 +392,11 @@ public class DisabledGameActivity extends AppCompatActivity {
 
             String url = Const.GET_GRAPH + "team_id=" + pollsPref.getTeamId() + Const.TAG_GAME_ID + pollsPref.getActiveGame() + Const.TAG_POLL_ID + pollId;
 
-            Log.e("url", url);
+           // Log.e("url", url);
 
             String jsonString = jsonParser.getJSONFromUrl(url);
 
-            Log.e("jsonString", jsonString);
+            //Log.e("jsonString", jsonString);
 
             try {
                 JSONObject jsonObject = new JSONObject(jsonString);

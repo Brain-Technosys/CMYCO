@@ -238,14 +238,14 @@ public class GameActivity extends AppCompatActivity {
         //X axis title, currently it is static
         graphLabelXAxis = new ArrayList<>();
         for (int i = 0; i < xTStrings.length; i++) {
-            Log.e("xAxis", xTStrings[i]);
+           // Log.e("xAxis", xTStrings[i]);
             graphLabelXAxis.add(xTStrings[i]);
         }
 
         //getting data for
         valueSet = new ArrayList<>();
         for (int i = 0; i < barStrings.length; i++) {
-            Log.e("data", barStrings[i]);
+           // Log.e("data", barStrings[i]);
             BarEntry v1e1 = new BarEntry(Float.parseFloat(barStrings[i]), i); // 1
             valueSet.add(v1e1);
         }
@@ -362,13 +362,15 @@ public class GameActivity extends AppCompatActivity {
         //menu item id
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            if (!TIMER) {
+        if (!TIMER) {
+            //noinspection SimplifiableIfStatement
+            if (id == R.id.action_settings) {
+
                 //clearing session from sheared preference
                 logoutAPI.logout(snakeOnClickForLogout, coordinatorLayout);
+
+                return true;
             }
-            return true;
         }
 //        else if (id == android.R.id.home) {
 //            this.finish();
@@ -496,7 +498,7 @@ public class GameActivity extends AppCompatActivity {
 
                 String url = Const.RATING + "?user_id=" + pollsPref.getUserID() + "&game_id=" + pollsPref.getActiveGame() + "&poll_id=" + pollId + "&poll_option=" + catDefenceArrayList.get(position).getPoll_id() + "&team_id=" + pollsPref.getTeamId();
 
-                Log.e("url", url);
+                //Log.e("url", url);
 
                 String jsonString = jsonParser.getJSONFromUrl(url);
                 JSONObject jsonObject = new JSONObject(jsonString);
@@ -579,11 +581,11 @@ public class GameActivity extends AppCompatActivity {
 
             String url = Const.GET_GRAPH + "team_id=" + pollsPref.getTeamId() + Const.TAG_GAME_ID + pollsPref.getActiveGame() + Const.TAG_POLL_ID + pollId;
 
-            Log.e("url", url);
+           // Log.e("url", url);
 
             String jsonString = jsonParser.getJSONFromUrl(url);
 
-            Log.e("jsonString", jsonString);
+           // Log.e("jsonString", jsonString);
 
             try {
                 JSONObject jsonObject = new JSONObject(jsonString);
@@ -621,7 +623,7 @@ public class GameActivity extends AppCompatActivity {
                             //set duration
                             playCallDur = Long.parseLong(jsonObjectData.getString("playcall_time"));
                             playCallDur = playCallDur * 1000;
-                            Log.e("playCallDur", "" + playCallDur);
+                            //Log.e("playCallDur", "" + playCallDur);
                         }
 
 

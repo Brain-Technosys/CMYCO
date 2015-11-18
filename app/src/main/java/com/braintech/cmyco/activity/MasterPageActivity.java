@@ -279,7 +279,7 @@ public class MasterPageActivity extends AppCompatActivity {
             String url = Const.GET_ACTIVE_USERS;
             String jsonString = jsonParser.getJSONFromUrl(url);
 
-            Log.e("jsonString", jsonString);
+            //Log.e("jsonString", jsonString);
 
             try {
                 JSONObject jsonObject = new JSONObject(jsonString);

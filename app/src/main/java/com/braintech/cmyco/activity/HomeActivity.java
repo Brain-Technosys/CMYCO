@@ -246,9 +246,9 @@ public class HomeActivity extends AppCompatActivity {
             arrayListCoach.add(hashMapCoachTitle);
 
             String url = Const.GET_COACH_RESULT;
-            Log.e("url", url);
+            //Log.e("url", url);
             String urlString = jsonParser.getJSONFromUrl(url);
-            Log.e("urlString", urlString);
+           // Log.e("urlString", urlString);
             try {
 
 //                for (int j = 0; j < 2; j++) {

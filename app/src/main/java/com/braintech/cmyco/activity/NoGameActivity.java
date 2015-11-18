@@ -149,7 +149,7 @@ public class NoGameActivity extends AppCompatActivity {
                 String url = Const.SIGN_IN + Const.TAG_EMAIL + URLEncoder.encode(email, "UTF-8") +
                         Const.TAG_PASSWORD + URLEncoder.encode(password, "UTF-8");
 
-                Log.e("url", url);
+                //Log.e("url", url);
 
                 String jsonString = jsonParser.getJSONFromUrl(url);
                 JSONObject jsonObject = new JSONObject(jsonString);

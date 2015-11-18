@@ -132,7 +132,7 @@ public class InstructionActivityTwo extends AppCompatActivity {
             JsonParser jsonParser = new JsonParser(InstructionActivityTwo.this);
 
             String url = Const.GET_INSTRUCTION2;
-            Log.e(url, url);
+            //Log.e(url, url);
             String jsonString = jsonParser.getJSONFromUrl(url);
             try {
                 JSONObject jsonObject = new JSONObject(jsonString);

@@ -145,7 +145,7 @@ public class InstructionActivity extends AppCompatActivity {
                     }
                 }
 
-                handler.postDelayed(this, 40000);
+                handler.postDelayed(this, 20000);
             }
         }, 10000);
     }
@@ -246,7 +246,7 @@ public class InstructionActivity extends AppCompatActivity {
 
             //
             String url = Const.GET_INSTRUCTION + page;
-            Log.e(url, url);
+           // Log.e(url, url);
             String jsonString = jsonParser.getJSONFromUrl(url);
             try {
                 JSONObject jsonObject = new JSONObject(jsonString);
