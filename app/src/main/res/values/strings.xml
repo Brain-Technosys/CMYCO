@@ -70,6 +70,7 @@
     <!-- NO GAME ACTIVITY-->
     <string name="txt_no_game">There is no game available at this time.</string>
     <string name="title_activity_disabled_game">The Game</string>
+    <string name="btn_title_refresh">REFRESH</string>
 
 
 </resources>
