@@ -260,7 +260,7 @@ public class PollService extends Service {
 
                                 arrayListPollOpt.clear();
 
-                                long poll_duration = Utility.findTimeDifference(endTime, startTime);
+                                long poll_duration = Utility.findTimeDifference(endTime,currentTime);
 
                                 arrayListPollOpt = hashMapPollOptions.get(poll_id);
                                 Intent intent = new Intent(context, GameActivity.class);
