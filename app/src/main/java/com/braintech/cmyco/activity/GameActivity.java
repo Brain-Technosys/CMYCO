@@ -104,12 +104,12 @@ public class GameActivity extends AppCompatActivity {
 
     // graph colors
     String blue = "#14DDF9";
-    String violet = "#800080";
-    String darkPink = "#e75480";
-    String green = "#7CFC00";
-    String yellow = "#FFFF00";
-    String orange = "#FFA500";
-    String red = "#DC143C";
+    String color2 = "#22ca51";
+    String color3 = "#f56200";
+    String color4 = "#e8ba00";
+    String color5 = "#9b59b6";
+    String color6 = "#c0392b";
+    String color7 = "#14DDF9";
 
     String pollName;
 
@@ -204,17 +204,17 @@ public class GameActivity extends AppCompatActivity {
         if (pollId == 1) {
             graphItemColor = blue;
         } else if (pollId == 2) {
-            graphItemColor = violet;
+            graphItemColor = color2;
         } else if (pollId == 3) {
-            graphItemColor = darkPink;
+            graphItemColor = color3;
         } else if (pollId == 4) {
-            graphItemColor = green;
+            graphItemColor = color4;
         } else if (pollId == 5) {
-            graphItemColor = yellow;
+            graphItemColor = color5;
         } else if (pollId == 6) {
-            graphItemColor = orange;
+            graphItemColor = color6;
         } else if (pollId == 7) {
-            graphItemColor = red;
+            graphItemColor = color7;
         } else {
             graphItemColor = blue;
         }
