@@ -201,12 +201,14 @@ public class GameActivity extends AppCompatActivity {
         //X axis title, currently it is static
         graphLabelXAxis = new ArrayList<>();
         for (int i = 0; i < xTStrings.length; i++) {
+            Log.e("xAxis",xTStrings[i]);
             graphLabelXAxis.add(xTStrings[i]);
         }
 
         //getting data for
         valueSet = new ArrayList<>();
         for (int i = 0; i < barStrings.length; i++) {
+            Log.e("data",barStrings[i]);
             BarEntry v1e1 = new BarEntry(Float.parseFloat(barStrings[i]), i); // 1
             valueSet.add(v1e1);
         }
@@ -240,7 +242,7 @@ public class GameActivity extends AppCompatActivity {
         leftAxis.setEnabled(true);
         leftAxis.setAxisLineColor(Color.parseColor(graphItemColor));
         leftAxis.setAxisMinValue(0);
-        leftAxis.setAxisMaxValue(1000);
+        leftAxis.setAxisMaxValue(maxY);
 
         //Handling graph Y axis(Right) Content. making it invisible
 
@@ -641,7 +643,7 @@ public class GameActivity extends AppCompatActivity {
 
                                 for (int i = 0; i < pollLength; i++) {
                                     xTitle[i] = String.valueOf(i + 1);
-                                    barDataStrings[i] = jsonObjectData.getString(String.valueOf(i + 1));
+                                    barDataStrings[i] = jsonObjectPollOption.getString(String.valueOf(i + 1));
 
                                 }
                             }
@@ -702,7 +704,7 @@ public class GameActivity extends AppCompatActivity {
                 handleGraph(maxY);
                 // show play call
 
-                if (showPlayCall) {
+                if (!showPlayCall) {
                     txtPlayCall.setVisibility(View.VISIBLE);
                     txtPlayCall.setText(resultMaxPoll);
 
