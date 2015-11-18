@@ -203,19 +203,21 @@ public class MasterPageActivity extends AppCompatActivity {
 
                         ArrayList<PollOptions> arrayListPollOpt = new ArrayList<PollOptions>();
 
-                        for (int j = 0; j < jsonArrayPollOptions.length(); j++) {
+                        if(jsonArrayPollOptions.length()!=0) {
 
-                            JSONObject jsonObjOpt = jsonArrayPollOptions.getJSONObject(j);
+                            for (int j = 0; j < jsonArrayPollOptions.length(); j++) {
 
-                            String pollId = jsonObjOpt.getString(Const.KEY_POLL_ID);
+                                JSONObject jsonObjOpt = jsonArrayPollOptions.getJSONObject(j);
 
-                            String pollName = jsonObjOpt.getString(Const.KEY_POLL_NAME);
+                                String pollId = jsonObjOpt.getString(Const.KEY_POLL_ID);
 
-                            PollOptions pollOptions = new PollOptions(pollId, pollName);
+                                String pollName = jsonObjOpt.getString(Const.KEY_POLL_NAME);
 
-                            arrayListPollOpt.add(pollOptions);
+                                PollOptions pollOptions = new PollOptions(pollId, pollName);
+
+                                arrayListPollOpt.add(pollOptions);
+                            }
                         }
-
                         hashMapPollOptions.put(poll_id, arrayListPollOpt);
 
 
