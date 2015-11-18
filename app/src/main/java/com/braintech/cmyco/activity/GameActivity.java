@@ -75,6 +75,9 @@ public class GameActivity extends AppCompatActivity {
     @InjectView(R.id.txtPlayCall)
     TextView txtPlayCall;
 
+    @InjectView(R.id.playCallLayout)
+    LinearLayout playCallLayout;
+
     RadioButton[] catRadioButtons;
 
     UserSession userSession;
@@ -173,14 +176,14 @@ public class GameActivity extends AppCompatActivity {
                 .start();
 
         //Preparing data for graph
-     //   getGraphData(xTitle, barDataStrings);
+        //   getGraphData(xTitle, barDataStrings);
 
         handleLogoutRetry();
         handleRatingRetry();
         handleGraphRetry();
 
         // here we are Showing graph
-      //  handleGraph(maxY);
+        //  handleGraph(maxY);
     }
 
 
@@ -201,14 +204,14 @@ public class GameActivity extends AppCompatActivity {
         //X axis title, currently it is static
         graphLabelXAxis = new ArrayList<>();
         for (int i = 0; i < xTStrings.length; i++) {
-            Log.e("xAxis",xTStrings[i]);
+            Log.e("xAxis", xTStrings[i]);
             graphLabelXAxis.add(xTStrings[i]);
         }
 
         //getting data for
         valueSet = new ArrayList<>();
         for (int i = 0; i < barStrings.length; i++) {
-            Log.e("data",barStrings[i]);
+            Log.e("data", barStrings[i]);
             BarEntry v1e1 = new BarEntry(Float.parseFloat(barStrings[i]), i); // 1
             valueSet.add(v1e1);
         }
@@ -268,7 +271,7 @@ public class GameActivity extends AppCompatActivity {
         //  chart.setGridBackgroundColor(Color.parseColor("#010f1a"));
 
         chart.setPinchZoom(false);
-       // chart.setScaleMinima(2f, 1f);
+        // chart.setScaleMinima(2f, 1f);
         chart.setDrawBarShadow(false);
         chart.setDrawGridBackground(false);
         chart.animateXY(2000, 2000);
@@ -650,39 +653,18 @@ public class GameActivity extends AppCompatActivity {
 
                             //getting max Poll result
                             resultMaxPoll = "PLAY CALL :" + jsonObjectData.getString(String.valueOf("max_id"));
-                            maxId = jsonObjectData.getString(String.valueOf("max_id"))+"."+jsonObjectData.getString(String.valueOf("max"));
+                            maxId = jsonObjectData.getString(String.valueOf("max_id")) + "." + jsonObjectData.getString(String.valueOf("max"));
 
                             //set max value for Graph Y axis
                             maxY = jsonObjectData.getInt("max_value");
 
                             //set duration
                             playCallDur = Long.parseLong(jsonObjectData.getString("playcall_time"));
-
+                            Log.e("playCallDur", "" + playCallDur);
                         }
-                        //  JSONArray jsonArrayGraphData = jsonObject.getJSONArray(Const.KEY_DATA);
 
 
-//                        for (int i = 0; i < jsonArrayGraphData.length(); i++) {
-//                            JSONObject jsonObjectPoleOption = jsonArrayGraphData.getJSONObject(i);
-//
-//                            if (jsonObjectPoleOption != null) {
-//                                JSONArray jsonArrayGraph = jsonObjectPoleOption.getJSONArray("PollOption");
-//
-//                                xTitle = new String[jsonArrayGraph.length()];
-//                                barDataStrings = new String[jsonArrayGraph.length()];
-//
-//                                for (int j = 0; j < jsonArrayGraph.length(); j++) {
-//                                    JSONObject jsonObjectData = jsonArrayGraph.getJSONObject(i);
-//
-//                                    xTitle[j] = String.valueOf(j + 1);
-//                                    //  barDataStrings[j] = jsonObjectData.getString();
-//
-//                                }
-//
-//                                //   barDataStrings[i] = jsonObjectGraph.getString()
-//                            }
-//                        }
-//                    } else {
+                    } else {
                         msg = jsonObject.getString(Const.KEY_MSG);
                     }
                 }
@@ -704,8 +686,8 @@ public class GameActivity extends AppCompatActivity {
                 handleGraph(maxY);
                 // show play call
 
-                if (!showPlayCall) {
-                    txtPlayCall.setVisibility(View.VISIBLE);
+                if (showPlayCall) {
+                    playCallLayout.setVisibility(View.VISIBLE);
                     txtPlayCall.setText(resultMaxPoll);
 
                     final Handler handler = new Handler();
