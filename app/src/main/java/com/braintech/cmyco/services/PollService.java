@@ -87,6 +87,8 @@ public class PollService extends Service {
 
         pollsPref = new PollsPref(this);
 
+        pollsPref.pollActivated(false);
+
 
     }
 

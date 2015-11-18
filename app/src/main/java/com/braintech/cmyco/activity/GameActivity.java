@@ -713,6 +713,7 @@ public class GameActivity extends AppCompatActivity {
                             //Do something after 100ms
 
                             pollsPref.saveOptions(maxId);
+                            pollsPref.pollActivated(false);
                             Intent intent = new Intent(GameActivity.this, MasterPageActivity.class);
                             startActivity(intent);
                         }
