@@ -318,6 +318,7 @@ public class MasterPageActivity extends AppCompatActivity {
         Bundle bundle = new Bundle();
         bundle.putString(Const.KEY_POLL_NAME, pollName);
         bundle.putSerializable(Const.TAG_POLL_OPTION, arrayListPollOpt);
+        bundle.putInt(Const.KEY_POLL_ID, poll_id);
         intent.putExtras(bundle);
         startActivity(intent);
 

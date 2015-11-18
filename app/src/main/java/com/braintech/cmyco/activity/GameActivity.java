@@ -170,7 +170,9 @@ public class GameActivity extends AppCompatActivity {
 
                 TIMER = false;
                 showPlayCall = true;
+
                 disableRadioButtons();
+                txtViewTimer.setVisibility(View.GONE);
             }
         }
                 .start();
@@ -660,6 +662,7 @@ public class GameActivity extends AppCompatActivity {
 
                             //set duration
                             playCallDur = Long.parseLong(jsonObjectData.getString("playcall_time"));
+                            playCallDur = playCallDur * 1000;
                             Log.e("playCallDur", "" + playCallDur);
                         }
 

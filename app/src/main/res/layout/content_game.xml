@@ -90,6 +90,8 @@
                     android:id="@+id/txtPlayCall"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:gravity="center_horizontal|center_vertical"
+                    android:padding="10dp"
                     android:background="@drawable/play_btn"
                     android:textAppearance="?android:attr/textAppearanceLarge" />
 

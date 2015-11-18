@@ -61,8 +61,8 @@ public class DisabledGameActivity extends AppCompatActivity {
     @InjectView(R.id.chart)
     BarChart chart;
 
-    @InjectView(R.id.playCallLayout)
-    LinearLayout playCallLayout;
+//    @InjectView(R.id.playCallLayout)
+//    LinearLayout playCallLayout;
 
     RadioButton[] catRadioButtons;
 
@@ -105,7 +105,7 @@ public class DisabledGameActivity extends AppCompatActivity {
 
         handleToolbar();
 
-        playCallLayout.setVisibility(View.GONE);
+     //   playCallLayout.setVisibility(View.GONE);
 
         alertDialogManager = new AlertDialogManager();
 
