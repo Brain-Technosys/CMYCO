@@ -349,7 +349,7 @@ public class GameActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-       
+
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.setting_menu, menu);
 
@@ -364,10 +364,10 @@ public class GameActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
-
-            //clearing session from sheared preference
-            logoutAPI.logout(snakeOnClickForLogout, coordinatorLayout);
-
+            if (!TIMER) {
+                //clearing session from sheared preference
+                logoutAPI.logout(snakeOnClickForLogout, coordinatorLayout);
+            }
             return true;
         }
 //        else if (id == android.R.id.home) {
