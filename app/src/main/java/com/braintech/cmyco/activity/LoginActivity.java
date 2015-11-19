@@ -146,7 +146,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private void doLogin() {
 //
-        Utility.hideSoftKeyboard(LoginActivity.this);
+//        Utility.hideSoftKeyboard(LoginActivity.this);
         getData();
         validateData();
     }

@@ -184,15 +184,15 @@ public class Utility {
 
     }*/
 
-    public static String getCurrentTime(String time,String timeZone) {
+    public static String getCurrentTime(String time, String timeZone) {
 
-        Date myDate=null;
+        Date myDate = null;
 
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("hh:mm:ss aa");
         TimeZone utcZone = TimeZone.getTimeZone(timeZone);
         simpleDateFormat.setTimeZone(utcZone);
         try {
-           myDate = simpleDateFormat.parse(time);
+            myDate = simpleDateFormat.parse(time);
         } catch (ParseException ex) {
             ex.printStackTrace();
         }
@@ -203,9 +203,8 @@ public class Utility {
         return formattedDate;
     }
 
-    public static long findTimeDifference(String endTime,String startTime)
-    {
-        long mills=0;
+    public static long findTimeDifference(String endTime, String startTime) {
+        long mills = 0;
 
         SimpleDateFormat format = new SimpleDateFormat("HH:mm:ss");
         try {
@@ -222,9 +221,8 @@ public class Utility {
             diff = Hours*3600+Mins*60+seconds;
 
             Log.e("diff",""+diff);*/
-           // Log.e("mills",""+mills);
-        } catch(ParseException ex)
-        {
+            // Log.e("mills",""+mills);
+        } catch (ParseException ex) {
             ex.printStackTrace();
         }
 
