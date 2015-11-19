@@ -71,6 +71,9 @@ public class GameActivity extends AppCompatActivity {
     @InjectView(R.id.txtViewTimer)
     TextView txtViewTimer;
 
+    @InjectView(R.id.txtViewTimerText)
+    TextView txtViewTimerText;
+
     @InjectView(R.id.ll_cat_no)
     LinearLayout ll_cat_no;
 
@@ -99,6 +102,7 @@ public class GameActivity extends AppCompatActivity {
     int maxY = 1000;
 
     boolean isActivityStarted = false;
+    boolean isButtonClicked=false;
 
     String graphItemColor = "#14DDF9";
     String graphBgColor = "#010f1a";
@@ -169,7 +173,15 @@ public class GameActivity extends AppCompatActivity {
         new CountDownTimer(pollDuration, 1000) {//CountDownTimer(edittext1.getText()+edittext2.getText()) also parse it to long
 
             public void onTick(long millisUntilFinished) {
-                txtViewTimer.setText("Time Left: " + millisUntilFinished / 1000);
+
+                if(!isButtonClicked) {
+                    txtViewTimerText.setText("Time Left: ");
+                }
+                else
+                {
+                    txtViewTimerText.setText("Waiting for playcall: ");
+                }
+                txtViewTimer.setText(""+millisUntilFinished / 1000);
 
             }
 
@@ -180,6 +192,7 @@ public class GameActivity extends AppCompatActivity {
 
                 disableRadioButtons();
                 txtViewTimer.setVisibility(View.GONE);
+                txtViewTimerText.setVisibility(View.GONE);
             }
         }
                 .start();
@@ -199,6 +212,7 @@ public class GameActivity extends AppCompatActivity {
         Fonts.robotoRegular(this, defenceTextView);
         Fonts.robotoRegular(this, txtPlayCall);
         Fonts.robotoRegular(this, txtViewTimer);
+        Fonts.robotoRegular(this,txtViewTimerText);
     }
 
     private void setGraphColor() {
@@ -448,6 +462,7 @@ public class GameActivity extends AppCompatActivity {
     }
 
     private void disableRadioButtons() {
+        isButtonClicked=true;
         callgraphAPI();
         for (int i = 0; i < defenceRadioGroup.getChildCount(); i++) {
             ((RadioButton) defenceRadioGroup.getChildAt(i)).setEnabled(false);
