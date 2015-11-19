@@ -11,7 +11,9 @@ import java.text.DecimalFormat;
  */
 public class DefaultYAxisValueFormatter implements YAxisValueFormatter {
 
-    /** decimalformat for formatting */
+    /**
+     * decimalformat for formatting
+     */
     private DecimalFormat mFormat;
 
     /**
@@ -35,6 +37,9 @@ public class DefaultYAxisValueFormatter implements YAxisValueFormatter {
     @Override
     public String getFormattedValue(float value, YAxis yAxis) {
         // avoid memory allocations here (for performance)
-        return mFormat.format(value);
+//        String myYValue=mFormat.format(value);
+        String myYValue = String.valueOf((int) value);
+
+        return myYValue;
     }
 }

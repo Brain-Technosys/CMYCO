@@ -259,6 +259,7 @@ public class YAxis extends AxisBase {
 	}
 
 	public float getAxisMaxValue() {
+
 		return mCustomAxisMax;
 	}
 

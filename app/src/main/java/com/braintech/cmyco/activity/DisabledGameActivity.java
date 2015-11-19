@@ -244,7 +244,7 @@ public class DisabledGameActivity extends AppCompatActivity {
         leftAxis.setTextColor(Color.parseColor(graphItemColor));
         leftAxis.setPosition(YAxis.YAxisLabelPosition.OUTSIDE_CHART);
         leftAxis.setDrawGridLines(false);
-        leftAxis.setLabelCount(5, true);
+        leftAxis.setLabelCount(2, true);
         leftAxis.setDrawAxisLine(true);
         leftAxis.setEnabled(true);
         leftAxis.setAxisLineColor(Color.parseColor(graphItemColor));
