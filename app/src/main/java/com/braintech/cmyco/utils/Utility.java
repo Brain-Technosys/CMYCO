@@ -184,12 +184,12 @@ public class Utility {
 
     }*/
 
-    public static String getCurrentTime(String time) {
+    public static String getCurrentTime(String time,String timeZone) {
 
         Date myDate=null;
 
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("hh:mm:ss aa");
-        TimeZone utcZone = TimeZone.getTimeZone("UTC");
+        TimeZone utcZone = TimeZone.getTimeZone(timeZone);
         simpleDateFormat.setTimeZone(utcZone);
         try {
            myDate = simpleDateFormat.parse(time);

@@ -132,12 +132,15 @@ public class PollService extends Service {
 
         String msg;
 
+        String serverTime;
+        String timeZone;
+
 
         ArrayList<PollOptions> arrayListPollOpt;
         ArrayList<PollData> arrayListPollData;
         HashMap<Integer, ArrayList<PollOptions>> hashMapPollOptions;
 
-        String serverTime;
+
 
         @Override
         protected void onPreExecute() {
@@ -165,6 +168,7 @@ public class PollService extends Service {
                     result = jsonObject.getInt(Const.KEY_RESULT);
 
                     serverTime = jsonObject.getString(Const.KEY_POLL_SERVER_TIME);
+                    timeZone=jsonObject.getString(Const.KEY_TIME_ZONE);
 
 
                     JSONArray jsonArrayPolLData = jsonObject.getJSONArray(Const.KEY_POLL_DATA);
@@ -191,11 +195,11 @@ public class PollService extends Service {
 
 
                         if (!startTime.equals("null")) {
-                            poll_start_time = Utility.getCurrentTime(startTime);
+                            poll_start_time = Utility.getCurrentTime(startTime,timeZone);
                         }
 
                         if (!endTime.equals("null")) {
-                            poll_end_time = Utility.getCurrentTime(endTime);
+                            poll_end_time = Utility.getCurrentTime(endTime,timeZone);
                         }
 
                         String poll_duration = jsonObj.getString(Const.KEY_POLL_DURATION);
@@ -245,10 +249,10 @@ public class PollService extends Service {
 
                 String server_time = Utility.convertDateFormat(serverTime);
 
-                String currentTime = Utility.getCurrentTime(server_time);
+                String currentTime = Utility.getCurrentTime(server_time,timeZone);
 
-                /*Log.e("server", server_time);
-                Log.e("currentTime", currentTime);*/
+                Log.e("server", server_time);
+                Log.e("currentTime", currentTime);
 
 
                 for (int i = 0; i < arrayListPollData.size(); i++) {

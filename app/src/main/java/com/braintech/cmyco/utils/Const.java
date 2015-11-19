@@ -59,7 +59,7 @@ public class Const {
     public static String TAG_EMAIL = "email=";
 
     //Active game
-    public static String TAG_TEAMID = "team_id=";
+    public static String TAG_TEAMID = "team_id";
 
     public static String KEY_POLL_OPTION = "poll_options";
     public static String KEY_POLL_DATA = "polldata";
@@ -71,6 +71,7 @@ public class Const {
     public static String KEY_POLL_SERVER_TIME = "server_time";
     public static String KEY_MAX_ID = "max_id";
     public static String KEY_MAX = "max";
+    public static String KEY_TIME_ZONE ="timezone";
 
 
     //Rating TAG

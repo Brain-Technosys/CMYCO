@@ -39,6 +39,7 @@ import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
+import com.github.mikephil.charting.formatter.ValueFormatter;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -97,7 +98,7 @@ public class GameActivity extends AppCompatActivity {
     int tag; //for rating
     int maxY = 1000;
 
-    boolean firstTime = true;
+    boolean isActivityStarted = false;
 
     String graphItemColor = "#14DDF9";
     String graphBgColor = "#010f1a";
@@ -320,8 +321,9 @@ public class GameActivity extends AppCompatActivity {
         chart.setNoDataText("No chart data available."); // this is the top line
         chart.setNoDataTextDescription("..."); // this is one line below the no-data-text
         chart.invalidate();
-    }
 
+
+    }
 
     private ArrayList<BarDataSet> getDataSet() {
         ArrayList<BarDataSet> dataSets = null;
@@ -661,8 +663,12 @@ public class GameActivity extends AppCompatActivity {
 
                             pollsPref.saveOptions(maxId);
                             pollsPref.pollActivated(false);
-                            Intent intent = new Intent(GameActivity.this, MasterPageActivity.class);
-                            startActivity(intent);
+
+                            if(!isActivityStarted) {
+                                isActivityStarted=true;
+                                Intent intent = new Intent(GameActivity.this, MasterPageActivity.class);
+                                startActivity(intent);
+                            }
                         }
                     }, playCallDur);
                 }
