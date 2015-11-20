@@ -338,7 +338,7 @@ public class HomeActivity extends AppCompatActivity {
 //                result = 1;
 
                 JSONObject jsonObject = new JSONObject(urlString);
-                Log.d("jsonObject", jsonObject.toString());
+                //Log.d("jsonObject", jsonObject.toString());
 
 //                if (Integer.parseInt(strings[0]) == 1) {
 //                    jsonObject = new JSONObject(pollsPref.getTeam1Detail());
