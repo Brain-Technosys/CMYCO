@@ -104,8 +104,6 @@ public class LoginActivity extends AppCompatActivity {
 
         pollsPref = new PollsPref(this);
 
-        pollsPref.pollActivated(true);
-
         handleSnakeRetryCall();
 
         setFont();
@@ -294,7 +292,7 @@ public class LoginActivity extends AppCompatActivity {
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
             if (result == 1) {
-                userSession.storeLoginDetail(email, password);
+                userSession.storeLoginDetail(email, password,hashMapLoginDetail.get(Const.KEY_ID));
                 if (activeGame != 0) {
 
                     //Calling GetPoll API from Common Class
