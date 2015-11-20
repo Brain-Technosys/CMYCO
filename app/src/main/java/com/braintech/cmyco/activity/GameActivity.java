@@ -9,6 +9,7 @@ import android.os.Handler;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -232,6 +233,8 @@ public class GameActivity extends AppCompatActivity {
 
 
     private void handleLogoutRetry() {
+
+        isActivityStarted = true;
         snakeOnClickForLogout = new SnakeOnClick() {
             @Override
             public void onRetryClick() {
@@ -388,6 +391,7 @@ public class GameActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         if (!TIMER) {
+            isActivityStarted = true;
             //noinspection SimplifiableIfStatement
             if (id == R.id.action_settings) {
 
@@ -688,8 +692,9 @@ public class GameActivity extends AppCompatActivity {
                             pollsPref.saveOptions(maxId);
                             pollsPref.pollActivated(false);
 
+                            Log.e("isactivated",""+isActivityStarted);
+
                             if (!isActivityStarted) {
-                                isActivityStarted = true;
                                 Intent intent = new Intent(GameActivity.this, GamePlayStrategyActivity.class);
                                 startActivity(intent);
                             }

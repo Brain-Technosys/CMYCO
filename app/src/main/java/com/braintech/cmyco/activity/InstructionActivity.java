@@ -137,15 +137,19 @@ public class InstructionActivity extends AppCompatActivity {
             @Override
             public void run() {
                 //Do something after 100ms
-                if (pollService != null) {
-                    if (pollsPref.isPollActivated()) {
-                        //do nothing
-                    } else {
-                        pollService.getPollData(InstructionActivity.this);
-                    }
-                }
+                if (pollsPref.getTeam() != null) {
+                    if (pollService != null) {
 
-                handler.postDelayed(this, 20000);
+
+                        if (pollsPref.isPollActivated()) {
+                            //do nothing
+                        } else {
+                            pollService.getPollData(InstructionActivity.this);
+                        }
+                    }
+
+                    handler.postDelayed(this, 20000);
+                }
             }
         }, 10000);
     }
