@@ -693,7 +693,7 @@ public class GameActivity extends AppCompatActivity {
                             pollsPref.saveOptions(maxId);
                             pollsPref.pollActivated(false);
 
-                            Log.e("isactivated",""+isActivityStarted);
+                           // Log.e("isactivated",""+isActivityStarted);
 
                             if (!isActivityStarted) {
                                 Intent intent = new Intent(GameActivity.this, GamePlayStrategyActivity.class);

@@ -251,8 +251,8 @@ public class PollService extends Service {
 
                 String currentTime = Utility.getCurrentTime(server_time, timeZone);
 
-                Log.e("server", server_time);
-                Log.e("currentTime", currentTime);
+               /* Log.e("server", server_time);
+                Log.e("currentTime", currentTime);*/
 
 
                 for (int i = 0; i < arrayListPollData.size(); i++) {
