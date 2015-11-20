@@ -5,14 +5,10 @@ import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.webkit.WebView;
 
 import com.braintech.cmyco.R;
@@ -109,7 +105,7 @@ public class InstructionActivityTwo extends AppCompatActivity {
 
     @OnClick(R.id.btn_continue)
     void goNext() {
-        Intent intent = new Intent(this, MasterPageActivity.class);
+        Intent intent = new Intent(this, GamePlayStrategyActivity.class);
         startActivity(intent);
     }
 

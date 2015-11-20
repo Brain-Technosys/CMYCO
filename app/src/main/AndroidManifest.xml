@@ -69,7 +69,7 @@
             android:label="@string/title_activity_instruction_page_two"
             android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity
-            android:name=".activity.MasterPageActivity"
+            android:name=".activity.GamePlayStrategyActivity"
             android:label="@string/title_activity_master_page"
             android:theme="@style/AppTheme.NoActionBar"></activity>
 

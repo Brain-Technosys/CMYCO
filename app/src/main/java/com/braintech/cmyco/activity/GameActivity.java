@@ -9,7 +9,6 @@ import android.os.Handler;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -39,9 +38,7 @@ import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
-import com.github.mikephil.charting.formatter.ValueFormatter;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -414,7 +411,7 @@ public class GameActivity extends AppCompatActivity {
         if (!TIMER) {
             super.onBackPressed();
 
-            Intent intent = new Intent(GameActivity.this, MasterPageActivity.class);
+            Intent intent = new Intent(GameActivity.this, GamePlayStrategyActivity.class);
             startActivity(intent);
         }
 
@@ -693,7 +690,7 @@ public class GameActivity extends AppCompatActivity {
 
                             if (!isActivityStarted) {
                                 isActivityStarted = true;
-                                Intent intent = new Intent(GameActivity.this, MasterPageActivity.class);
+                                Intent intent = new Intent(GameActivity.this, GamePlayStrategyActivity.class);
                                 startActivity(intent);
                             }
                         }

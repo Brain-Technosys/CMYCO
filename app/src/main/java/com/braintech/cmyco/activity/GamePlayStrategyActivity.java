@@ -1,18 +1,13 @@
 package com.braintech.cmyco.activity;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -35,16 +30,14 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
-import butterknife.OnClick;
 import butterknife.OnItemClick;
 
-public class MasterPageActivity extends AppCompatActivity {
+public class GamePlayStrategyActivity extends AppCompatActivity {
 
     @InjectView(R.id.coordinatorLayout)
     CoordinatorLayout coordinatorLayout;
@@ -76,7 +69,7 @@ public class MasterPageActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_master_page);
+        setContentView(R.layout.activity_game_play_strategy);
         ButterKnife.inject(this);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -157,14 +150,14 @@ public class MasterPageActivity extends AppCompatActivity {
         protected void onPreExecute() {
             super.onPreExecute();
 
-            Progress.start(MasterPageActivity.this);
+            Progress.start(GamePlayStrategyActivity.this);
         }
 
         @Override
         protected String doInBackground(String... strings) {
             try {
 
-                JsonParser jsonParser = new JsonParser(MasterPageActivity.this);
+                JsonParser jsonParser = new JsonParser(GamePlayStrategyActivity.this);
 
                 String url = Const.GET_ACTIVE_GAME_DETAIL+"?"+Const.TAG_TEAMID+"="+pollsPref.getTeamId();
                 String jsonString = jsonParser.getJSONFromUrl(url);
@@ -245,7 +238,7 @@ public class MasterPageActivity extends AppCompatActivity {
             if (result == 1) {
                 addDataToListView();
             } else {
-                alertDialogManager.showAlertDialog(MasterPageActivity.this, getString(R.string.server_not_responding));
+                alertDialogManager.showAlertDialog(GamePlayStrategyActivity.this, getString(R.string.server_not_responding));
             }
 
             getActiveUsers();
@@ -269,12 +262,12 @@ public class MasterPageActivity extends AppCompatActivity {
         protected void onPreExecute() {
             super.onPreExecute();
 
-            Progress.start(MasterPageActivity.this);
+            Progress.start(GamePlayStrategyActivity.this);
         }
 
         @Override
         protected String doInBackground(String... strings) {
-            JsonParser jsonParser = new JsonParser(MasterPageActivity.this);
+            JsonParser jsonParser = new JsonParser(GamePlayStrategyActivity.this);
 
             String url = Const.GET_ACTIVE_USERS;
             String jsonString = jsonParser.getJSONFromUrl(url);
@@ -312,9 +305,9 @@ public class MasterPageActivity extends AppCompatActivity {
                 txt_active_users.setText("ACTIVE USERS: " + activeUsers);
 
             } else if (result == 0) {
-                alertDialogManager.showAlertDialog(MasterPageActivity.this, msg);
+                alertDialogManager.showAlertDialog(GamePlayStrategyActivity.this, msg);
             } else {
-                alertDialogManager.showAlertDialog(MasterPageActivity.this, getString(R.string.server_not_responding));
+                alertDialogManager.showAlertDialog(GamePlayStrategyActivity.this, getString(R.string.server_not_responding));
             }
         }
 
