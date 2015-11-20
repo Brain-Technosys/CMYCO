@@ -288,13 +288,13 @@ public class GameActivity extends AppCompatActivity {
         leftAxis.setTextColor(Color.parseColor(graphItemColor));
         leftAxis.setPosition(YAxis.YAxisLabelPosition.OUTSIDE_CHART);
         leftAxis.setDrawGridLines(false);
-        leftAxis.setLabelCount(3, true);
+        leftAxis.setLabelCount(5, true);
         leftAxis.setDrawAxisLine(true);
         leftAxis.setEnabled(true);
         leftAxis.setAxisLineColor(Color.parseColor(graphItemColor));
         leftAxis.setAxisMinValue(0);
         leftAxis.setAxisLineWidth(2);
-        leftAxis.setAxisMaxValue(getYAxisData(maxY, 2));
+        leftAxis.setAxisMaxValue(maxY);
 
         //Handling graph Y axis(Right) Content. making it invisible
 

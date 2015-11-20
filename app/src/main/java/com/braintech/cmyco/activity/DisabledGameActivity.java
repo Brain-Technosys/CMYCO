@@ -231,6 +231,7 @@ public class DisabledGameActivity extends AppCompatActivity {
         XAxis xAxis = chart.getXAxis();
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
         xAxis.setSpaceBetweenLabels(0);
+        xAxis.setAxisLineWidth(2);
         xAxis.setTextSize(10);
         xAxis.setDrawGridLines(false);
         xAxis.setValues(graphLabelXAxis);
@@ -247,6 +248,7 @@ public class DisabledGameActivity extends AppCompatActivity {
         leftAxis.setLabelCount(5, true);
         leftAxis.setDrawAxisLine(true);
         leftAxis.setEnabled(true);
+        leftAxis.setAxisLineWidth(2);
         leftAxis.setAxisLineColor(Color.parseColor(graphItemColor));
         leftAxis.setAxisMinValue(0);
         leftAxis.setAxisMaxValue(maxY);
