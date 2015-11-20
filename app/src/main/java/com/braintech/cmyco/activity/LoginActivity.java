@@ -92,6 +92,8 @@ public class LoginActivity extends AppCompatActivity {
 
         ButterKnife.inject(this);
 
+
+
         loginActivity = this;
 
         alertDialogManager = new AlertDialogManager();
@@ -101,6 +103,8 @@ public class LoginActivity extends AppCompatActivity {
         commonAPI = new CommonAPI(LoginActivity.this);
 
         pollsPref = new PollsPref(this);
+
+        pollsPref.pollActivated(true);
 
         handleSnakeRetryCall();
 

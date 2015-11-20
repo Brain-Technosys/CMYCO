@@ -37,7 +37,7 @@ public class JsonParser {
     }
 
     public String getJSONFromUrl(String url) {
-        Log.v("URL ", " " + url);
+
         HttpURLConnection c = null;
         try {
             URL u = new URL(url);

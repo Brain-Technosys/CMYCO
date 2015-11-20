@@ -78,6 +78,7 @@ public class CommonAPI {
             JsonParser jsonParser = new JsonParser(context);
 
             String url = Const.GET_LOG_OUT + strings[0];
+            Log.e("url",url);
             String jsonString = jsonParser.getJSONFromUrl(url);
 
            // Log.e("jsonString", jsonString);
