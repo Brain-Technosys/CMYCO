@@ -697,6 +697,7 @@ public class GameActivity extends AppCompatActivity {
 
                             if (!isActivityStarted) {
                                 Intent intent = new Intent(GameActivity.this, GamePlayStrategyActivity.class);
+                                finish();
                                 startActivity(intent);
                             }
                         }

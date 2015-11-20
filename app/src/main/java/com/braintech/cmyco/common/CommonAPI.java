@@ -111,6 +111,8 @@ public class CommonAPI {
                 pollsPref.clearPollData();
 
                 Intent intent = new Intent((Activity) context, LoginActivity.class);
+
+                ((Activity) context).finish();
                 context.startActivity(intent);
 
             } else if (result == 0) {
