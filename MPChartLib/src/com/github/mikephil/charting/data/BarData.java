@@ -12,7 +12,7 @@ import java.util.List;
 public class BarData extends BarLineScatterCandleBubbleData<BarDataSet> {
 
     /** the space that is left between groups of bars */
-    private float mGroupSpace = 0.8f;
+    private long mGroupSpace = 0;
 
     // /**
     // * The maximum space (in pixels on the screen) a single bar can consume.
@@ -60,10 +60,10 @@ public class BarData extends BarLineScatterCandleBubbleData<BarDataSet> {
      * 
      * @return
      */
-    public float getGroupSpace() {
+    public long getGroupSpace() {
 
         if (mDataSets.size() <= 1)
-            return 0f;
+            return 0;
         else
             return mGroupSpace;
     }
@@ -75,8 +75,8 @@ public class BarData extends BarLineScatterCandleBubbleData<BarDataSet> {
      * 
      * @param percent
      */
-    public void setGroupSpace(float percent) {
-        mGroupSpace = percent / 100f;
+    public void setGroupSpace(long percent) {
+        mGroupSpace = percent / 100;
     }
 
     /**

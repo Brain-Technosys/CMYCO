@@ -21,7 +21,7 @@ public class YAxis extends AxisBase {
 	protected YAxisValueFormatter mYAxisValueFormatter;
 
 	/** the actual array of entries */
-	public float[] mEntries = new float[] {};
+	public int[] mEntries = new int[] {};
 
 	/** the number of entries the legend contains */
 	public int mEntryCount;

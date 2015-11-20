@@ -38,8 +38,6 @@ public class DefaultYAxisValueFormatter implements YAxisValueFormatter {
     public String getFormattedValue(float value, YAxis yAxis) {
         // avoid memory allocations here (for performance)
 //        String myYValue=mFormat.format(value);
-        String myYValue = String.valueOf((int) value);
-
-        return myYValue;
+        return mFormat.format(value);
     }
 }

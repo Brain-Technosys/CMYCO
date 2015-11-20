@@ -36,7 +36,7 @@ public class YAxisRendererRadarChart extends YAxisRenderer {
         double range = Math.abs(yMax - yMin);
 
         if (labelCount == 0 || range <= 0) {
-            mYAxis.mEntries = new float[]{};
+            mYAxis.mEntries = new int[]{};
             mYAxis.mEntryCount = 0;
             return;
         }
@@ -59,13 +59,13 @@ public class YAxisRendererRadarChart extends YAxisRenderer {
 
             if (mYAxis.mEntries.length < labelCount) {
                 // Ensure stops contains at least numStops elements.
-                mYAxis.mEntries = new float[labelCount];
+                mYAxis.mEntries = new int[labelCount];
             }
 
             float v = min;
 
             for (int i = 0; i < labelCount; i++) {
-                mYAxis.mEntries[i] = v;
+                mYAxis.mEntries[i] = (int)v;
                 v += step;
             }
 
@@ -76,9 +76,9 @@ public class YAxisRendererRadarChart extends YAxisRenderer {
             if (mYAxis.isShowOnlyMinMaxEnabled()) {
 
                 mYAxis.mEntryCount = 2;
-                mYAxis.mEntries = new float[2];
-                mYAxis.mEntries[0] = yMin;
-                mYAxis.mEntries[1] = yMax;
+                mYAxis.mEntries = new int[2];
+                mYAxis.mEntries[0] =(int) yMin;
+                mYAxis.mEntries[1] = (int)yMax;
 
             } else {
 
@@ -109,11 +109,11 @@ public class YAxisRendererRadarChart extends YAxisRenderer {
 
                 if (mYAxis.mEntries.length < n) {
                     // Ensure stops contains at least numStops elements.
-                    mYAxis.mEntries = new float[n];
+                    mYAxis.mEntries = new int[n];
                 }
 
                 for (f = first, i = 0; i < n; f += interval, ++i) {
-                    mYAxis.mEntries[i] = (float) f;
+                    mYAxis.mEntries[i] = (int) f;
                 }
             }
         }

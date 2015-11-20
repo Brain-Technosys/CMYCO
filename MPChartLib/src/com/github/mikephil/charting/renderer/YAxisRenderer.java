@@ -73,80 +73,85 @@ public class YAxisRenderer extends AxisRenderer {
         double range = Math.abs(yMax - yMin);
 
         if (labelCount == 0 || range <= 0) {
-            mYAxis.mEntries = new float[]{};
+            mYAxis.mEntries = new int[]{};
             mYAxis.mEntryCount = 0;
             return;
         }
-
-        double rawInterval = range / labelCount;
-        double interval = Utils.roundToNextSignificant(rawInterval);
-        double intervalMagnitude = Math.pow(10, (int) Math.log10(interval));
-        int intervalSigDigit = (int) (interval / intervalMagnitude);
-        if (intervalSigDigit > 5) {
-            // Use one order of magnitude higher, to avoid intervals like 0.9 or
-            // 90
-            interval = Math.floor(10 * intervalMagnitude);
-        }
-
-        // force label count
-        if (mYAxis.isForceLabelsEnabled()) {
-
-            float step = (float) range / (float) (labelCount - 1);
-            mYAxis.mEntryCount = labelCount;
-
-            if (mYAxis.mEntries.length < labelCount) {
-                // Ensure stops contains at least numStops elements.
-                mYAxis.mEntries = new float[labelCount];
+        try {
+            int rawInterval = (int) range / labelCount;
+            float interval = Utils.roundToNextSignificant(rawInterval);
+            Double intervalMagnitude =  Math.pow(10, (int) Math.log10(interval));
+            int intervalSigDigit = (int) (interval / intervalMagnitude);
+            if (intervalSigDigit > 5) {
+                // Use one order of magnitude higher, to avoid intervals like 0.9 or
+                // 90
+                interval = (int) Math.floor(10 * intervalMagnitude);
             }
 
-            float v = min;
 
-            for (int i = 0; i < labelCount; i++) {
-                mYAxis.mEntries[i] = v;
-                v += step;
-            }
+            // force label count
+            if (mYAxis.isForceLabelsEnabled()) {
 
-            // no forced count
-        } else {
+                float step = (float) range / (float) (labelCount - 1);
+                mYAxis.mEntryCount = labelCount;
 
-            // if the labels should only show min and max
-            if (mYAxis.isShowOnlyMinMaxEnabled()) {
+                if (mYAxis.mEntries.length < labelCount) {
+                    // Ensure stops contains at least numStops elements.
+                    mYAxis.mEntries = new int[labelCount];
+                }
 
-                mYAxis.mEntryCount = 2;
-                mYAxis.mEntries = new float[2];
-                mYAxis.mEntries[0] = yMin;
-                mYAxis.mEntries[1] = yMax;
+                float v = min;
 
+                for (int i = 0; i < labelCount; i++) {
+                    mYAxis.mEntries[i] = (int) v;
+                    v += step;
+                }
+
+                // no forced count
             } else {
 
-                double first = Math.ceil(yMin / interval) * interval;
-                double last = Utils.nextUp(Math.floor(yMax / interval) * interval);
+                // if the labels should only show min and max
+                if (mYAxis.isShowOnlyMinMaxEnabled()) {
 
-                double f;
-                int i;
-                int n = 0;
-                for (f = first; f <= last; f += interval) {
-                    ++n;
-                }
+                    mYAxis.mEntryCount = 2;
+                    mYAxis.mEntries = new int[2];
+                    mYAxis.mEntries[0] = (int) yMin;
+                    mYAxis.mEntries[1] = (int) yMax;
 
-                mYAxis.mEntryCount = n;
+                } else {
 
-                if (mYAxis.mEntries.length < n) {
-                    // Ensure stops contains at least numStops elements.
-                    mYAxis.mEntries = new float[n];
-                }
+                    double first = Math.ceil(yMin / interval) * interval;
+                    double last = Utils.nextUp(Math.floor(yMax / interval) * interval);
 
-                for (f = first, i = 0; i < n; f += interval, ++i) {
-                    mYAxis.mEntries[i] = (float) f;
+                    double f;
+                    int i;
+                    int n = 0;
+                    for (f = first; f <= last; f += interval) {
+                        ++n;
+                    }
+
+                    mYAxis.mEntryCount = n;
+
+                    if (mYAxis.mEntries.length < n) {
+                        // Ensure stops contains at least numStops elements.
+                        mYAxis.mEntries = new int[n];
+                    }
+
+                    for (f = first, i = 0; i < n; f += interval, ++i) {
+                        mYAxis.mEntries[i] = (int) f;
+                    }
                 }
             }
-        }
 
-        // set decimals
-        if (interval < 1) {
-            mYAxis.mDecimals = (int) Math.ceil(-Math.log10(interval));
-        } else {
-            mYAxis.mDecimals = 0;
+            // set decimals
+            if (interval < 1) {
+                mYAxis.mDecimals = (int) Math.ceil(-Math.log10(interval));
+            } else {
+                mYAxis.mDecimals = 0;
+            }
+
+        } catch (ArithmeticException ex) {
+            ex.printStackTrace();
         }
     }
 
@@ -295,7 +300,7 @@ public class YAxisRenderer extends AxisRenderer {
 
             LimitLine l = limitLines.get(i);
 
-            if(!l.isEnabled())
+            if (!l.isEnabled())
                 continue;
 
             mLimitLinePaint.setStyle(Paint.Style.STROKE);
