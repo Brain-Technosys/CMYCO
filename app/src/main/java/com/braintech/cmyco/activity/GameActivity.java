@@ -234,10 +234,11 @@ public class GameActivity extends AppCompatActivity {
 
     private void handleLogoutRetry() {
 
-        isActivityStarted = true;
+
         snakeOnClickForLogout = new SnakeOnClick() {
             @Override
             public void onRetryClick() {
+                isActivityStarted = true;
                 logoutAPI.logout(snakeOnClickForLogout, coordinatorLayout);
             }
         };
@@ -611,7 +612,7 @@ public class GameActivity extends AppCompatActivity {
 
             String url = Const.GET_GRAPH + "team_id=" + pollsPref.getTeamId() + Const.TAG_GAME_ID + pollsPref.getActiveGame() + Const.TAG_POLL_ID + pollId;
 
-            // Log.e("url", url);
+            Log.e("url", url);
 
             String jsonString = jsonParser.getJSONFromUrl(url);
 
