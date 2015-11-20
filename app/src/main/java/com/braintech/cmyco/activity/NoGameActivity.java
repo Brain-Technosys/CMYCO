@@ -3,19 +3,20 @@ package com.braintech.cmyco.activity;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.design.widget.CoordinatorLayout;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
-import android.view.View;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.TextView;
 
 import com.braintech.cmyco.R;
+import com.braintech.cmyco.common.CommonAPI;
 import com.braintech.cmyco.my_interface.SnakeOnClick;
 import com.braintech.cmyco.sessions.PollsPref;
+import com.braintech.cmyco.sessions.UserSession;
 import com.braintech.cmyco.utils.AlertDialogManager;
 import com.braintech.cmyco.utils.Const;
 import com.braintech.cmyco.utils.Fonts;
@@ -49,20 +50,32 @@ public class NoGameActivity extends AppCompatActivity {
     String email;
     String password;
 
+    SnakeOnClick snakeRetryLogout;
+
     PollsPref pollsPref;
+
+    CommonAPI logoutAPI;
 
     SnakeOnClick snakeOnClick;
 
     AlertDialogManager alertDialogManager;
+
+    boolean doubleBackToExitPressedOnce = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_no_game);
 
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+
         ButterKnife.inject(this);
 
         setFont();
+
+        logoutAPI = new CommonAPI(this);
 
         pollsPref = new PollsPref(this);
 
@@ -70,7 +83,7 @@ public class NoGameActivity extends AppCompatActivity {
 
         handleSnakeRetryCall();
 
-        getIntentData();
+        getLoginData();
 
     }
 
@@ -94,16 +107,45 @@ public class NoGameActivity extends AppCompatActivity {
 //                commonAPI.getPollData(snakeOnClickPollRetry, coordinatorLayout);
 //            }
 //        };
+
+        snakeRetryLogout = new SnakeOnClick() {
+            @Override
+            public void onRetryClick() {
+                logoutAPI.logout(snakeRetryLogout, coordinatorLayout);
+            }
+        };
     }
 
-    public void getIntentData()
-    {
-        if(getIntent().hasExtra("email"))
-        {
-            Bundle bundle=getIntent().getExtras();
-            email=bundle.getString("email");
-            password=bundle.getString("password");
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.setting_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_settings) {
+            logoutAPI.logout(snakeRetryLogout, coordinatorLayout);
+            return true;
+        } else if (id == android.R.id.home) {
+            this.finish();
         }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    public void getLoginData() {
+        UserSession userSession = new UserSession(this);
+        email = userSession.getKeyEmail();
+        password = userSession.getKeyPassword();
+
     }
 
     @OnClick(R.id.btn_refresh)
@@ -210,12 +252,9 @@ public class NoGameActivity extends AppCompatActivity {
             if (result == 1) {
                 if (activeGame != 0) {
 
-                    //Calling GetPoll API from Common Class
-                    //commonAPI.getPollData(snakeOnClickPollRetry, coordinatorLayout);
                     Intent intent = new Intent(NoGameActivity.this, HomeActivity.class);
                     startActivity(intent);
                     finish();
-
 
                 } else {
                     alertDialogManager.showAlertDialog(NoGameActivity.this, "There is no active game.");
@@ -225,11 +264,28 @@ public class NoGameActivity extends AppCompatActivity {
             } else {
                 alertDialogManager.showAlertDialog(NoGameActivity.this, getString(R.string.server_not_responding));
             }
-
-//
             Progress.stop();
         }
     }
 
+    @Override
+    public void onBackPressed() {
+        if (doubleBackToExitPressedOnce) {
+            super.onBackPressed();
+            return;
+        }
+
+        this.doubleBackToExitPressedOnce = true;
+
+        SnackNotify.showSnakeBarForBackPress(this, coordinatorLayout);
+
+        new Handler().postDelayed(new Runnable() {
+
+            @Override
+            public void run() {
+                doubleBackToExitPressedOnce = false;
+            }
+        }, 2000);
+    }
 
 }

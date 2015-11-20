@@ -290,10 +290,16 @@ public class LoginActivity extends AppCompatActivity {
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
             if (result == 1) {
+                userSession.storeLoginDetail(email, password);
                 if (activeGame != 0) {
 
                     //Calling GetPoll API from Common Class
                     //commonAPI.getPollData(snakeOnClickPollRetry, coordinatorLayout);
+
+                    //Saving Password and email in sheared pref
+
+
+                    //Go to Home activity
                     Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
                     startActivity(intent);
                     finish();
@@ -302,12 +308,8 @@ public class LoginActivity extends AppCompatActivity {
                 } else {
                     //  alertDialogManager.showAlertDialog(LoginActivity.this, getString(R.string.alert_no_active_game));
                     Intent intent = new Intent(LoginActivity.this, NoGameActivity.class);
-                    Bundle bundle = new Bundle();
-                    bundle.putString("email", email);
-                    bundle.putString("password", password);
-                    intent.putExtras(bundle);
-
                     startActivity(intent);
+                    finish();
                 }
             } else if (result == 0) {
                 alertDialogManager.showAlertDialog(LoginActivity.this, msg);

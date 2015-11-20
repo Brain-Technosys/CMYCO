@@ -54,6 +54,14 @@ public class UserSession {
         editor.commit();
     }
 
+    public void storeLoginDetail(String email,String password){
+        editor.putString(KEY_EMAIL, email);
+        editor.putString(KEY_PASSWORD, password);
+
+        editor.commit();
+
+    }
+
     /* Get User ID */
     public String getUserID() {
         return pref.getString(KEY_USER_ID, null);
