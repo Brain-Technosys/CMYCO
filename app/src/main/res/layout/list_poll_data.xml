@@ -28,7 +28,7 @@
                 android:id="@+id/txtViewPollNo"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_gravity="center_vertical"
+                android:layout_gravity="center_vertical|center_horizontal"
                 android:layout_weight="0.2"
                 android:background="@drawable/bg_circle_tv"
                 android:gravity="center_vertical"
