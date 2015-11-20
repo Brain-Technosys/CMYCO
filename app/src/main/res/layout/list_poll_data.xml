@@ -23,6 +23,8 @@
                 android:paddingTop="10dp"
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 android:textColor="@android:color/white" />
+
+
             <!-- Poll No. -->
             <FrameLayout
                 android:layout_width="0dp"
