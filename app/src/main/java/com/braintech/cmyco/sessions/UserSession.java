@@ -45,7 +45,7 @@ public class UserSession {
         // Storing login value as TRUE
         editor.putBoolean(IS_LOGIN, true);
         // Storing name in pref
-        editor.putString(KEY_USER_ID, user_id);
+
         editor.putString(KEY_EMAIL, email);
         editor.putString(KEY_NAME, name);
 
@@ -54,9 +54,10 @@ public class UserSession {
         editor.commit();
     }
 
-    public void storeLoginDetail(String email,String password){
+    public void storeLoginDetail(String email,String password,String userId){
         editor.putString(KEY_EMAIL, email);
         editor.putString(KEY_PASSWORD, password);
+        editor.putString(KEY_USER_ID, userId);
 
         editor.commit();
 
