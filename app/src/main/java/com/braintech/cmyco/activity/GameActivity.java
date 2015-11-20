@@ -102,7 +102,7 @@ public class GameActivity extends AppCompatActivity {
     int maxY = 1000;
 
     boolean isActivityStarted = false;
-    boolean isButtonClicked=false;
+    boolean isButtonClicked = false;
 
     String graphItemColor = "#14DDF9";
     String graphBgColor = "#010f1a";
@@ -174,14 +174,12 @@ public class GameActivity extends AppCompatActivity {
 
             public void onTick(long millisUntilFinished) {
 
-                if(!isButtonClicked) {
+                if (!isButtonClicked) {
                     txtViewTimerText.setText("Time Left: ");
-                }
-                else
-                {
+                } else {
                     txtViewTimerText.setText("Waiting for playcall: ");
                 }
-                txtViewTimer.setText(""+millisUntilFinished / 1000);
+                txtViewTimer.setText("" + millisUntilFinished / 1000);
 
             }
 
@@ -212,7 +210,7 @@ public class GameActivity extends AppCompatActivity {
         Fonts.robotoRegular(this, defenceTextView);
         Fonts.robotoRegular(this, txtPlayCall);
         Fonts.robotoRegular(this, txtViewTimer);
-        Fonts.robotoRegular(this,txtViewTimerText);
+        Fonts.robotoRegular(this, txtViewTimerText);
     }
 
     private void setGraphColor() {
@@ -253,14 +251,14 @@ public class GameActivity extends AppCompatActivity {
         //X axis title, currently it is static
         graphLabelXAxis = new ArrayList<>();
         for (int i = 0; i < xTStrings.length; i++) {
-           // Log.e("xAxis", xTStrings[i]);
+            // Log.e("xAxis", xTStrings[i]);
             graphLabelXAxis.add(xTStrings[i]);
         }
 
         //getting data for
         valueSet = new ArrayList<>();
         for (int i = 0; i < barStrings.length; i++) {
-           // Log.e("data", barStrings[i]);
+            // Log.e("data", barStrings[i]);
             BarEntry v1e1 = new BarEntry(Float.parseFloat(barStrings[i]), i); // 1
             valueSet.add(v1e1);
         }
@@ -280,6 +278,7 @@ public class GameActivity extends AppCompatActivity {
         xAxis.setDrawGridLines(false);
         xAxis.setValues(graphLabelXAxis);
         xAxis.setAxisLineColor(Color.parseColor(graphItemColor));
+        xAxis.setAxisLineWidth(2);
         xAxis.setTextColor(Color.parseColor(graphItemColor));
 
         //Handling graph Y axis(Left) Content
@@ -294,7 +293,8 @@ public class GameActivity extends AppCompatActivity {
         leftAxis.setEnabled(true);
         leftAxis.setAxisLineColor(Color.parseColor(graphItemColor));
         leftAxis.setAxisMinValue(0);
-        leftAxis.setAxisMaxValue(getYAxisData(maxY,2));
+        leftAxis.setAxisLineWidth(2);
+        leftAxis.setAxisMaxValue(getYAxisData(maxY, 2));
 
         //Handling graph Y axis(Right) Content. making it invisible
 
@@ -321,6 +321,7 @@ public class GameActivity extends AppCompatActivity {
 
         chart.setPinchZoom(false);
         // chart.setScaleMinima(2f, 1f);
+        chart.setDoubleTapToZoomEnabled(false);
         chart.setDrawBarShadow(false);
         chart.setDrawGridBackground(false);
         chart.animateXY(2000, 2000);
@@ -356,7 +357,7 @@ public class GameActivity extends AppCompatActivity {
         //Showing Bar and height of bar
         BarDataSet barDataSet = new BarDataSet(valueSet, "CMYCO");
         barDataSet.setColor(Color.parseColor(graphItemColor));
-        barDataSet.setValueTextSize(5.00f);
+        barDataSet.setValueTextSize(10.00f);
         barDataSet.setValueTextColor(Color.parseColor(graphBgColor));
 
         dataSets = new ArrayList<>();
@@ -473,7 +474,7 @@ public class GameActivity extends AppCompatActivity {
     }
 
     private void disableRadioButtons() {
-        isButtonClicked=true;
+        isButtonClicked = true;
         callgraphAPI();
         for (int i = 0; i < defenceRadioGroup.getChildCount(); i++) {
             ((RadioButton) defenceRadioGroup.getChildAt(i)).setEnabled(false);
@@ -609,11 +610,11 @@ public class GameActivity extends AppCompatActivity {
 
             String url = Const.GET_GRAPH + "team_id=" + pollsPref.getTeamId() + Const.TAG_GAME_ID + pollsPref.getActiveGame() + Const.TAG_POLL_ID + pollId;
 
-           // Log.e("url", url);
+            // Log.e("url", url);
 
             String jsonString = jsonParser.getJSONFromUrl(url);
 
-           // Log.e("jsonString", jsonString);
+            // Log.e("jsonString", jsonString);
 
             try {
                 JSONObject jsonObject = new JSONObject(jsonString);
@@ -690,8 +691,8 @@ public class GameActivity extends AppCompatActivity {
                             pollsPref.saveOptions(maxId);
                             pollsPref.pollActivated(false);
 
-                            if(!isActivityStarted) {
-                                isActivityStarted=true;
+                            if (!isActivityStarted) {
+                                isActivityStarted = true;
                                 Intent intent = new Intent(GameActivity.this, MasterPageActivity.class);
                                 startActivity(intent);
                             }

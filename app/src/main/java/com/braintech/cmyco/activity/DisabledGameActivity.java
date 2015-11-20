@@ -234,10 +234,11 @@ public class DisabledGameActivity extends AppCompatActivity {
         xAxis.setDrawGridLines(false);
         xAxis.setValues(graphLabelXAxis);
         xAxis.setAxisLineColor(Color.parseColor(graphItemColor));
-        xAxis.setAxisLineWidth(1);
+        xAxis.setAxisLineWidth(2);
         xAxis.setTextColor(Color.parseColor(graphItemColor));
 
         //Handling graph Y axis(Left) Content
+
 
         YAxis leftAxis = chart.getAxisLeft();
         // leftAxis.setDrawAxisLine(false);
@@ -249,8 +250,8 @@ public class DisabledGameActivity extends AppCompatActivity {
         leftAxis.setEnabled(true);
         leftAxis.setAxisLineColor(Color.parseColor(graphItemColor));
         leftAxis.setAxisMinValue(0);
-        leftAxis.setAxisLineWidth(1);
-        leftAxis.setAxisMaxValue(getYAxisData(maxY,2));
+        leftAxis.setAxisLineWidth(2);
+        leftAxis.setAxisMaxValue(getYAxisData(maxY, 2));
 
 
         //Handling graph Y axis(Right) Content. making it invisible
@@ -277,6 +278,7 @@ public class DisabledGameActivity extends AppCompatActivity {
         //  chart.setGridBackgroundColor(Color.parseColor("#010f1a"));
 
         chart.setPinchZoom(false);
+        chart.setDoubleTapToZoomEnabled(false);
         // chart.setScaleMinima(2f, 1f);
         chart.setDrawBarShadow(false);
         chart.setDrawGridBackground(false);
@@ -300,7 +302,7 @@ public class DisabledGameActivity extends AppCompatActivity {
         if (maxY == 1) {
             rem = 2;
         } else {
-            rem = maxY % 2;
+            rem = maxY % i;
             rem = maxY + rem;
         }
         return rem;
@@ -313,7 +315,7 @@ public class DisabledGameActivity extends AppCompatActivity {
         //Showing Bar and height of bar
         BarDataSet barDataSet = new BarDataSet(valueSet, "CMYCO");
         barDataSet.setColor(Color.parseColor(graphItemColor));
-        barDataSet.setValueTextSize(5.00f);
+        barDataSet.setValueTextSize(10.00f);
         barDataSet.setValueTextColor(Color.parseColor(graphBgColor));
 
         dataSets = new ArrayList<>();

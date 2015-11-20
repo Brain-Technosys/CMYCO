@@ -62,9 +62,9 @@
                 android:id="@+id/txtViewTimerText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_toLeftOf="@+id/txtViewTimer"
                 android:layout_below="@+id/llCat"
                 android:layout_margin="5dp"
+                android:layout_toLeftOf="@+id/txtViewTimer"
                 android:textColor="@android:color/white"
                 android:textSize="18sp" />
 
@@ -84,7 +84,8 @@
                 android:layout_height="200dp"
                 android:layout_below="@+id/txtViewTimer"
                 android:layout_marginBottom="5dp"
-                android:layout_marginTop="5dp" />
+                android:layout_marginTop="5dp"
+                android:paddingTop="10dp" />
 
             <LinearLayout
                 android:id="@+id/playCallLayout"
@@ -100,9 +101,9 @@
                     android:id="@+id/txtPlayCall"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:background="@drawable/play_btn"
                     android:gravity="center_horizontal|center_vertical"
                     android:padding="10dp"
-                    android:background="@drawable/play_btn"
                     android:textAppearance="?android:attr/textAppearanceLarge" />
 
             </LinearLayout>
