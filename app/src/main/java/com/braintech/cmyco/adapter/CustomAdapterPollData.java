@@ -83,7 +83,7 @@ public class CustomAdapterPollData extends BaseAdapter {
         holder.txtViewPollName.setTag(pollData.getPoll_id());
 
         if (!pollData.getMaxId().equals("null") && !pollData.getMaxValue().equals("null")) {
-            holder.txtViewPollNo.setText(pollData.getMaxId() + ".");
+            holder.txtViewPollNo.setText(pollData.getMaxId());
             holder.txtViewPollOptions.setText(pollData.getMaxValue());
         }
 

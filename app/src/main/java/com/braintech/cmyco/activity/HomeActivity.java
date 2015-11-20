@@ -248,7 +248,7 @@ public class HomeActivity extends AppCompatActivity {
             String url = Const.GET_COACH_RESULT;
             //Log.e("url", url);
             String urlString = jsonParser.getJSONFromUrl(url);
-           // Log.e("urlString", urlString);
+            // Log.e("urlString", urlString);
             try {
 
 //                for (int j = 0; j < 2; j++) {
@@ -262,22 +262,23 @@ public class HomeActivity extends AppCompatActivity {
 //                    }
                 if (jsonObject != null) {
                     result = jsonObject.getInt(Const.KEY_RESULT);
-                    JSONArray jsonArrayTeam = jsonObject.getJSONArray(Const.KEY_DATA);
+                    if (result == 1) {
+                        JSONArray jsonArrayTeam = jsonObject.getJSONArray(Const.KEY_DATA);
 
-                    for (int i = 0; i < jsonArrayTeam.length(); i++) {
+                        for (int i = 0; i < jsonArrayTeam.length(); i++) {
 
-                        JSONObject jsonObjectCoach = jsonArrayTeam.getJSONObject(i);
-                        HashMap<String, String> hashMapCoach = new HashMap<>();
+                            JSONObject jsonObjectCoach = jsonArrayTeam.getJSONObject(i);
+                            HashMap<String, String> hashMapCoach = new HashMap<>();
 
-                        hashMapCoach.put(Const.KEY_ID, jsonObjectCoach.getString(Const.KEY_ID));
-                        hashMapCoach.put(Const.KEY_NAME, jsonObjectCoach.getString(Const.KEY_NAME));
+                            hashMapCoach.put(Const.KEY_ID, jsonObjectCoach.getString(Const.KEY_ID));
+                            hashMapCoach.put(Const.KEY_NAME, jsonObjectCoach.getString(Const.KEY_NAME));
 
-                        arrayListCoach.add(hashMapCoach);
+                            arrayListCoach.add(hashMapCoach);
+                        }
+                    } else {
+                        msg = jsonObject.getString(Const.KEY_MSG);
                     }
 
-
-                }else{
-                    msg=jsonObject.getString(Const.KEY_MSG);
                 }
 
 //                }
@@ -337,6 +338,7 @@ public class HomeActivity extends AppCompatActivity {
 //                result = 1;
 
                 JSONObject jsonObject = new JSONObject(urlString);
+                Log.d("jsonObject", jsonObject.toString());
 
 //                if (Integer.parseInt(strings[0]) == 1) {
 //                    jsonObject = new JSONObject(pollsPref.getTeam1Detail());
@@ -346,23 +348,27 @@ public class HomeActivity extends AppCompatActivity {
 
                 if (jsonObject != null) {
                     result = jsonObject.getInt(Const.KEY_RESULT);
-                    JSONArray jsonArrayTeamData = jsonObject.getJSONArray(Const.KEY_DATA);
 
-                    for (int i = 0; i < jsonArrayTeamData.length(); i++) {
+                    if (result == 1) {
 
 
-                        JSONObject jsonObjectGetTeamData = jsonArrayTeamData.getJSONObject(i);
-                        HashMap<String, String> hashMapTeam = new HashMap<>();
+                        JSONArray jsonArrayTeamData = jsonObject.getJSONArray(Const.KEY_DATA);
 
-                        hashMapTeam.put(Const.KEY_ID, jsonObjectGetTeamData.getString(Const.KEY_ID));
-                        hashMapTeam.put(Const.KEY_NAME, jsonObjectGetTeamData.getString(Const.KEY_NAME));
+                        for (int i = 0; i < jsonArrayTeamData.length(); i++) {
 
-                        arrayListTeam.add(hashMapTeam);
 
+                            JSONObject jsonObjectGetTeamData = jsonArrayTeamData.getJSONObject(i);
+                            HashMap<String, String> hashMapTeam = new HashMap<>();
+
+                            hashMapTeam.put(Const.KEY_ID, jsonObjectGetTeamData.getString(Const.KEY_ID));
+                            hashMapTeam.put(Const.KEY_NAME, jsonObjectGetTeamData.getString(Const.KEY_NAME));
+
+                            arrayListTeam.add(hashMapTeam);
+                        }
+                    } else {
+                        msg = jsonObject.getString(Const.KEY_MSG);
                     }
 
-                } else {
-                    msg=jsonObject.getString(Const.KEY_MSG);
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -416,9 +422,9 @@ public class HomeActivity extends AppCompatActivity {
         } else {
             teamSpinner.setEnabled(true);
 
-            teamName=arrayListTeam.get(pos).get(Const.KEY_NAME);
+            teamName = arrayListTeam.get(pos).get(Const.KEY_NAME);
 
-            teamId=arrayListTeam.get(pos).get(Const.KEY_ID);
+            teamId = arrayListTeam.get(pos).get(Const.KEY_ID);
 
         }
 
@@ -433,7 +439,7 @@ public class HomeActivity extends AppCompatActivity {
             alertDialogManager.showAlertDialog(HomeActivity.this, getString(R.string.alert_no_team_selected));
         } else {
             PollsPref pollsPref = new PollsPref(HomeActivity.this);
-            pollsPref.storeCoachTeamDetail(arrayListCoach.get(coachSpinner.getSelectedItemPosition()).get(Const.KEY_NAME), teamName,teamId);
+            pollsPref.storeCoachTeamDetail(arrayListCoach.get(coachSpinner.getSelectedItemPosition()).get(Const.KEY_NAME), teamName, teamId);
             Intent intent = new Intent(HomeActivity.this, InstructionActivity.class);
             startActivity(intent);
         }
