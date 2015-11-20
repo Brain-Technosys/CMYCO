@@ -4,18 +4,14 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-import android.util.Log;
-import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
 import com.braintech.cmyco.R;
 import com.braintech.cmyco.my_interface.SnakeOnClick;
 import com.braintech.cmyco.sessions.PollsPref;
+import com.braintech.cmyco.sessions.UserSession;
 import com.braintech.cmyco.utils.AlertDialogManager;
 import com.braintech.cmyco.utils.Const;
 import com.braintech.cmyco.utils.Fonts;
@@ -70,7 +66,7 @@ public class NoGameActivity extends AppCompatActivity {
 
         handleSnakeRetryCall();
 
-        getIntentData();
+        getLoginData();
 
     }
 
@@ -96,14 +92,11 @@ public class NoGameActivity extends AppCompatActivity {
 //        };
     }
 
-    public void getIntentData()
-    {
-        if(getIntent().hasExtra("email"))
-        {
-            Bundle bundle=getIntent().getExtras();
-            email=bundle.getString("email");
-            password=bundle.getString("password");
-        }
+    public void getLoginData() {
+        UserSession userSession = new UserSession(this);
+        email = userSession.getKeyEmail();
+        password = userSession.getKeyPassword();
+
     }
 
     @OnClick(R.id.btn_refresh)
@@ -210,12 +203,9 @@ public class NoGameActivity extends AppCompatActivity {
             if (result == 1) {
                 if (activeGame != 0) {
 
-                    //Calling GetPoll API from Common Class
-                    //commonAPI.getPollData(snakeOnClickPollRetry, coordinatorLayout);
                     Intent intent = new Intent(NoGameActivity.this, HomeActivity.class);
                     startActivity(intent);
                     finish();
-
 
                 } else {
                     alertDialogManager.showAlertDialog(NoGameActivity.this, "There is no active game.");
@@ -225,8 +215,6 @@ public class NoGameActivity extends AppCompatActivity {
             } else {
                 alertDialogManager.showAlertDialog(NoGameActivity.this, getString(R.string.server_not_responding));
             }
-
-//
             Progress.stop();
         }
     }

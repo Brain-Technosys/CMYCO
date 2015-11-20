@@ -24,6 +24,7 @@ import com.braintech.cmyco.R;
 import com.braintech.cmyco.activity.GameActivity;
 import com.braintech.cmyco.activity.HomeActivity;
 import com.braintech.cmyco.activity.LoginActivity;
+import com.braintech.cmyco.activity.NoGameActivity;
 import com.braintech.cmyco.common.CommonAPI;
 import com.braintech.cmyco.my_interface.SnakeOnClick;
 import com.braintech.cmyco.objectclasses.PollData;
@@ -106,7 +107,7 @@ public class PollService extends Service {
     public void onDestroy() {
         super.onDestroy();
 
-       // Log.e("Service", "Destroyed");
+        // Log.e("Service", "Destroyed");
     }
 
 
@@ -141,7 +142,6 @@ public class PollService extends Service {
         HashMap<Integer, ArrayList<PollOptions>> hashMapPollOptions;
 
 
-
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
@@ -153,7 +153,7 @@ public class PollService extends Service {
         protected String doInBackground(String... strings) {
             JsonParser jsonParser = new JsonParser(context);
 
-            String url = Const.GET_ACTIVE_GAME_DETAIL+"?"+Const.TAG_TEAMID+"="+pollsPref.getTeamId();
+            String url = Const.GET_ACTIVE_GAME_DETAIL + "?" + Const.TAG_TEAMID + "=" + pollsPref.getTeamId();
             String jsonString = jsonParser.getJSONFromUrl(url);
 
 
@@ -168,7 +168,7 @@ public class PollService extends Service {
                     result = jsonObject.getInt(Const.KEY_RESULT);
 
                     serverTime = jsonObject.getString(Const.KEY_POLL_SERVER_TIME);
-                    timeZone=jsonObject.getString(Const.KEY_TIME_ZONE);
+                    timeZone = jsonObject.getString(Const.KEY_TIME_ZONE);
 
 
                     JSONArray jsonArrayPolLData = jsonObject.getJSONArray(Const.KEY_POLL_DATA);
@@ -189,22 +189,22 @@ public class PollService extends Service {
 
                         String endTime = jsonObj.getString(Const.KEY_END_TIME);
 
-                        String maxValue=jsonObj.getString(Const.KEY_MAX);
+                        String maxValue = jsonObj.getString(Const.KEY_MAX);
 
-                        String maxId=jsonObj.getString(Const.KEY_MAX_ID);
+                        String maxId = jsonObj.getString(Const.KEY_MAX_ID);
 
 
                         if (!startTime.equals("null")) {
-                            poll_start_time = Utility.getCurrentTime(startTime,timeZone);
+                            poll_start_time = Utility.getCurrentTime(startTime, timeZone);
                         }
 
                         if (!endTime.equals("null")) {
-                            poll_end_time = Utility.getCurrentTime(endTime,timeZone);
+                            poll_end_time = Utility.getCurrentTime(endTime, timeZone);
                         }
 
                         String poll_duration = jsonObj.getString(Const.KEY_POLL_DURATION);
 
-                        PollData pollData = new PollData(poll_id, poll_name, poll_start_time, poll_end_time, poll_duration,maxId,maxValue);
+                        PollData pollData = new PollData(poll_id, poll_name, poll_start_time, poll_end_time, poll_duration, maxId, maxValue);
 
                         arrayListPollData.add(pollData);
 
@@ -249,7 +249,7 @@ public class PollService extends Service {
 
                 String server_time = Utility.convertDateFormat(serverTime);
 
-                String currentTime = Utility.getCurrentTime(server_time,timeZone);
+                String currentTime = Utility.getCurrentTime(server_time, timeZone);
 
                 Log.e("server", server_time);
                 Log.e("currentTime", currentTime);
@@ -288,7 +288,7 @@ public class PollService extends Service {
 
                                 arrayListPollOpt.clear();
 
-                                long poll_duration = Utility.findTimeDifference(endTime,currentTime);
+                                long poll_duration = Utility.findTimeDifference(endTime, currentTime);
 
                                 arrayListPollOpt = hashMapPollOptions.get(poll_id);
                                 Intent intent = new Intent(context, GameActivity.class);
@@ -313,6 +313,11 @@ public class PollService extends Service {
 
                 }
 
+            } else if (result == 0) {
+                Intent intent = new Intent(context, NoGameActivity.class);
+                startActivity(intent);
+            } else {
+                Toast.makeText(context, getString(R.string.server_not_responding), Toast.LENGTH_LONG).show();
             }
         }
     }

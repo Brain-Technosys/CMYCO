@@ -119,7 +119,7 @@ public class DisabledGameActivity extends AppCompatActivity {
 
         handleToolbar();
 
-     //   playCallLayout.setVisibility(View.GONE);
+        //   playCallLayout.setVisibility(View.GONE);
 
         alertDialogManager = new AlertDialogManager();
 
@@ -197,7 +197,7 @@ public class DisabledGameActivity extends AppCompatActivity {
                 textView.setText(String.valueOf(i + 1) + ".  " + arrayListPollOpt.get(i).getPoll_name());
 
                 //apply font
-                Fonts.robotoRegular(this,textView);
+                Fonts.robotoRegular(this, textView);
 
                 linLayTextView.addView(tvView);
             }
@@ -220,7 +220,6 @@ public class DisabledGameActivity extends AppCompatActivity {
             valueSet.add(v1e1);
         }
 
-
     }
 
 
@@ -235,6 +234,7 @@ public class DisabledGameActivity extends AppCompatActivity {
         xAxis.setDrawGridLines(false);
         xAxis.setValues(graphLabelXAxis);
         xAxis.setAxisLineColor(Color.parseColor(graphItemColor));
+        xAxis.setAxisLineWidth(1);
         xAxis.setTextColor(Color.parseColor(graphItemColor));
 
         //Handling graph Y axis(Left) Content
@@ -244,12 +244,13 @@ public class DisabledGameActivity extends AppCompatActivity {
         leftAxis.setTextColor(Color.parseColor(graphItemColor));
         leftAxis.setPosition(YAxis.YAxisLabelPosition.OUTSIDE_CHART);
         leftAxis.setDrawGridLines(false);
-        leftAxis.setLabelCount(2, true);
+        leftAxis.setLabelCount(3, true);
         leftAxis.setDrawAxisLine(true);
         leftAxis.setEnabled(true);
         leftAxis.setAxisLineColor(Color.parseColor(graphItemColor));
         leftAxis.setAxisMinValue(0);
-        leftAxis.setAxisMaxValue(maxY);
+        leftAxis.setAxisLineWidth(1);
+        leftAxis.setAxisMaxValue(getYAxisData(maxY,2));
 
 
         //Handling graph Y axis(Right) Content. making it invisible
@@ -292,6 +293,17 @@ public class DisabledGameActivity extends AppCompatActivity {
         chart.setNoDataText("No chart data available."); // this is the top line
         chart.setNoDataTextDescription("..."); // this is one line below the no-data-text
         chart.invalidate();
+    }
+
+    private float getYAxisData(int maxY, int i) {
+        float rem;
+        if (maxY == 1) {
+            rem = 2;
+        } else {
+            rem = maxY % 2;
+            rem = maxY + rem;
+        }
+        return rem;
     }
 
 
@@ -392,7 +404,7 @@ public class DisabledGameActivity extends AppCompatActivity {
 
             String url = Const.GET_GRAPH + "team_id=" + pollsPref.getTeamId() + Const.TAG_GAME_ID + pollsPref.getActiveGame() + Const.TAG_POLL_ID + pollId;
 
-           // Log.e("url", url);
+            // Log.e("url", url);
 
             String jsonString = jsonParser.getJSONFromUrl(url);
 
