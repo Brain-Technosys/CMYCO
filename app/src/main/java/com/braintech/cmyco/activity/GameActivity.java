@@ -289,12 +289,12 @@ public class GameActivity extends AppCompatActivity {
         leftAxis.setTextColor(Color.parseColor(graphItemColor));
         leftAxis.setPosition(YAxis.YAxisLabelPosition.OUTSIDE_CHART);
         leftAxis.setDrawGridLines(false);
-        leftAxis.setLabelCount(2, true);
+        leftAxis.setLabelCount(3, true);
         leftAxis.setDrawAxisLine(true);
         leftAxis.setEnabled(true);
         leftAxis.setAxisLineColor(Color.parseColor(graphItemColor));
         leftAxis.setAxisMinValue(0);
-        leftAxis.setAxisMaxValue(maxY);
+        leftAxis.setAxisMaxValue(getYAxisData(maxY,2));
 
         //Handling graph Y axis(Right) Content. making it invisible
 
@@ -337,6 +337,17 @@ public class GameActivity extends AppCompatActivity {
         chart.invalidate();
 
 
+    }
+
+    private float getYAxisData(int maxY, int i) {
+        float rem;
+        if (maxY == 1) {
+            rem = 2;
+        } else {
+            rem = maxY % 2;
+            rem = maxY + rem;
+        }
+        return rem;
     }
 
     private ArrayList<BarDataSet> getDataSet() {
