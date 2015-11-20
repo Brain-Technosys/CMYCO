@@ -6,8 +6,10 @@ import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -45,10 +47,13 @@ public class GamePlayStrategyActivity extends AppCompatActivity {
     @InjectView(R.id.listViewPoll)
     ListView listViewPoll;
 
-    @InjectView(R.id.txt_active_users)
+    //@InjectView(R.id.txt_playCall)
+    TextView txt_playCall;
+
+    // @InjectView(R.id.txt_active_users)
     TextView txt_active_users;
 
-    @InjectView(R.id.txt_team_name)
+    // @InjectView(R.id.txt_team_name)
     TextView txt_team_name;
 
     SnakeOnClick snakeOnClick;
@@ -83,7 +88,29 @@ public class GamePlayStrategyActivity extends AppCompatActivity {
 
         handleSnakeRetryCall();
 
+        manageListViewHeaderFooter();
+
         setFont();
+
+    }
+
+    private void manageListViewHeaderFooter() {
+
+
+        LayoutInflater inflater = getLayoutInflater();
+
+        //header listView
+        ViewGroup header = (ViewGroup) inflater.inflate(R.layout.layout_header_gps, listViewPoll, false);
+        listViewPoll.addHeaderView(header, null, false);
+        txt_team_name = (TextView) header.findViewById(R.id.txt_team_name);
+        txt_playCall = (TextView) header.findViewById(R.id.txt_playCall);
+
+
+        //footer listView
+        ViewGroup footer = (ViewGroup) inflater.inflate(R.layout.layout_footer_gps, listViewPoll, false);
+        listViewPoll.addFooterView(footer, null, false);
+        txt_active_users = (TextView) footer.findViewById(R.id.txt_active_users);
+
 
     }
 
@@ -140,6 +167,7 @@ public class GamePlayStrategyActivity extends AppCompatActivity {
     private void setFont() {
         Fonts.robotoRegular(this, txt_active_users);
         Fonts.robotoRegular(this, txt_team_name);
+        Fonts.robotoRegular(this, txt_playCall);
     }
 
     private class GetPollData extends AsyncTask<String, String, String> {
@@ -159,7 +187,7 @@ public class GamePlayStrategyActivity extends AppCompatActivity {
 
                 JsonParser jsonParser = new JsonParser(GamePlayStrategyActivity.this);
 
-                String url = Const.GET_ACTIVE_GAME_DETAIL+"?"+Const.TAG_TEAMID+"="+pollsPref.getTeamId();
+                String url = Const.GET_ACTIVE_GAME_DETAIL + "?" + Const.TAG_TEAMID + "=" + pollsPref.getTeamId();
                 String jsonString = jsonParser.getJSONFromUrl(url);
 
                 JSONObject jsonObject = new JSONObject(jsonString);
@@ -184,11 +212,11 @@ public class GamePlayStrategyActivity extends AppCompatActivity {
                         String poll_end_time = jsonObj.getString(Const.KEY_END_TIME);
                         String poll_duration = jsonObj.getString(Const.KEY_POLL_DURATION);
 
-                        String maxValue=jsonObj.getString(Const.KEY_MAX);
+                        String maxValue = jsonObj.getString(Const.KEY_MAX);
 
-                        String maxId=jsonObj.getString(Const.KEY_MAX_ID);
+                        String maxId = jsonObj.getString(Const.KEY_MAX_ID);
 
-                        PollData pollData = new PollData(poll_id, poll_name, poll_end_time, poll_start_time, poll_duration,maxId,maxValue);
+                        PollData pollData = new PollData(poll_id, poll_name, poll_end_time, poll_start_time, poll_duration, maxId, maxValue);
 
                         arrayListPollData.add(pollData);
 
@@ -196,7 +224,7 @@ public class GamePlayStrategyActivity extends AppCompatActivity {
 
                         ArrayList<PollOptions> arrayListPollOpt = new ArrayList<PollOptions>();
 
-                        if(jsonArrayPollOptions.length()!=0) {
+                        if (jsonArrayPollOptions.length() != 0) {
 
                             for (int j = 0; j < jsonArrayPollOptions.length(); j++) {
 
@@ -218,11 +246,9 @@ public class GamePlayStrategyActivity extends AppCompatActivity {
                 } else
                     result = 0;
 
-            }
-            catch(NullPointerException ex)
-            {
+            } catch (NullPointerException ex) {
                 ex.printStackTrace();
-            } catch(JSONException e) {
+            } catch (JSONException e) {
                 e.printStackTrace();
             }
 
@@ -318,12 +344,12 @@ public class GamePlayStrategyActivity extends AppCompatActivity {
     void onItemClick(int position) {
         ArrayList<PollOptions> arrayListPollOpt = new ArrayList<>();
 
-        int poll_id = arrayListPollData.get(position).getPoll_id();
+        int poll_id = arrayListPollData.get(position-1).getPoll_id();
 
         if (poll_id == 7) {
             //do not navigate
         } else {
-            String pollName = arrayListPollData.get(position).getPoll_name();
+            String pollName = arrayListPollData.get(position-1).getPoll_name();
 
             arrayListPollOpt = hashMapPollOptions.get(poll_id);
 

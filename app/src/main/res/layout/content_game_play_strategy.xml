@@ -14,45 +14,58 @@
     tools:showIn="@layout/activity_master_page">
 
 
-    <TextView
-        android:id="@+id/txt_team_name"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:layout_margin="10dp"
-        android:layout_marginRight="10dp"
-        android:background="@drawable/bg_edittext"
-        android:gravity="left"
-        android:padding="@dimen/padding_size"
-        android:text="TEAM A"
-        android:textColor="@color/white"
-        android:textSize="@dimen/txt_normal_size" />
+    <!--<TextView-->
+        <!--android:id="@+id/txt_team_name"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_alignParentLeft="true"-->
+        <!--android:layout_alignParentTop="true"-->
+        <!--android:layout_margin="10dp"-->
+        <!--android:layout_marginRight="10dp"-->
+        <!--android:background="@drawable/bg_edittext"-->
+        <!--android:gravity="left"-->
+        <!--android:padding="@dimen/padding_size"-->
+        <!--android:textColor="@color/white"-->
+        <!--android:textSize="@dimen/txt_normal_size" />-->
+
+
+    <!--<TextView-->
+        <!--android:id="@+id/txt_playCall"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_alignParentRight="true"-->
+        <!--android:layout_below="@+id/txt_team_name"-->
+        <!--android:layout_margin="10dp"-->
+        <!--android:layout_marginRight="10dp"-->
+        <!--android:background="@drawable/bg_edittext"-->
+        <!--android:gravity="left"-->
+        <!--android:padding="@dimen/padding_size"-->
+        <!--android:text="@string/logo_play_call"-->
+        <!--android:textColor="@color/white"-->
+        <!--android:textSize="@dimen/txt_normal_size" />-->
 
 
     <ListView
         android:id="@+id/listViewPoll"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/txt_active_users"
-        android:layout_below="@+id/txt_team_name"
         android:divider="@android:color/white"
         android:dividerHeight="0dp"
         android:listSelector="@android:color/transparent">
 
     </ListView>
 
-    <TextView
-        android:id="@+id/txt_active_users"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_marginRight="10dp"
-        android:background="@drawable/bg_edittext"
-        android:padding="@dimen/padding_size"
-        android:text="ACTIVE USERS"
-        android:textColor="@color/white"
-        android:textSize="@dimen/txt_normal_size" />
+    <!--<TextView-->
+        <!--android:id="@+id/txt_active_users"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_alignParentBottom="true"-->
+        <!--android:layout_marginRight="10dp"-->
+        <!--android:background="@drawable/bg_edittext"-->
+        <!--android:padding="@dimen/padding_size"-->
+        <!--android:text="ACTIVE USERS"-->
+        <!--android:textColor="@color/white"-->
+        <!--android:textSize="@dimen/txt_normal_size" />-->
 
     <!--<Button-->
     <!--android:id="@+id/btn_continue"-->

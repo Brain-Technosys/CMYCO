@@ -31,8 +31,6 @@ public class CustomAdapterPollData extends BaseAdapter {
     HashMap<Integer,ArrayList<PollOptions>> hashMapPollOptions;
 
     public CustomAdapterPollData(Context context, ArrayList<PollData> rowItems,HashMap<Integer,ArrayList<PollOptions>> hashMapPollOptions) {
-
-
         this.context = context;
         this.rowItems = rowItems;
         this.hashMapPollOptions=hashMapPollOptions;
@@ -41,7 +39,6 @@ public class CustomAdapterPollData extends BaseAdapter {
 
     @Override
     public int getCount() {
-
         return rowItems.size();
     }
 
@@ -83,7 +80,7 @@ public class CustomAdapterPollData extends BaseAdapter {
         holder.txtViewPollName.setTag(pollData.getPoll_id());
 
         if(!pollData.getMaxId().equals("null") && !pollData.getMaxValue().equals("null"))
-            holder.txtViewPollOptions.setText("- "+pollData.getMaxId()+"."+pollData.getMaxValue() );
+            holder.txtViewPollOptions.setText(pollData.getMaxId()+"."+pollData.getMaxValue() );
 
 
         return convertView;
