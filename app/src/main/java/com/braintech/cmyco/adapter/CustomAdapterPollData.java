@@ -28,12 +28,12 @@ public class CustomAdapterPollData extends BaseAdapter {
 
     ArrayList<PollData> rowItems;
 
-    HashMap<Integer,ArrayList<PollOptions>> hashMapPollOptions;
+    HashMap<Integer, ArrayList<PollOptions>> hashMapPollOptions;
 
-    public CustomAdapterPollData(Context context, ArrayList<PollData> rowItems,HashMap<Integer,ArrayList<PollOptions>> hashMapPollOptions) {
+    public CustomAdapterPollData(Context context, ArrayList<PollData> rowItems, HashMap<Integer, ArrayList<PollOptions>> hashMapPollOptions) {
         this.context = context;
         this.rowItems = rowItems;
-        this.hashMapPollOptions=hashMapPollOptions;
+        this.hashMapPollOptions = hashMapPollOptions;
 
     }
 
@@ -64,10 +64,13 @@ public class CustomAdapterPollData extends BaseAdapter {
             holder = new ViewHolder();
 
             holder.txtViewPollName = (TextView) convertView.findViewById(R.id.txtViewPollName);
-            holder.txtViewPollOptions=(TextView)  convertView.findViewById(R.id.txtViewPollOptions);
+            holder.txtViewPollOptions = (TextView) convertView.findViewById(R.id.txtViewPollOptions);
+            holder.txtViewPollNo = (TextView) convertView.findViewById(R.id.txtViewPollNo);
+
 
             Fonts.robotoRegular(context, holder.txtViewPollName);
-            Fonts.robotoRegular(context,  holder.txtViewPollOptions);
+            Fonts.robotoRegular(context, holder.txtViewPollOptions);
+            Fonts.robotoRegular(context, holder.txtViewPollNo);
 
             convertView.setTag(holder);
         } else {
@@ -79,15 +82,17 @@ public class CustomAdapterPollData extends BaseAdapter {
         holder.txtViewPollName.setText(pollData.getPoll_name());
         holder.txtViewPollName.setTag(pollData.getPoll_id());
 
-        if(!pollData.getMaxId().equals("null") && !pollData.getMaxValue().equals("null"))
-            holder.txtViewPollOptions.setText(pollData.getMaxId()+"."+pollData.getMaxValue() );
-
+        if (!pollData.getMaxId().equals("null") && !pollData.getMaxValue().equals("null")) {
+            holder.txtViewPollNo.setText(pollData.getMaxId() + ".");
+            holder.txtViewPollOptions.setText(pollData.getMaxValue());
+        }
 
         return convertView;
     }
 
     static class ViewHolder {
         TextView txtViewPollName;
+        TextView txtViewPollNo;
         TextView txtViewPollOptions;
     }
 }
