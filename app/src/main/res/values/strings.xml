@@ -12,7 +12,6 @@
     <string name="title_activity_no_game">CMYCO</string>
 
 
-
     <!--alert dialog -->
     <string name="empty_fields">Please fill all the fields.</string>
     <string name="invalid_email">Please enter a valid email id.</string>
@@ -66,6 +65,7 @@
     <!-- master page-->
     <string name="logo_team">TEAM</string>
     <string name="logo_active_game">ACTIVE GAME</string>
+    <string name="logo_play_call">PLAY CALL</string>
 
     <!-- NO GAME ACTIVITY-->
     <string name="txt_no_game">There is no game available at this time. Please refresh or Login again.</string>
