@@ -56,7 +56,9 @@ public class CustomAdapterPollData extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder holder;
+
         if (convertView == null) {
+
             LayoutInflater mInflater = (LayoutInflater) context
                     .getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
             convertView = mInflater.inflate(R.layout.list_poll_data, null);
@@ -71,6 +73,11 @@ public class CustomAdapterPollData extends BaseAdapter {
             Fonts.robotoRegular(context, holder.txtViewPollName);
             Fonts.robotoRegular(context, holder.txtViewPollOptions);
             Fonts.robotoRegular(context, holder.txtViewPollNo);
+            PollData pollData = rowItems.get(position);
+
+            if (pollData.getPoll_id() == 7) {
+                holder.txtViewPollNo.setVisibility(View.GONE);
+            }
 
             convertView.setTag(holder);
         } else {
@@ -87,9 +94,7 @@ public class CustomAdapterPollData extends BaseAdapter {
             holder.txtViewPollOptions.setText(pollData.getMaxValue());
         }
 
-        if (pollData.getPoll_id() == 7) {
-            holder.txtViewPollNo.setVisibility(View.GONE);
-        }
+
 
         return convertView;
     }
