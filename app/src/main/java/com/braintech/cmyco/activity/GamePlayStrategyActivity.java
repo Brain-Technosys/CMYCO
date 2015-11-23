@@ -359,6 +359,10 @@ public class GamePlayStrategyActivity extends AppCompatActivity {
         if (getIntent().hasExtra(Const.TAG_POLL_ID)) {
             int pollId = getIntent().getExtras().getInt(Const.TAG_POLL_ID);
 
+            if(pollId==4 || pollId==8)
+            {
+                poll_id=pollId;
+            }
             if (poll_id == pollId) {
                 if (pollsPref.isPollActivated()) {
                     pollsPref.pollActivated(false);
