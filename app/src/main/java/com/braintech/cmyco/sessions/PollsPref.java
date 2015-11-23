@@ -127,6 +127,13 @@ public class PollsPref {
         editor.commit();
     }
 
+    public void saveButtonClicked(Boolean value,int pollId)
+    {
+        editor.putBoolean(Const.KEY_BUTTON_CLICKED, value);
+        editor.putInt(Const.KEY_POLL_ID, pollId);
+        editor.commit();
+    }
+
 
 
     public String getCoachDetail() {
@@ -175,6 +182,11 @@ public class PollsPref {
 
     }
 
+    public int getPollId() {
+        return pref.getInt(Const.KEY_POLL_ID, 0);
+
+    }
+
     public boolean isPollActivated()
     {
         return pref.getBoolean(KEY_POLL_ACTIVATED, false);
@@ -183,6 +195,11 @@ public class PollsPref {
     public boolean isTimePresent()
     {
         return pref.getBoolean(KEY_TIME_PRESENT, false);
+    }
+
+    public boolean isButtonClicked()
+    {
+        return pref.getBoolean(Const.KEY_BUTTON_CLICKED, false);
     }
 
 

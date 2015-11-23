@@ -56,6 +56,8 @@ public class PollService extends Service {
 
     PollsPref pollsPref;
 
+    Boolean isButtonClicked;
+
 
     //Class ServiceBinder: As this service is private to the application and runs
     //in the same process as the client, you should create your interface by extending
@@ -286,6 +288,15 @@ public class PollService extends Service {
                                     e.printStackTrace();
                                 }*/
 
+                                if(pollsPref.getPollId()==poll_id)
+                                {
+                                    isButtonClicked=pollsPref.isButtonClicked();
+                                }
+                                else
+                                {
+                                    isButtonClicked=false;
+                                }
+
                                 pollsPref.pollActivated(true);
 
                                 arrayListPollOpt.clear();
@@ -299,7 +310,8 @@ public class PollService extends Service {
                                 bundle.putInt(Const.KEY_POLL_ID, poll_id);
                                 bundle.putLong(Const.KEY_POLL_DURATION, poll_duration);
                                 bundle.putSerializable(Const.TAG_POLL_OPTION, arrayListPollOpt);
-                                bundle.putBoolean(Const.KEY_BUTTON_CLICKED,false);
+                                bundle.putBoolean(Const.KEY_BUTTON_CLICKED, false);
+                                bundle.putBoolean(Const.KEY_BUTTON_CLICKED,isButtonClicked);
                                 intent.putExtras(bundle);
                                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                                 startActivity(intent);
