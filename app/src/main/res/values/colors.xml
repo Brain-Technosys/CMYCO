@@ -16,5 +16,7 @@
 
     <color name="play_call_bg">#0C1E2C</color>
 
+    <color name="light_black">#262626</color>
+
 
 </resources>
