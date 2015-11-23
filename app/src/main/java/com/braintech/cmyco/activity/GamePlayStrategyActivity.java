@@ -5,7 +5,6 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -371,8 +370,12 @@ public class GamePlayStrategyActivity extends AppCompatActivity {
                     } else {
 
                         Progress.stop();
-                        passIntentOnClick(position, poll_id);
+                        passIntentOnClick(position, pollId);
                     }
+                }
+                else
+                {
+                    passIntentOnClick(position, pollId);
                 }
             } else {
                 passIntentOnClick(position, poll_id);
