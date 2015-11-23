@@ -334,6 +334,7 @@ public class PollService extends Service {
 
             } else if (result == 0) {
                 Intent intent = new Intent(context, NoGameActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
             } else {
                 Toast.makeText(context, getString(R.string.server_not_responding), Toast.LENGTH_LONG).show();
