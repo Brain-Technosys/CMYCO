@@ -124,7 +124,6 @@ public class GameActivity extends AppCompatActivity {
 
     CommonAPI logoutAPI;
 
-    boolean TIMER = true;
     boolean showPlayCall = false;
 
     AlertDialogManager alertDialogManager;
@@ -164,9 +163,9 @@ public class GameActivity extends AppCompatActivity {
             pollName = bundle.getString(Const.KEY_POLL_NAME, pollName);
             pollDuration = bundle.getLong(Const.KEY_POLL_DURATION);
 
-            isButtonClicked=bundle.getBoolean(Const.KEY_BUTTON_CLICKED);
+            isButtonClicked = bundle.getBoolean(Const.KEY_BUTTON_CLICKED);
 
-            Log.e("isButtonClicked",""+isButtonClicked);
+            Log.e("isButtonClicked", "" + isButtonClicked);
 
 
             defenceTextView.setText(pollName);
@@ -191,7 +190,6 @@ public class GameActivity extends AppCompatActivity {
 
             public void onFinish() {
 
-                TIMER = false;
                 showPlayCall = true;
 
                 disableRadioButtons();
@@ -400,16 +398,15 @@ public class GameActivity extends AppCompatActivity {
         int id = item.getItemId();
 
 
-            isActivityStarted = true;
-            //noinspection SimplifiableIfStatement
-            if (id == R.id.action_settings) {
+        isActivityStarted = true;
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_settings) {
 
-                //clearing session from sheared preference
-                logoutAPI.logout(snakeOnClickForLogout, coordinatorLayout);
+            //clearing session from sheared preference
+            logoutAPI.logout(snakeOnClickForLogout, coordinatorLayout);
 
-                return true;
-            }
-         else if (id == android.R.id.home) {
+            return true;
+        } else if (id == android.R.id.home) {
             passIntent();
         }
 
@@ -432,6 +429,7 @@ public class GameActivity extends AppCompatActivity {
 
         Log.e("intent", "" + isButtonClicked);
         intent.putExtra(Const.TAG_POLL_ID, pollId);
+        isActivityStarted = true;
         finish();
         startActivity(intent);
     }
@@ -471,8 +469,7 @@ public class GameActivity extends AppCompatActivity {
             //Adding Views
             defenceRadioGroup.addView(catRadioButtons[i]);
 
-            if(isButtonClicked)
-            {
+            if (isButtonClicked) {
                 disableRadioButtons();
             }
 
@@ -483,7 +480,7 @@ public class GameActivity extends AppCompatActivity {
 
                     isButtonClicked = true;
 
-                    pollsPref.saveButtonClicked(true,pollId);
+                    pollsPref.saveButtonClicked(true, pollId);
 
                     disableRadioButtons();
 
