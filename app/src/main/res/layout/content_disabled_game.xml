@@ -20,30 +20,33 @@
         android:textColor="@color/white"
         android:textSize="@dimen/txt_title_size" />
 
+    <LinearLayout
+        android:id="@+id/linLayTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/lbl_defence"
+        android:layout_margin="10dp"
+        android:orientation="vertical">
 
 
-
-        <LinearLayout
-            android:id="@+id/linLayTextView"
-            android:layout_below="@+id/lbl_defence"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_alignParentLeft="true"
-            android:layout_margin="10dp">
+    </LinearLayout>
 
 
-        </LinearLayout>
+    <com.github.mikephil.charting.charts.BarChart
+        android:id="@+id/chart"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_below="@+id/linLayTextView"
+        android:layout_marginTop="15dp" />
 
-
-        <com.github.mikephil.charting.charts.BarChart
-            android:id="@+id/chart"
-            android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:layout_below="@+id/linLayTextView"
-            android:layout_marginTop="15dp" />
-
-
+    <com.github.mikephil.charting.charts.BarChart
+        android:id="@+id/chartTwo"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_below="@+id/linLayTextView"
+        android:layout_marginTop="15dp"
+        android:visibility="gone" />
 
 
 </RelativeLayout>

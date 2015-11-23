@@ -1,13 +1,11 @@
 package com.braintech.cmyco.activity;
 
-import android.content.Intent;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -36,12 +34,9 @@ import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -64,6 +59,9 @@ public class DisabledGameActivity extends AppCompatActivity {
 
     @InjectView(R.id.chart)
     BarChart chart;
+
+    @InjectView(R.id.chartTwo)
+    BarChart chartTwo;
 
 //    @InjectView(R.id.playCallLayout)
 //    LinearLayout playCallLayout;
@@ -107,8 +105,9 @@ public class DisabledGameActivity extends AppCompatActivity {
     String color6 = "#c0392b";
     String color7 = "#14DDF9";
 
-
     CommonAPI logoutAPI;
+
+    boolean GRAPHONE = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -119,7 +118,7 @@ public class DisabledGameActivity extends AppCompatActivity {
 
         handleToolbar();
 
-     //   playCallLayout.setVisibility(View.GONE);
+        //   playCallLayout.setVisibility(View.GONE);
 
         alertDialogManager = new AlertDialogManager();
 
@@ -154,7 +153,9 @@ public class DisabledGameActivity extends AppCompatActivity {
         }
 
         setGraphColor();
-        callgraphAPI();
+
+        callgraphAPI(pollId);
+
     }
 
     private void setGraphColor() {
@@ -197,7 +198,7 @@ public class DisabledGameActivity extends AppCompatActivity {
                 textView.setText(String.valueOf(i + 1) + ".  " + arrayListPollOpt.get(i).getPoll_name());
 
                 //apply font
-                Fonts.robotoRegular(this,textView);
+                Fonts.robotoRegular(this, textView);
 
                 linLayTextView.addView(tvView);
             }
@@ -225,7 +226,7 @@ public class DisabledGameActivity extends AppCompatActivity {
 
 
     //Handling Graph
-    private void handleGraph(int maxY) {
+    private void handleGraph(int maxY, BarChart chart) {
 
         //Handling graph X axis Content
         XAxis xAxis = chart.getXAxis();
@@ -351,10 +352,10 @@ public class DisabledGameActivity extends AppCompatActivity {
     //---------------------------------------------- Start handling graph API ---------------------------------------
 
 
-    private void callgraphAPI() {
+    private void callgraphAPI(int pollId) {
         //getting graph data
         if (Utility.isNetworkAvailable(DisabledGameActivity.this)) {
-            new GetGraph().execute();
+            new GetGraph().execute(pollId);
         } else {
             //show snake bar
             SnackNotify.showSnakeBar(DisabledGameActivity.this, snakeOnClickGetGraph, coordinatorLayout);
@@ -365,13 +366,13 @@ public class DisabledGameActivity extends AppCompatActivity {
         snakeOnClickGetGraph = new SnakeOnClick() {
             @Override
             public void onRetryClick() {
-                callgraphAPI();
+                callgraphAPI(pollId);
             }
         };
     }
 
     //Getting graph Data from API
-    private class GetGraph extends AsyncTask<String, String, String> {
+    private class GetGraph extends AsyncTask<Integer, String, String> {
 
         int result = -1;
         String msg;
@@ -388,13 +389,13 @@ public class DisabledGameActivity extends AppCompatActivity {
         }
 
         @Override
-        protected String doInBackground(String... strings) {
+        protected String doInBackground(Integer... param) {
 
             JsonParser jsonParser = new JsonParser(DisabledGameActivity.this);
 
-            String url = Const.GET_GRAPH + "team_id=" + pollsPref.getTeamId() + Const.TAG_GAME_ID + pollsPref.getActiveGame() + Const.TAG_POLL_ID + pollId;
+            String url = Const.GET_GRAPH + "team_id=" + pollsPref.getTeamId() + Const.TAG_GAME_ID + pollsPref.getActiveGame() + Const.TAG_POLL_ID + param[0];
 
-           // Log.e("url", url);
+            // Log.e("url", url);
 
             String jsonString = jsonParser.getJSONFromUrl(url);
 
@@ -458,7 +459,18 @@ public class DisabledGameActivity extends AppCompatActivity {
 
             if (result == 1) {
                 getGraphData(xTitle, barDataStrings);
-                handleGraph(maxY);
+                if (GRAPHONE) {
+                    handleGraph(maxY, chart);
+                } else if (!GRAPHONE) {
+                    chartTwo.setVisibility(View.VISIBLE);
+                    handleGraph(maxY, chartTwo);
+                }
+                if (pollId == 4) {
+                    pollId = 0;
+                    GRAPHONE = false;
+                    callgraphAPI(8);
+
+                }
 
             } else if (result == 0) {
                 alertDialogManager.showAlertDialog(DisabledGameActivity.this, msg);
