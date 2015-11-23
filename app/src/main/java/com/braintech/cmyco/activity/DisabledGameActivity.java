@@ -472,7 +472,8 @@ public class DisabledGameActivity extends AppCompatActivity {
                     handleGraph(maxY, chartTwo);
                 }
                 if (pollId == 4) {
-                    pollId = 0;
+                    pollId = 8;
+                    setGraphColor();
                     GRAPHONE = false;
                     flay_chartTwo.setVisibility(View.VISIBLE);
                     Log.e("calling 2nd graph", "true");
