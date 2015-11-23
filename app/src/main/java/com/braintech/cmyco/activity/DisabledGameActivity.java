@@ -6,9 +6,11 @@ import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.TextView;
@@ -62,6 +64,9 @@ public class DisabledGameActivity extends AppCompatActivity {
 
     @InjectView(R.id.chartTwo)
     BarChart chartTwo;
+
+    @InjectView(R.id.flay_chartTwo)
+    FrameLayout flay_chartTwo;
 
 //    @InjectView(R.id.playCallLayout)
 //    LinearLayout playCallLayout;
@@ -461,13 +466,17 @@ public class DisabledGameActivity extends AppCompatActivity {
                 getGraphData(xTitle, barDataStrings);
                 if (GRAPHONE) {
                     handleGraph(maxY, chart);
-                } else if (!GRAPHONE) {
-                    chartTwo.setVisibility(View.VISIBLE);
+                }
+
+                if (!GRAPHONE) {
                     handleGraph(maxY, chartTwo);
                 }
                 if (pollId == 4) {
                     pollId = 0;
                     GRAPHONE = false;
+                    flay_chartTwo.setVisibility(View.VISIBLE);
+                    Log.e("calling 2nd graph", "true");
+
                     callgraphAPI(8);
 
                 }

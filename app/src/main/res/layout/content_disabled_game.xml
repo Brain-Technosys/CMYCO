@@ -37,20 +37,42 @@
         </LinearLayout>
 
 
-        <com.github.mikephil.charting.charts.BarChart
-            android:id="@+id/chart"
+        <FrameLayout
+            android:id="@+id/flay_chart"
             android:layout_width="match_parent"
             android:layout_height="200dp"
             android:layout_below="@+id/linLayTextView"
-            android:layout_marginTop="15dp" />
+            android:layout_marginTop="15dp">
 
-        <com.github.mikephil.charting.charts.BarChart
-            android:id="@+id/chartTwo"
+            <com.github.mikephil.charting.charts.BarChart
+                android:id="@+id/chart"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </FrameLayout>
+
+
+        <FrameLayout
+            android:id="@+id/flay_chartTwo"
             android:layout_width="match_parent"
             android:layout_height="200dp"
-            android:layout_below="@+id/linLayTextView"
+            android:layout_below="@+id/flay_chart"
             android:layout_marginTop="15dp"
-            android:visibility="gone" />
+            android:visibility="gone">
+
+            <com.github.mikephil.charting.charts.BarChart
+                android:id="@+id/chartTwo"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+
+                />
+        </FrameLayout>
+        <!--<com.github.mikephil.charting.charts.BarChart-->
+        <!--android:id="@+id/chartTwo"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="200dp"-->
+        <!--android:layout_below="@+id/linLayTextView"-->
+        <!--android:layout_marginTop="15dp"-->
+        <!--android:visibility="gone" />-->
 
 
     </RelativeLayout>
