@@ -6,12 +6,15 @@ package com.braintech.cmyco.adapter;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Color;
+import android.support.v7.widget.CardView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.braintech.cmyco.R;
@@ -23,6 +26,8 @@ import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+
+import butterknife.InjectView;
 
 public class CustomAdapterPollData extends BaseAdapter {
 
@@ -78,9 +83,13 @@ public class CustomAdapterPollData extends BaseAdapter {
             holder.txtViewPollName = (TextView) convertView.findViewById(R.id.txtViewPollName);
             holder.txtViewPollOptions = (TextView) convertView.findViewById(R.id.txtViewPollOptions);
             holder.txtViewPollNo = (TextView) convertView.findViewById(R.id.txtViewPollNo);
+            holder.card_view = (CardView) convertView.findViewById(R.id.card_view);
+
+            //set card view bg
+            holder.card_view.setCardBackgroundColor(Color.parseColor("#2980b9"));
 
             //For Substitution
-            holder.frameLayoutPollTwo = (FrameLayout) convertView.findViewById(R.id.frameLayoutPollTwo);
+            holder.linLayoutPollTwo = (LinearLayout) convertView.findViewById(R.id.linLayoutPollTwo);
             holder.txtViewPollOptionsTwo = (TextView) convertView.findViewById(R.id.txtViewPollOptionsTwo);
             holder.txtViewPollNoTwo = (TextView) convertView.findViewById(R.id.txtViewPollNoTwo);
 
@@ -104,8 +113,8 @@ public class CustomAdapterPollData extends BaseAdapter {
 
             if (pollData.getPoll_id() == 4) {
                 //for Substitution, setting visibility visible to views
-                holder.frameLayoutPollTwo.setVisibility(View.VISIBLE);
-                holder.txtViewPollOptionsTwo.setVisibility(View.VISIBLE);
+                holder.linLayoutPollTwo.setVisibility(View.VISIBLE);
+
 
                 //For Substitution
                 Fonts.robotoRegular(context, holder.txtViewPollOptionsTwo);
@@ -155,8 +164,9 @@ public class CustomAdapterPollData extends BaseAdapter {
         TextView txtViewPollNo;
         TextView txtViewPollOptions;
 
-        FrameLayout frameLayoutPollTwo;
+        LinearLayout linLayoutPollTwo;
         TextView txtViewPollNoTwo;
         TextView txtViewPollOptionsTwo;
+        CardView card_view;
     }
 }
