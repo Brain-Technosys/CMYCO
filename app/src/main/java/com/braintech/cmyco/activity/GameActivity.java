@@ -430,11 +430,8 @@ public class GameActivity extends AppCompatActivity {
     private void passIntent() {
         Intent intent = new Intent(GameActivity.this, GamePlayStrategyActivity.class);
 
-        Log.e("intent",""+isButtonClicked);
-        Bundle bundle=new Bundle();
-        bundle.putBoolean(Const.KEY_BUTTON_CLICKED, isButtonClicked);
-        bundle.putInt(Const.TAG_POLL_ID, pollId);
-        intent.putExtras(bundle);
+        Log.e("intent", "" + isButtonClicked);
+        intent.putExtra(Const.TAG_POLL_ID, pollId);
         finish();
         startActivity(intent);
     }
@@ -485,6 +482,9 @@ public class GameActivity extends AppCompatActivity {
                 public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
 
                     isButtonClicked = true;
+
+                    pollsPref.saveButtonClicked(true,pollId);
+
                     disableRadioButtons();
 
                     tag = Integer.parseInt(compoundButton.getTag().toString());
