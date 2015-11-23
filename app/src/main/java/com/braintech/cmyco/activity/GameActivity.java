@@ -100,7 +100,7 @@ public class GameActivity extends AppCompatActivity {
     int maxY = 1000;
 
     boolean isActivityStarted = false;
-    boolean isButtonClicked = false;
+    boolean isButtonClicked;
 
     String graphItemColor = "#14DDF9";
     String graphBgColor = "#010f1a";
@@ -163,6 +163,8 @@ public class GameActivity extends AppCompatActivity {
             pollId = bundle.getInt(Const.KEY_POLL_ID);
             pollName = bundle.getString(Const.KEY_POLL_NAME, pollName);
             pollDuration = bundle.getLong(Const.KEY_POLL_DURATION);
+
+            isButtonClicked=bundle.getBoolean(Const.KEY_BUTTON_CLICKED);
 
 
             defenceTextView.setText(pollName);
@@ -427,8 +429,8 @@ public class GameActivity extends AppCompatActivity {
         Intent intent = new Intent(GameActivity.this, GamePlayStrategyActivity.class);
 
        Bundle bundle=new Bundle();
-        bundle.putBoolean(Const.KEY_BUTTON_CLICKED,isButtonClicked);
-        bundle.putInt(Const.TAG_POLL_ID,pollId);
+        bundle.putBoolean(Const.KEY_BUTTON_CLICKED, isButtonClicked);
+        bundle.putInt(Const.TAG_POLL_ID, pollId);
         intent.putExtras(bundle);
         finish();
         startActivity(intent);
@@ -468,6 +470,11 @@ public class GameActivity extends AppCompatActivity {
 
             //Adding Views
             defenceRadioGroup.addView(catRadioButtons[i]);
+
+            if(!isButtonClicked)
+            {
+                disableRadioButtons();
+            }
 
             //Applying click Listener on category radio button
             catRadioButtons[i].setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
