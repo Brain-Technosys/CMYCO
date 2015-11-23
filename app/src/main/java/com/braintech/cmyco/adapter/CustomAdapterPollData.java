@@ -7,6 +7,7 @@ package com.braintech.cmyco.adapter;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
+import android.opengl.EGLExt;
 import android.support.v7.widget.CardView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -103,6 +104,7 @@ public class CustomAdapterPollData extends BaseAdapter {
 
             if (pollData.getPoll_id() == 7) {
                 holder.txtViewPollNo.setVisibility(View.GONE);
+                holder.card_view.setCardBackgroundColor(Color.TRANSPARENT);
             }
 
 
