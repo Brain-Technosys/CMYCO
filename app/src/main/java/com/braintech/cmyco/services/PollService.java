@@ -288,13 +288,10 @@ public class PollService extends Service {
                                     e.printStackTrace();
                                 }*/
 
-                                if(pollsPref.getPollId()==poll_id)
-                                {
-                                    isButtonClicked=pollsPref.isButtonClicked();
-                                }
-                                else
-                                {
-                                    isButtonClicked=false;
+                                if (pollsPref.getPollId() == poll_id) {
+                                    isButtonClicked = pollsPref.isButtonClicked();
+                                } else {
+                                    isButtonClicked = false;
                                 }
 
                                 pollsPref.pollActivated(true);
@@ -304,6 +301,13 @@ public class PollService extends Service {
                                 long poll_duration = Utility.findTimeDifference(endTime, currentTime);
 
                                 arrayListPollOpt = hashMapPollOptions.get(poll_id);
+
+                                if (poll_id == 4) {
+                                    poll_name = "Substitution player in";
+                                } else if (poll_id == 8) {
+
+                                    poll_name = "Substitution player out";
+                                }
                                 Intent intent = new Intent(context, GameActivity.class);
                                 Bundle bundle = new Bundle();
                                 bundle.putString(Const.KEY_POLL_NAME, poll_name);
@@ -311,7 +315,7 @@ public class PollService extends Service {
                                 bundle.putLong(Const.KEY_POLL_DURATION, poll_duration);
                                 bundle.putSerializable(Const.TAG_POLL_OPTION, arrayListPollOpt);
                                 bundle.putBoolean(Const.KEY_BUTTON_CLICKED, false);
-                                bundle.putBoolean(Const.KEY_BUTTON_CLICKED,isButtonClicked);
+                                bundle.putBoolean(Const.KEY_BUTTON_CLICKED, isButtonClicked);
                                 intent.putExtras(bundle);
                                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                                 startActivity(intent);

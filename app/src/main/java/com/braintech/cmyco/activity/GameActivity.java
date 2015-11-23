@@ -425,8 +425,8 @@ public class GameActivity extends AppCompatActivity {
     }
 
     private void passIntent() {
-        Intent intent = new Intent(GameActivity.this, GamePlayStrategyActivity.class);
 
+        Intent intent = new Intent(GameActivity.this, GamePlayStrategyActivity.class);
         Log.e("intent", "" + isButtonClicked);
         intent.putExtra(Const.TAG_POLL_ID, pollId);
         isActivityStarted = true;
