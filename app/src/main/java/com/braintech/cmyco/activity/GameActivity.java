@@ -425,6 +425,8 @@ public class GameActivity extends AppCompatActivity {
 
     private void passIntent() {
         Intent intent = new Intent(GameActivity.this, GamePlayStrategyActivity.class);
+
+        intent.putExtra(Const.TAG_POLL_ID,pollId);
         finish();
         startActivity(intent);
     }

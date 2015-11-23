@@ -343,9 +343,24 @@ public class GamePlayStrategyActivity extends AppCompatActivity {
 
     @OnItemClick(R.id.listViewPoll)
     void onItemClick(int position) {
+
         ArrayList<PollOptions> arrayListPollOpt = new ArrayList<>();
 
         int poll_id = arrayListPollData.get(position-1).getPoll_id();
+
+
+        if(getIntent().hasExtra(Const.TAG_POLL_ID))
+        {
+            int pollId=getIntent().getExtras().getInt(Const.TAG_POLL_ID);
+
+            if(poll_id==poll_id)
+            {
+                if(pollsPref.isPollActivated())
+                {
+                    pollsPref.pollActivated(false);
+                }
+            }
+        }
 
         if (poll_id == 7) {
             //do not navigate
