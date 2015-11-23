@@ -6,6 +6,7 @@ package com.braintech.cmyco.adapter;
 
 import android.app.Activity;
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -56,76 +57,83 @@ public class CustomAdapterPollData extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        ViewHolder holder;
+        ViewHolder holder = null;
 
-//        PollData pollDataParent = rowItems.get(position);
+        PollData pollDataParent = rowItems.get(position);
 //        if (pollDataParent.getPoll_id() != 5) {
 
 
-            if (convertView == null) {
+        if (convertView == null) {
 
 
-                LayoutInflater mInflater = (LayoutInflater) context
-                        .getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
-                convertView = mInflater.inflate(R.layout.list_poll_data, null);
+            LayoutInflater mInflater = (LayoutInflater) context
+                    .getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
+            convertView = mInflater.inflate(R.layout.list_poll_data, null);
 
-                holder = new ViewHolder();
+            holder = new ViewHolder();
 
-                holder.txtViewPollName = (TextView) convertView.findViewById(R.id.txtViewPollName);
-                holder.txtViewPollOptions = (TextView) convertView.findViewById(R.id.txtViewPollOptions);
-                holder.txtViewPollNo = (TextView) convertView.findViewById(R.id.txtViewPollNo);
+            holder.txtViewPollName = (TextView) convertView.findViewById(R.id.txtViewPollName);
+            holder.txtViewPollOptions = (TextView) convertView.findViewById(R.id.txtViewPollOptions);
+            holder.txtViewPollNo = (TextView) convertView.findViewById(R.id.txtViewPollNo);
 
-                //For Substitution
-                holder.frameLayoutPollTwo = (FrameLayout) convertView.findViewById(R.id.frameLayoutPollTwo);
-                holder.txtViewPollOptionsTwo = (TextView) convertView.findViewById(R.id.txtViewPollOptionsTwo);
-                holder.txtViewPollNoTwo = (TextView) convertView.findViewById(R.id.txtViewPollNoTwo);
+            //For Substitution
+            holder.frameLayoutPollTwo = (FrameLayout) convertView.findViewById(R.id.frameLayoutPollTwo);
+            holder.txtViewPollOptionsTwo = (TextView) convertView.findViewById(R.id.txtViewPollOptionsTwo);
+            holder.txtViewPollNoTwo = (TextView) convertView.findViewById(R.id.txtViewPollNoTwo);
 
 
-                Fonts.robotoRegular(context, holder.txtViewPollName);
-                Fonts.robotoRegular(context, holder.txtViewPollOptions);
-                Fonts.robotoRegular(context, holder.txtViewPollNo);
-
-                PollData pollData = rowItems.get(position);
-
-                if (pollData.getPoll_id() == 7) {
-                    holder.txtViewPollNo.setVisibility(View.GONE);
-                }
-
-                convertView.setTag(holder);
-            } else {
-                holder = (ViewHolder) convertView.getTag();
-            }
+            Fonts.robotoRegular(context, holder.txtViewPollName);
+            Fonts.robotoRegular(context, holder.txtViewPollOptions);
+            Fonts.robotoRegular(context, holder.txtViewPollNo);
 
             PollData pollData = rowItems.get(position);
+            Log.e("poll id", String.valueOf(pollData.getPoll_id()));
 
-
-            holder.txtViewPollName.setText(pollData.getPoll_name());
-            holder.txtViewPollName.setTag(pollData.getPoll_id());
-
-            if (!pollData.getMaxId().equals("null") && !pollData.getMaxValue().equals("null")) {
-                holder.txtViewPollNo.setText(pollData.getMaxId());
-                holder.txtViewPollOptions.setText(pollData.getMaxValue());
+            if (pollData.getPoll_id() == 7) {
+                holder.txtViewPollNo.setVisibility(View.GONE);
             }
 
-            if (pollData.getPoll_id() == 4) {
-                //for Substitution, setting visibility visible to views
-                holder.frameLayoutPollTwo.setVisibility(View.VISIBLE);
-                holder.txtViewPollOptionsTwo.setVisibility(View.VISIBLE);
 
-                //For Substitution
-                Fonts.robotoRegular(context, holder.txtViewPollOptionsTwo);
-                Fonts.robotoRegular(context, holder.txtViewPollNoTwo);
-
-                PollData pollDataSubstitution = rowItems.get(position + 1);
-
-                if (!pollDataSubstitution.getMaxId().equals("null") && !pollDataSubstitution.getMaxValue().equals("null")) {
-                    holder.txtViewPollNoTwo.setText(pollDataSubstitution.getMaxId());
-                    holder.txtViewPollOptionsTwo.setText(pollDataSubstitution.getMaxValue());
-                }
+            convertView.setTag(holder);
 
 
+        } else {
+            holder = (ViewHolder) convertView.getTag();
+        }
+
+
+        PollData pollData = rowItems.get(position);
+
+
+        holder.txtViewPollName.setText(pollData.getPoll_name());
+        holder.txtViewPollName.setTag(pollData.getPoll_id());
+
+        if (!pollData.getMaxId().equals("null") && !pollData.getMaxValue().equals("null")) {
+            holder.txtViewPollNo.setText(pollData.getMaxId());
+            holder.txtViewPollOptions.setText(pollData.getMaxValue());
+        }
+
+        if (pollData.getPoll_id() == 4) {
+            //for Substitution, setting visibility visible to views
+            holder.frameLayoutPollTwo.setVisibility(View.VISIBLE);
+            holder.txtViewPollOptionsTwo.setVisibility(View.VISIBLE);
+
+            //For Substitution
+            Fonts.robotoRegular(context, holder.txtViewPollOptionsTwo);
+            Fonts.robotoRegular(context, holder.txtViewPollNoTwo);
+
+            PollData pollDataSubstitution = rowItems.get(position + 1);
+
+            if (!pollDataSubstitution.getMaxId().equals("null") && !pollDataSubstitution.getMaxValue().equals("null")) {
+                holder.txtViewPollNoTwo.setText(pollDataSubstitution.getMaxId());
+                holder.txtViewPollOptionsTwo.setText(pollDataSubstitution.getMaxValue());
             }
 
+
+        }
+
+        convertView.setVisibility((pollData.getPoll_id() == 8) ? View.GONE : View.VISIBLE);
+        notifyDataSetChanged();
 
         return convertView;
     }
