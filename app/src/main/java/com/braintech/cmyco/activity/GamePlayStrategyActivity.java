@@ -277,7 +277,7 @@ public class GamePlayStrategyActivity extends AppCompatActivity {
     }
 
     private void addDataToListView(int ignorePos) {
-        CustomAdapterPollData customAdapterPollData = new CustomAdapterPollData(this, arrayListPollData, hashMapPollOptions,ignorePos);
+        CustomAdapterPollData customAdapterPollData = new CustomAdapterPollData(this, arrayListPollData, hashMapPollOptions, ignorePos);
         listViewPoll.setAdapter(customAdapterPollData);
     }
 
@@ -355,18 +355,20 @@ public class GamePlayStrategyActivity extends AppCompatActivity {
         if (getIntent().hasExtra(Const.TAG_POLL_ID)) {
             int pollId = getIntent().getExtras().getInt(Const.TAG_POLL_ID);
 
+            Boolean isButtonclicked=getIntent().getExtras().getBoolean(Const.KEY_BUTTON_CLICKED);
+
             if (poll_id == pollId) {
                 if (pollsPref.isPollActivated()) {
                     pollsPref.pollActivated(false);
 
-                    InstructionActivity inst = new InstructionActivity();
-
-                    inst.setPostDelayedDuration(0);
+                    Progress.start(this);
 
                     if (pollsPref.isTimePresent()) {
                         //do nothing screen will automatically switch
                     } else {
-                        passIntentOnClick(position, poll_id);
+
+                        Progress.stop();
+                        passIntentOnClick(position, poll_id,isButtonclicked);
                     }
                 }
             }
@@ -376,14 +378,14 @@ public class GamePlayStrategyActivity extends AppCompatActivity {
                 //do not navigate
             } else {
 
-                passIntentOnClick(position, poll_id);
+                passIntentOnClick(position, poll_id,false);
 
             }
 
         }
     }
 
-    public void passIntentOnClick(int position, int poll_id) {
+    public void passIntentOnClick(int position, int poll_id,Boolean isButtonClicked) {
         ArrayList<PollOptions> arrayListPollOpt = new ArrayList<>();
 
         String pollName = arrayListPollData.get(position - 1).getPoll_name();
@@ -395,6 +397,7 @@ public class GamePlayStrategyActivity extends AppCompatActivity {
         bundle.putString(Const.KEY_POLL_NAME, pollName);
         bundle.putSerializable(Const.TAG_POLL_OPTION, arrayListPollOpt);
         bundle.putInt(Const.KEY_POLL_ID, poll_id);
+        bundle.putBoolean(Const.KEY_BUTTON_CLICKED,isButtonClicked);
         intent.putExtras(bundle);
         startActivity(intent);
     }

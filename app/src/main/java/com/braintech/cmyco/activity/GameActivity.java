@@ -395,7 +395,7 @@ public class GameActivity extends AppCompatActivity {
         //menu item id
         int id = item.getItemId();
 
-        if (!TIMER) {
+
             isActivityStarted = true;
             //noinspection SimplifiableIfStatement
             if (id == R.id.action_settings) {
@@ -405,7 +405,7 @@ public class GameActivity extends AppCompatActivity {
 
                 return true;
             }
-        } else if (id == android.R.id.home) {
+         else if (id == android.R.id.home) {
             passIntent();
         }
 
@@ -426,7 +426,10 @@ public class GameActivity extends AppCompatActivity {
     private void passIntent() {
         Intent intent = new Intent(GameActivity.this, GamePlayStrategyActivity.class);
 
-        intent.putExtra(Const.TAG_POLL_ID,pollId);
+       Bundle bundle=new Bundle();
+        bundle.putBoolean(Const.KEY_BUTTON_CLICKED,isButtonClicked);
+        bundle.putInt(Const.TAG_POLL_ID,pollId);
+        intent.putExtras(bundle);
         finish();
         startActivity(intent);
     }

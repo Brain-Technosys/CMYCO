@@ -84,6 +84,9 @@ public class Const {
     //Active Users
     public static String KEY_ACTIVE_USER = "active_user";
 
+    //Intent varaibles
+    public static String KEY_BUTTON_CLICKED="isButtonClicked";
+
 
 
 
