@@ -268,6 +268,8 @@ public class PollService extends Service {
                         try {
                             if (TimeCheck.isTimeBetweenTwoTime(startTime, endTime, currentTime)) {
 
+                                pollsPref.saveTimePresent(true);
+
                                 Vibrator v = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
                                 v.vibrate(500);
 
