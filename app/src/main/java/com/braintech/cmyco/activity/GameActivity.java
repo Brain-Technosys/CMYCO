@@ -406,8 +406,7 @@ public class GameActivity extends AppCompatActivity {
                 return true;
             }
         } else if (id == android.R.id.home) {
-            Intent intent = new Intent(this, GamePlayStrategyActivity.class);
-            startActivity(intent);
+            passIntent();
         }
 
         return super.onOptionsItemSelected(item);
@@ -417,13 +416,17 @@ public class GameActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
 
-        if (!TIMER) {
-            super.onBackPressed();
 
-            Intent intent = new Intent(GameActivity.this, GamePlayStrategyActivity.class);
-            startActivity(intent);
-        }
+        super.onBackPressed();
+        passIntent();
 
+
+    }
+
+    private void passIntent() {
+        Intent intent = new Intent(GameActivity.this, GamePlayStrategyActivity.class);
+        finish();
+        startActivity(intent);
     }
 
     //Setting Layout
