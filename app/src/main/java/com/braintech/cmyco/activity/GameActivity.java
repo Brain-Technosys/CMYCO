@@ -716,6 +716,7 @@ public class GameActivity extends AppCompatActivity {
                             // Log.e("isactivated",""+isActivityStarted);
 
                             if (!isActivityStarted) {
+                                pollsPref.saveButtonClicked(false, pollId);
                                 Intent intent = new Intent(GameActivity.this, GamePlayStrategyActivity.class);
                                 finish();
                                 startActivity(intent);
