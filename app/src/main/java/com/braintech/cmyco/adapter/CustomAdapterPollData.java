@@ -33,10 +33,11 @@ public class CustomAdapterPollData extends BaseAdapter {
     HashMap<Integer, ArrayList<PollOptions>> hashMapPollOptions;
 
 
-    public CustomAdapterPollData(Context context, ArrayList<PollData> rowItems, HashMap<Integer, ArrayList<PollOptions>> hashMapPollOptions) {
+    public CustomAdapterPollData(Context context, ArrayList<PollData> rowItems, HashMap<Integer, ArrayList<PollOptions>> hashMapPollOptions, int ignorePos) {
         this.context = context;
         this.rowItems = rowItems;
-        this.getRowItems=rowItems;
+        this.getRowItems = rowItems;
+        rowItems.remove(ignorePos);
         this.hashMapPollOptions = hashMapPollOptions;
 
     }
@@ -61,7 +62,7 @@ public class CustomAdapterPollData extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder holder = null;
 
-        PollData pollDataParent = rowItems.get(position);
+      //  PollData pollDataParent = rowItems.get(position);
 //        if (pollDataParent.getPoll_id() != 5) {
 
 
@@ -98,8 +99,8 @@ public class CustomAdapterPollData extends BaseAdapter {
 
             convertView.setTag(holder);
 
-            convertView.setVisibility((pollData.getPoll_id() == 8) ? View.GONE : View.VISIBLE);
-            notifyDataSetChanged();
+//            convertView.setVisibility((pollData.getPoll_id() == 8) ? View.GONE : View.VISIBLE);
+//            notifyDataSetChanged();
 
 
         } else {
@@ -127,7 +128,7 @@ public class CustomAdapterPollData extends BaseAdapter {
             Fonts.robotoRegular(context, holder.txtViewPollOptionsTwo);
             Fonts.robotoRegular(context, holder.txtViewPollNoTwo);
 
-            PollData pollDataSubstitution = rowItems.get(position + 1);
+            PollData pollDataSubstitution = getRowItems.get(position + 1);
 
             if (!pollDataSubstitution.getMaxId().equals("null") && !pollDataSubstitution.getMaxValue().equals("null")) {
                 holder.txtViewPollNoTwo.setText(pollDataSubstitution.getMaxId());

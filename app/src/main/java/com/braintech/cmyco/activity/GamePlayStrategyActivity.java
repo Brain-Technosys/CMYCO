@@ -174,6 +174,7 @@ public class GamePlayStrategyActivity extends AppCompatActivity {
     private class GetPollData extends AsyncTask<String, String, String> {
 
         int result = -1;
+        int ignorePos;
 
         @Override
         protected void onPreExecute() {
@@ -233,6 +234,9 @@ public class GamePlayStrategyActivity extends AppCompatActivity {
 
                                 String pollId = jsonObjOpt.getString(Const.KEY_POLL_ID);
 
+                                if (pollId.equals("8")) {
+                                    ignorePos = j;
+                                }
                                 String pollName = jsonObjOpt.getString(Const.KEY_POLL_NAME);
 
                                 PollOptions pollOptions = new PollOptions(pollId, pollName);
@@ -263,7 +267,7 @@ public class GamePlayStrategyActivity extends AppCompatActivity {
             Progress.stop();
 
             if (result == 1) {
-                addDataToListView();
+                addDataToListView(ignorePos);
             } else {
                 alertDialogManager.showAlertDialog(GamePlayStrategyActivity.this, getString(R.string.server_not_responding));
             }
@@ -272,8 +276,8 @@ public class GamePlayStrategyActivity extends AppCompatActivity {
         }
     }
 
-    private void addDataToListView() {
-        CustomAdapterPollData customAdapterPollData = new CustomAdapterPollData(this, arrayListPollData, hashMapPollOptions);
+    private void addDataToListView(int ignorePos) {
+        CustomAdapterPollData customAdapterPollData = new CustomAdapterPollData(this, arrayListPollData, hashMapPollOptions,ignorePos);
         listViewPoll.setAdapter(customAdapterPollData);
     }
 
@@ -355,14 +359,14 @@ public class GamePlayStrategyActivity extends AppCompatActivity {
                 if (pollsPref.isPollActivated()) {
                     pollsPref.pollActivated(false);
 
-                    InstructionActivity inst=new InstructionActivity();
+                    InstructionActivity inst = new InstructionActivity();
 
                     inst.setPostDelayedDuration(0);
 
                     if (pollsPref.isTimePresent()) {
                         //do nothing screen will automatically switch
                     } else {
-                        passIntentOnClick(position,poll_id);
+                        passIntentOnClick(position, poll_id);
                     }
                 }
             }
@@ -372,14 +376,14 @@ public class GamePlayStrategyActivity extends AppCompatActivity {
                 //do not navigate
             } else {
 
-                passIntentOnClick(position,poll_id);
+                passIntentOnClick(position, poll_id);
 
             }
 
         }
     }
 
-    public void passIntentOnClick(int position,int poll_id) {
+    public void passIntentOnClick(int position, int poll_id) {
         ArrayList<PollOptions> arrayListPollOpt = new ArrayList<>();
 
         String pollName = arrayListPollData.get(position - 1).getPoll_name();
