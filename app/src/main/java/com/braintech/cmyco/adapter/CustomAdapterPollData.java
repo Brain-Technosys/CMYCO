@@ -62,7 +62,7 @@ public class CustomAdapterPollData extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder holder = null;
 
-      //  PollData pollDataParent = rowItems.get(position);
+        //  PollData pollDataParent = rowItems.get(position);
 //        if (pollDataParent.getPoll_id() != 5) {
 
 
@@ -102,6 +102,16 @@ public class CustomAdapterPollData extends BaseAdapter {
 //            convertView.setVisibility((pollData.getPoll_id() == 8) ? View.GONE : View.VISIBLE);
 //            notifyDataSetChanged();
 
+            if (pollData.getPoll_id() == 4) {
+                //for Substitution, setting visibility visible to views
+                holder.frameLayoutPollTwo.setVisibility(View.VISIBLE);
+                holder.txtViewPollOptionsTwo.setVisibility(View.VISIBLE);
+
+                //For Substitution
+                Fonts.robotoRegular(context, holder.txtViewPollOptionsTwo);
+                Fonts.robotoRegular(context, holder.txtViewPollNoTwo);
+            }
+
 
         } else {
             holder = (ViewHolder) convertView.getTag();
@@ -120,19 +130,17 @@ public class CustomAdapterPollData extends BaseAdapter {
         }
 
         if (pollData.getPoll_id() == 4) {
-            //for Substitution, setting visibility visible to views
-            holder.frameLayoutPollTwo.setVisibility(View.VISIBLE);
-            holder.txtViewPollOptionsTwo.setVisibility(View.VISIBLE);
-
-            //For Substitution
-            Fonts.robotoRegular(context, holder.txtViewPollOptionsTwo);
-            Fonts.robotoRegular(context, holder.txtViewPollNoTwo);
 
             PollData pollDataSubstitution = getRowItems.get(position + 1);
 
+            if (!pollData.getMaxId().equals("null") && !pollData.getMaxValue().equals("null")) {
+                holder.txtViewPollNo.setText(pollData.getMaxId());
+                holder.txtViewPollOptions.setText("Player In");
+            }
+
             if (!pollDataSubstitution.getMaxId().equals("null") && !pollDataSubstitution.getMaxValue().equals("null")) {
                 holder.txtViewPollNoTwo.setText(pollDataSubstitution.getMaxId());
-                holder.txtViewPollOptionsTwo.setText(pollDataSubstitution.getMaxValue());
+                holder.txtViewPollOptionsTwo.setText("Player Out");
             }
 
 
