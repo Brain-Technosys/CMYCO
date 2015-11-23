@@ -344,41 +344,56 @@ public class GamePlayStrategyActivity extends AppCompatActivity {
     @OnItemClick(R.id.listViewPoll)
     void onItemClick(int position) {
 
-        ArrayList<PollOptions> arrayListPollOpt = new ArrayList<>();
 
-        int poll_id = arrayListPollData.get(position-1).getPoll_id();
+        int poll_id = arrayListPollData.get(position - 1).getPoll_id();
 
 
-        if(getIntent().hasExtra(Const.TAG_POLL_ID))
-        {
-            int pollId=getIntent().getExtras().getInt(Const.TAG_POLL_ID);
+        if (getIntent().hasExtra(Const.TAG_POLL_ID)) {
+            int pollId = getIntent().getExtras().getInt(Const.TAG_POLL_ID);
 
-            if(poll_id==poll_id)
-            {
-                if(pollsPref.isPollActivated())
-                {
+            if (poll_id == pollId) {
+                if (pollsPref.isPollActivated()) {
                     pollsPref.pollActivated(false);
+
+                    InstructionActivity inst=new InstructionActivity();
+
+                    inst.setPostDelayedDuration(0);
+
+                    if (pollsPref.isTimePresent()) {
+                        //do nothing screen will automatically switch
+                    } else {
+                        passIntentOnClick(position,poll_id);
+                    }
                 }
             }
-        }
-
-        if (poll_id == 7) {
-            //do not navigate
         } else {
-            String pollName = arrayListPollData.get(position-1).getPoll_name();
 
-            arrayListPollOpt = hashMapPollOptions.get(poll_id);
+            if (poll_id == 7) {
+                //do not navigate
+            } else {
 
+                passIntentOnClick(position,poll_id);
 
-            Intent intent = new Intent(this, DisabledGameActivity.class);
+            }
 
-            Bundle bundle = new Bundle();
-            bundle.putString(Const.KEY_POLL_NAME, pollName);
-            bundle.putSerializable(Const.TAG_POLL_OPTION, arrayListPollOpt);
-            bundle.putInt(Const.KEY_POLL_ID, poll_id);
-            intent.putExtras(bundle);
-            startActivity(intent);
         }
-
     }
+
+    public void passIntentOnClick(int position,int poll_id) {
+        ArrayList<PollOptions> arrayListPollOpt = new ArrayList<>();
+
+        String pollName = arrayListPollData.get(position - 1).getPoll_name();
+
+        arrayListPollOpt = hashMapPollOptions.get(poll_id);
+        Intent intent = new Intent(this, DisabledGameActivity.class);
+
+        Bundle bundle = new Bundle();
+        bundle.putString(Const.KEY_POLL_NAME, pollName);
+        bundle.putSerializable(Const.TAG_POLL_OPTION, arrayListPollOpt);
+        bundle.putInt(Const.KEY_POLL_ID, poll_id);
+        intent.putExtras(bundle);
+        startActivity(intent);
+    }
+
+
 }

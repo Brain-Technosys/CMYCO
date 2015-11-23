@@ -38,6 +38,7 @@ public class PollsPref {
     private static final String KEY_ACTIVE_USERS = "active_users";
 
     public static final String KEY_POLL_ACTIVATED = "pollActivated";
+    public static final String KEY_TIME_PRESENT = "timePresent";
 
 
     public PollsPref(Context _context) {
@@ -120,6 +121,12 @@ public class PollsPref {
     }
 
 
+    public void saveTimePresent(Boolean value)
+    {
+        editor.putBoolean(KEY_TIME_PRESENT, value);
+        editor.commit();
+    }
+
 
 
     public String getCoachDetail() {
@@ -172,6 +179,12 @@ public class PollsPref {
     {
         return pref.getBoolean(KEY_POLL_ACTIVATED, false);
     }
+
+    public boolean isTimePresent()
+    {
+        return pref.getBoolean(KEY_TIME_PRESENT, false);
+    }
+
 
 
     public void clearPollData() {

@@ -66,6 +66,8 @@ public class InstructionActivity extends AppCompatActivity {
 
     private boolean mIsBound = false;
 
+    long postDelayedTime;
+
 
     private ServiceConnection sCon = new ServiceConnection() {
         @Override
@@ -124,7 +126,14 @@ public class InstructionActivity extends AppCompatActivity {
 
         // callingPollData();
 
+        setPostDelayedDuration(5000);
 
+
+    }
+
+    public void setPostDelayedDuration(long duration)
+    {
+        postDelayedTime=duration;
     }
 
     private void callingPollData() {
@@ -148,10 +157,10 @@ public class InstructionActivity extends AppCompatActivity {
                         }
                     }
 
-                    handler.postDelayed(this, 20000);
+                    handler.postDelayed(this, postDelayedTime);
                 }
             }
-        }, 10000);
+        }, 1000);
     }
 
     @Override
