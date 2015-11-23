@@ -138,6 +138,10 @@ public class GameActivity extends AppCompatActivity {
 
         handleToolbar();
 
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         alertDialogManager = new AlertDialogManager();
 
         catDefenceArrayList = new ArrayList<>();
@@ -401,10 +405,10 @@ public class GameActivity extends AppCompatActivity {
 
                 return true;
             }
+        } else if (id == android.R.id.home) {
+            Intent intent = new Intent(this, GamePlayStrategyActivity.class);
+            startActivity(intent);
         }
-//        else if (id == android.R.id.home) {
-//            this.finish();
-//        }
 
         return super.onOptionsItemSelected(item);
     }
@@ -693,7 +697,7 @@ public class GameActivity extends AppCompatActivity {
                             pollsPref.saveOptions(maxId);
                             pollsPref.pollActivated(false);
 
-                           // Log.e("isactivated",""+isActivityStarted);
+                            // Log.e("isactivated",""+isActivityStarted);
 
                             if (!isActivityStarted) {
                                 Intent intent = new Intent(GameActivity.this, GamePlayStrategyActivity.class);
