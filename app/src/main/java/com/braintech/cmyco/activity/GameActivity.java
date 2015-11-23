@@ -166,6 +166,8 @@ public class GameActivity extends AppCompatActivity {
 
             isButtonClicked=bundle.getBoolean(Const.KEY_BUTTON_CLICKED);
 
+            Log.e("isButtonClicked",""+isButtonClicked);
+
 
             defenceTextView.setText(pollName);
 
@@ -428,7 +430,8 @@ public class GameActivity extends AppCompatActivity {
     private void passIntent() {
         Intent intent = new Intent(GameActivity.this, GamePlayStrategyActivity.class);
 
-       Bundle bundle=new Bundle();
+        Log.e("intent",""+isButtonClicked);
+        Bundle bundle=new Bundle();
         bundle.putBoolean(Const.KEY_BUTTON_CLICKED, isButtonClicked);
         bundle.putInt(Const.TAG_POLL_ID, pollId);
         intent.putExtras(bundle);
@@ -471,7 +474,7 @@ public class GameActivity extends AppCompatActivity {
             //Adding Views
             defenceRadioGroup.addView(catRadioButtons[i]);
 
-            if(!isButtonClicked)
+            if(isButtonClicked)
             {
                 disableRadioButtons();
             }
@@ -481,6 +484,7 @@ public class GameActivity extends AppCompatActivity {
                 @Override
                 public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
 
+                    isButtonClicked = true;
                     disableRadioButtons();
 
                     tag = Integer.parseInt(compoundButton.getTag().toString());
@@ -495,7 +499,7 @@ public class GameActivity extends AppCompatActivity {
     }
 
     private void disableRadioButtons() {
-        isButtonClicked = true;
+
         callgraphAPI();
         for (int i = 0; i < defenceRadioGroup.getChildCount(); i++) {
             ((RadioButton) defenceRadioGroup.getChildAt(i)).setEnabled(false);

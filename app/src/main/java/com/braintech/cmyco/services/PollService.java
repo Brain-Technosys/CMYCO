@@ -299,6 +299,7 @@ public class PollService extends Service {
                                 bundle.putInt(Const.KEY_POLL_ID, poll_id);
                                 bundle.putLong(Const.KEY_POLL_DURATION, poll_duration);
                                 bundle.putSerializable(Const.TAG_POLL_OPTION, arrayListPollOpt);
+                                bundle.putBoolean(Const.KEY_BUTTON_CLICKED,false);
                                 intent.putExtras(bundle);
                                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                                 startActivity(intent);
