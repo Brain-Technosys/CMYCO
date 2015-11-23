@@ -29,12 +29,14 @@ public class CustomAdapterPollData extends BaseAdapter {
     Context context;
 
     ArrayList<PollData> rowItems;
-
+    ArrayList<PollData> getRowItems;
     HashMap<Integer, ArrayList<PollOptions>> hashMapPollOptions;
+
 
     public CustomAdapterPollData(Context context, ArrayList<PollData> rowItems, HashMap<Integer, ArrayList<PollOptions>> hashMapPollOptions) {
         this.context = context;
         this.rowItems = rowItems;
+        this.getRowItems=rowItems;
         this.hashMapPollOptions = hashMapPollOptions;
 
     }
@@ -96,6 +98,9 @@ public class CustomAdapterPollData extends BaseAdapter {
 
             convertView.setTag(holder);
 
+            convertView.setVisibility((pollData.getPoll_id() == 8) ? View.GONE : View.VISIBLE);
+            notifyDataSetChanged();
+
 
         } else {
             holder = (ViewHolder) convertView.getTag();
@@ -132,8 +137,6 @@ public class CustomAdapterPollData extends BaseAdapter {
 
         }
 
-        convertView.setVisibility((pollData.getPoll_id() == 8) ? View.GONE : View.VISIBLE);
-        notifyDataSetChanged();
 
         return convertView;
     }
