@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.braintech.cmyco.R;
@@ -57,43 +58,73 @@ public class CustomAdapterPollData extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder holder;
 
-        if (convertView == null) {
-
-            LayoutInflater mInflater = (LayoutInflater) context
-                    .getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
-            convertView = mInflater.inflate(R.layout.list_poll_data, null);
-
-            holder = new ViewHolder();
-
-            holder.txtViewPollName = (TextView) convertView.findViewById(R.id.txtViewPollName);
-            holder.txtViewPollOptions = (TextView) convertView.findViewById(R.id.txtViewPollOptions);
-            holder.txtViewPollNo = (TextView) convertView.findViewById(R.id.txtViewPollNo);
+//        PollData pollDataParent = rowItems.get(position);
+//        if (pollDataParent.getPoll_id() != 5) {
 
 
-            Fonts.robotoRegular(context, holder.txtViewPollName);
-            Fonts.robotoRegular(context, holder.txtViewPollOptions);
-            Fonts.robotoRegular(context, holder.txtViewPollNo);
-            PollData pollData = rowItems.get(position);
+            if (convertView == null) {
 
-            if (pollData.getPoll_id() == 7) {
-                holder.txtViewPollNo.setVisibility(View.GONE);
+
+                LayoutInflater mInflater = (LayoutInflater) context
+                        .getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
+                convertView = mInflater.inflate(R.layout.list_poll_data, null);
+
+                holder = new ViewHolder();
+
+                holder.txtViewPollName = (TextView) convertView.findViewById(R.id.txtViewPollName);
+                holder.txtViewPollOptions = (TextView) convertView.findViewById(R.id.txtViewPollOptions);
+                holder.txtViewPollNo = (TextView) convertView.findViewById(R.id.txtViewPollNo);
+
+                //For Substitution
+                holder.frameLayoutPollTwo = (FrameLayout) convertView.findViewById(R.id.frameLayoutPollTwo);
+                holder.txtViewPollOptionsTwo = (TextView) convertView.findViewById(R.id.txtViewPollOptionsTwo);
+                holder.txtViewPollNoTwo = (TextView) convertView.findViewById(R.id.txtViewPollNoTwo);
+
+
+                Fonts.robotoRegular(context, holder.txtViewPollName);
+                Fonts.robotoRegular(context, holder.txtViewPollOptions);
+                Fonts.robotoRegular(context, holder.txtViewPollNo);
+
+                PollData pollData = rowItems.get(position);
+
+                if (pollData.getPoll_id() == 7) {
+                    holder.txtViewPollNo.setVisibility(View.GONE);
+                }
+
+                convertView.setTag(holder);
+            } else {
+                holder = (ViewHolder) convertView.getTag();
             }
 
-            convertView.setTag(holder);
-        } else {
-            holder = (ViewHolder) convertView.getTag();
-        }
+            PollData pollData = rowItems.get(position);
 
-        PollData pollData = rowItems.get(position);
 
-        holder.txtViewPollName.setText(pollData.getPoll_name());
-        holder.txtViewPollName.setTag(pollData.getPoll_id());
+            holder.txtViewPollName.setText(pollData.getPoll_name());
+            holder.txtViewPollName.setTag(pollData.getPoll_id());
 
-        if (!pollData.getMaxId().equals("null") && !pollData.getMaxValue().equals("null")) {
-            holder.txtViewPollNo.setText(pollData.getMaxId());
-            holder.txtViewPollOptions.setText(pollData.getMaxValue());
-        }
+            if (!pollData.getMaxId().equals("null") && !pollData.getMaxValue().equals("null")) {
+                holder.txtViewPollNo.setText(pollData.getMaxId());
+                holder.txtViewPollOptions.setText(pollData.getMaxValue());
+            }
 
+            if (pollData.getPoll_id() == 4) {
+                //for Substitution, setting visibility visible to views
+                holder.frameLayoutPollTwo.setVisibility(View.VISIBLE);
+                holder.txtViewPollOptionsTwo.setVisibility(View.VISIBLE);
+
+                //For Substitution
+                Fonts.robotoRegular(context, holder.txtViewPollOptionsTwo);
+                Fonts.robotoRegular(context, holder.txtViewPollNoTwo);
+
+                PollData pollDataSubstitution = rowItems.get(position + 1);
+
+                if (!pollDataSubstitution.getMaxId().equals("null") && !pollDataSubstitution.getMaxValue().equals("null")) {
+                    holder.txtViewPollNoTwo.setText(pollDataSubstitution.getMaxId());
+                    holder.txtViewPollOptionsTwo.setText(pollDataSubstitution.getMaxValue());
+                }
+
+
+            }
 
 
         return convertView;
@@ -103,5 +134,9 @@ public class CustomAdapterPollData extends BaseAdapter {
         TextView txtViewPollName;
         TextView txtViewPollNo;
         TextView txtViewPollOptions;
+
+        FrameLayout frameLayoutPollTwo;
+        TextView txtViewPollNoTwo;
+        TextView txtViewPollOptionsTwo;
     }
 }

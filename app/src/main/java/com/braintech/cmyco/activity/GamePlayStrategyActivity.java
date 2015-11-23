@@ -104,12 +104,13 @@ public class GamePlayStrategyActivity extends AppCompatActivity {
         listViewPoll.addHeaderView(header, null, false);
         txt_team_name = (TextView) header.findViewById(R.id.txt_team_name);
         txt_playCall = (TextView) header.findViewById(R.id.txt_playCall);
+        txt_active_users = (TextView) header.findViewById(R.id.txt_active_users);
 
 
-        //footer listView
-        ViewGroup footer = (ViewGroup) inflater.inflate(R.layout.layout_footer_gps, listViewPoll, false);
-        listViewPoll.addFooterView(footer, null, false);
-        txt_active_users = (TextView) footer.findViewById(R.id.txt_active_users);
+//        //footer listView
+//        ViewGroup footer = (ViewGroup) inflater.inflate(R.layout.layout_footer_gps, listViewPoll, false);
+//        listViewPoll.addFooterView(footer, null, false);
+//        txt_active_users = (TextView) footer.findViewById(R.id.txt_active_users);
 
 
     }
