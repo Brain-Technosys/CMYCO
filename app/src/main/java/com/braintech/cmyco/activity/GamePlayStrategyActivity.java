@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -208,6 +209,9 @@ public class GamePlayStrategyActivity extends AppCompatActivity {
 
                         JSONObject jsonObj = jsonArrayPolLData.getJSONObject(i);
                         int poll_id = jsonObj.getInt(Const.KEY_POLL_ID);
+                        if (poll_id == 8) {
+                            ignorePos = i;
+                        }
 
                         String poll_name = jsonObj.getString(Const.KEY_POLL_NAME);
                         String poll_start_time = jsonObj.getString(Const.KEY_START_TIME);
@@ -232,11 +236,11 @@ public class GamePlayStrategyActivity extends AppCompatActivity {
 
                                 JSONObject jsonObjOpt = jsonArrayPollOptions.getJSONObject(j);
 
+                                Log.e("poll", jsonObjOpt.toString());
+
                                 String pollId = jsonObjOpt.getString(Const.KEY_POLL_ID);
 
-                                if (pollId.equals("8")) {
-                                    ignorePos = j;
-                                }
+
                                 String pollName = jsonObjOpt.getString(Const.KEY_POLL_NAME);
 
                                 PollOptions pollOptions = new PollOptions(pollId, pollName);
@@ -355,7 +359,7 @@ public class GamePlayStrategyActivity extends AppCompatActivity {
         if (getIntent().hasExtra(Const.TAG_POLL_ID)) {
             int pollId = getIntent().getExtras().getInt(Const.TAG_POLL_ID);
 
-            Boolean isButtonclicked=getIntent().getExtras().getBoolean(Const.KEY_BUTTON_CLICKED);
+            Boolean isButtonclicked = getIntent().getExtras().getBoolean(Const.KEY_BUTTON_CLICKED);
 
             if (poll_id == pollId) {
                 if (pollsPref.isPollActivated()) {
@@ -368,7 +372,7 @@ public class GamePlayStrategyActivity extends AppCompatActivity {
                     } else {
 
                         Progress.stop();
-                        passIntentOnClick(position, poll_id,isButtonclicked);
+                        passIntentOnClick(position, poll_id, isButtonclicked);
                     }
                 }
             }
@@ -378,14 +382,14 @@ public class GamePlayStrategyActivity extends AppCompatActivity {
                 //do not navigate
             } else {
 
-                passIntentOnClick(position, poll_id,false);
+                passIntentOnClick(position, poll_id, false);
 
             }
 
         }
     }
 
-    public void passIntentOnClick(int position, int poll_id,Boolean isButtonClicked) {
+    public void passIntentOnClick(int position, int poll_id, Boolean isButtonClicked) {
         ArrayList<PollOptions> arrayListPollOpt = new ArrayList<>();
 
         String pollName = arrayListPollData.get(position - 1).getPoll_name();
@@ -397,7 +401,7 @@ public class GamePlayStrategyActivity extends AppCompatActivity {
         bundle.putString(Const.KEY_POLL_NAME, pollName);
         bundle.putSerializable(Const.TAG_POLL_OPTION, arrayListPollOpt);
         bundle.putInt(Const.KEY_POLL_ID, poll_id);
-        bundle.putBoolean(Const.KEY_BUTTON_CLICKED,isButtonClicked);
+        bundle.putBoolean(Const.KEY_BUTTON_CLICKED, isButtonClicked);
         intent.putExtras(bundle);
         startActivity(intent);
     }
