@@ -355,13 +355,17 @@ public class GamePlayStrategyActivity extends AppCompatActivity {
 
         int poll_id = arrayListPollData.get(position - 1).getPoll_id();
 
+        Log.e("pollidClick",""+poll_id);
+
 
         if (getIntent().hasExtra(Const.TAG_POLL_ID)) {
             int pollId = getIntent().getExtras().getInt(Const.TAG_POLL_ID);
-
-            if(pollId==4 || pollId==8)
+            Log.e("pollidintent",""+pollId);
+            if(poll_id==4 && pollId==8)
             {
                 poll_id=pollId;
+
+                Log.e("inside","com");
             }
             if (poll_id == pollId) {
                 if (pollsPref.isPollActivated()) {
@@ -370,10 +374,13 @@ public class GamePlayStrategyActivity extends AppCompatActivity {
                     Progress.start(this);
 
                     if (pollsPref.isTimePresent()) {
+
+                        Progress.stop();
                         //do nothing screen will automatically switch
                     } else {
 
                         Progress.stop();
+                        pollId=poll_id;
                         passIntentOnClick(position, pollId);
                     }
                 }
