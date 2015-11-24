@@ -72,5 +72,9 @@
     <string name="title_activity_disabled_game">The Game</string>
     <string name="btn_title_refresh">REFRESH</string>
 
+    <!-- Disabled game activity -->
+    <string name="title_substitution_in">Substitution Player In</string>
+    <string name="title_substitution_out">Substitution Player Out</string>
+
 
 </resources>

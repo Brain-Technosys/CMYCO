@@ -66,7 +66,16 @@ public class DisabledGameActivity extends AppCompatActivity {
     BarChart chartTwo;
 
     @InjectView(R.id.flay_chartTwo)
-    FrameLayout flay_chartTwo;
+    LinearLayout flay_chartTwo;
+
+    @InjectView(R.id.txtTitleSubIn)
+    TextView txtTitleSubIn;
+
+    @InjectView(R.id.txtPlayCallOne)
+    TextView txtPlayCallOne;
+
+    @InjectView(R.id.txtPlayCallTwo)
+    TextView txtPlayCallTwo;
 
 //    @InjectView(R.id.playCallLayout)
 //    LinearLayout playCallLayout;
@@ -384,6 +393,7 @@ public class DisabledGameActivity extends AppCompatActivity {
         String resultMaxPoll;
         Long playCallDur;
         String maxId;
+        String sequence;
 
 
         @Override
@@ -409,6 +419,7 @@ public class DisabledGameActivity extends AppCompatActivity {
             try {
                 JSONObject jsonObject = new JSONObject(jsonString);
 
+                Log.e("Disabled game", jsonObject.toString());
                 if (jsonObject != null) {
 
 
@@ -438,6 +449,8 @@ public class DisabledGameActivity extends AppCompatActivity {
                             resultMaxPoll = "PLAY CALL :" + jsonObjectData.getString(String.valueOf("max_id"));
                             maxId = jsonObjectData.getString(String.valueOf("max_id")) + "." + jsonObjectData.getString(String.valueOf("max"));
 
+                            sequence=jsonObjectData.getString(String.valueOf("sequence"));
+
                             //set max value for Graph Y axis
                             maxY = jsonObjectData.getInt("max_value");
 
@@ -466,12 +479,15 @@ public class DisabledGameActivity extends AppCompatActivity {
                 getGraphData(xTitle, barDataStrings);
                 if (GRAPHONE) {
                     handleGraph(maxY, chart);
+                    txtPlayCallOne.setText(sequence);
                 }
 
                 if (!GRAPHONE) {
                     handleGraph(maxY, chartTwo);
+                    txtPlayCallTwo.setText(sequence);
                 }
                 if (pollId == 4) {
+                    txtTitleSubIn.setVisibility(View.VISIBLE);
                     pollId = 8;
                     setGraphColor();
                     GRAPHONE = false;

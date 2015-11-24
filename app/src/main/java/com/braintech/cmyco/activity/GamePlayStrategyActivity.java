@@ -3,6 +3,7 @@ package com.braintech.cmyco.activity;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -10,6 +11,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -71,6 +73,11 @@ public class GamePlayStrategyActivity extends AppCompatActivity {
 
     AlertDialogManager alertDialogManager;
 
+    private long startTime=2*60*1000; // 15 MINS IDLE TIME
+    private final long interval = 1 * 1000;
+
+    MyCountDownTimer countDownTimer;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,6 +99,8 @@ public class GamePlayStrategyActivity extends AppCompatActivity {
         manageListViewHeaderFooter();
 
         setFont();
+
+        countDownTimer = new MyCountDownTimer(startTime, interval);
 
     }
 
@@ -419,5 +428,38 @@ public class GamePlayStrategyActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    public boolean dispatchTouchEvent (MotionEvent ev) {
+
+        return false; // return false to indicate that the event hasn't been handled yet
+    }
+
+
+    @Override
+    public void onUserInteraction(){
+
+        super.onUserInteraction();
+
+        //Reset the timer on user interaction...
+        countDownTimer.cancel();
+        countDownTimer.start();
+    }
+
+    public class MyCountDownTimer extends CountDownTimer {
+        public MyCountDownTimer(long startTime, long interval) {
+            super(startTime, interval);
+        }
+
+        @Override
+        public void onFinish() {
+            //DO WHATEVER YOU WANT HERE
+            logoutAPI.logout(snakeOnClick, coordinatorLayout);
+
+        }
+
+        @Override
+        public void onTick(long millisUntilFinished) {
+        }
+    }
 
 }

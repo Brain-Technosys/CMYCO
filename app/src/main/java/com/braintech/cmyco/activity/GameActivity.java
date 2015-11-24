@@ -616,6 +616,7 @@ public class GameActivity extends AppCompatActivity {
         String resultMaxPoll;
         Long playCallDur;
         String maxId;
+        String sequence;
 
 
         @Override
@@ -640,6 +641,8 @@ public class GameActivity extends AppCompatActivity {
 
             try {
                 JSONObject jsonObject = new JSONObject(jsonString);
+
+                Log.e("Enable game", jsonObject.toString());
 
                 if (jsonObject != null) {
                     result = jsonObject.getInt(Const.KEY_RESULT);
@@ -667,6 +670,8 @@ public class GameActivity extends AppCompatActivity {
                             //getting max Poll result
                             resultMaxPoll = "PLAY CALL :" + jsonObjectData.getString(String.valueOf("max_id"));
                             maxId = jsonObjectData.getString(String.valueOf("max_id")) + "." + jsonObjectData.getString(String.valueOf("max"));
+
+                            sequence=jsonObjectData.getString(String.valueOf("sequence"));
 
                             //set max value for Graph Y axis
                             maxY = jsonObjectData.getInt("max_value");
@@ -702,7 +707,7 @@ public class GameActivity extends AppCompatActivity {
 
                 if (showPlayCall) {
                     playCallLayout.setVisibility(View.VISIBLE);
-                    txtPlayCall.setText(resultMaxPoll);
+                    txtPlayCall.setText(sequence);
 
                     final Handler handler = new Handler();
                     handler.postDelayed(new Runnable() {
