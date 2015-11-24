@@ -18,8 +18,8 @@ public class ControlApplication extends Application
     public void onCreate()
     {
         super.onCreate();
-        Log.d(TAG, "Starting application" + this.toString());
-        waiter=new Waiter(15*60*1000); //15 mins
+        Log.e(TAG, "Starting application" + this.toString());
+        waiter=new Waiter(2*60*1000); //15 mins
         waiter.start();
     }
 

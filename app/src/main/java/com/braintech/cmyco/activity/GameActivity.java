@@ -20,6 +20,7 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.braintech.cmyco.R;
+import com.braintech.cmyco.application.ControlApplication;
 import com.braintech.cmyco.common.CommonAPI;
 import com.braintech.cmyco.my_interface.SnakeOnClick;
 import com.braintech.cmyco.objectclasses.PollOptions;
@@ -127,6 +128,8 @@ public class GameActivity extends AppCompatActivity {
     boolean showPlayCall = false;
 
     AlertDialogManager alertDialogManager;
+
+    private static final String TAG= InstructionActivity.class.getName();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -736,5 +739,18 @@ public class GameActivity extends AppCompatActivity {
                 alertDialogManager.showAlertDialog(GameActivity.this, getString(R.string.server_not_responding));
             }
         }
+    }
+
+    public ControlApplication getApp()
+    {
+        return (ControlApplication)this.getApplication();
+    }
+
+    @Override
+    public void onUserInteraction()
+    {
+        super.onUserInteraction();
+        getApp().touch();
+        Log.e(TAG, "User interaction to "+this.toString());
     }
 }

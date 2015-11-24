@@ -7,11 +7,13 @@ import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.webkit.WebView;
 
 import com.braintech.cmyco.R;
+import com.braintech.cmyco.application.ControlApplication;
 import com.braintech.cmyco.common.CommonAPI;
 import com.braintech.cmyco.my_interface.SnakeOnClick;
 import com.braintech.cmyco.utils.AlertDialogManager;
@@ -42,6 +44,7 @@ public class InstructionActivityTwo extends AppCompatActivity {
 
     AlertDialogManager alertDialogManager;
 
+    private static final String TAG= InstructionActivity.class.getName();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -170,6 +173,19 @@ public class InstructionActivityTwo extends AppCompatActivity {
                 alertDialogManager.showAlertDialog(InstructionActivityTwo.this, getString(R.string.server_not_responding));
             }
         }
+    }
+
+    public ControlApplication getApp()
+    {
+        return (ControlApplication )this.getApplication();
+    }
+
+    @Override
+    public void onUserInteraction()
+    {
+        super.onUserInteraction();
+        getApp().touch();
+        Log.e(TAG, "User interaction to " + this.toString());
     }
 
 }

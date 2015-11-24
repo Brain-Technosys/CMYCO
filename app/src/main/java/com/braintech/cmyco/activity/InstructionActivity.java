@@ -19,6 +19,7 @@ import android.webkit.WebView;
 import android.widget.Toast;
 
 import com.braintech.cmyco.R;
+import com.braintech.cmyco.application.ControlApplication;
 import com.braintech.cmyco.common.CommonAPI;
 import com.braintech.cmyco.my_interface.SnakeOnClick;
 import com.braintech.cmyco.services.PollService;
@@ -68,6 +69,7 @@ public class InstructionActivity extends AppCompatActivity {
 
     long postDelayedTime;
 
+    private static final String TAG= InstructionActivity.class.getName();
 
     private ServiceConnection sCon = new ServiceConnection() {
         @Override
@@ -312,5 +314,18 @@ public class InstructionActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+
+    public ControlApplication getApp()
+    {
+        return (ControlApplication)this.getApplication();
+    }
+
+    @Override
+    public void onUserInteraction()
+    {
+        super.onUserInteraction();
+        getApp().touch();
+        Log.e(TAG, "User interaction to " + this.toString());
+    }
 
 }

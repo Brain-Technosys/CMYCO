@@ -18,6 +18,7 @@ import android.widget.TextView;
 
 import com.braintech.cmyco.R;
 import com.braintech.cmyco.adapter.CustomAdapterPollData;
+import com.braintech.cmyco.application.ControlApplication;
 import com.braintech.cmyco.common.CommonAPI;
 import com.braintech.cmyco.my_interface.SnakeOnClick;
 import com.braintech.cmyco.objectclasses.PollData;
@@ -73,11 +74,10 @@ public class GamePlayStrategyActivity extends AppCompatActivity {
 
     AlertDialogManager alertDialogManager;
 
-    private long startTime=2*60*1000; // 15 MINS IDLE TIME
+    private long startTime = 2 * 60 * 1000; // 15 MINS IDLE TIME
     private final long interval = 1 * 1000;
 
-    MyCountDownTimer countDownTimer;
-
+    private static final String TAG= InstructionActivity.class.getName();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -100,7 +100,6 @@ public class GamePlayStrategyActivity extends AppCompatActivity {
 
         setFont();
 
-        countDownTimer = new MyCountDownTimer(startTime, interval);
 
     }
 
@@ -364,17 +363,16 @@ public class GamePlayStrategyActivity extends AppCompatActivity {
 
         int poll_id = arrayListPollData.get(position - 1).getPoll_id();
 
-        Log.e("pollidClick",""+poll_id);
+        Log.e("pollidClick", "" + poll_id);
 
 
         if (getIntent().hasExtra(Const.TAG_POLL_ID)) {
             int pollId = getIntent().getExtras().getInt(Const.TAG_POLL_ID);
-            Log.e("pollidintent",""+pollId);
-            if(poll_id==4 && pollId==8)
-            {
-                poll_id=pollId;
+            Log.e("pollidintent", "" + pollId);
+            if (poll_id == 4 && pollId == 8) {
+                poll_id = pollId;
 
-                Log.e("inside","com");
+                Log.e("inside", "com");
             }
             if (poll_id == pollId) {
                 if (pollsPref.isPollActivated()) {
@@ -389,12 +387,10 @@ public class GamePlayStrategyActivity extends AppCompatActivity {
                     } else {
 
                         Progress.stop();
-                        pollId=poll_id;
+                        pollId = poll_id;
                         passIntentOnClick(position, pollId);
                     }
-                }
-                else
-                {
+                } else {
                     passIntentOnClick(position, pollId);
                 }
             } else {
@@ -428,38 +424,17 @@ public class GamePlayStrategyActivity extends AppCompatActivity {
         }
     }
 
-    @Override
-    public boolean dispatchTouchEvent (MotionEvent ev) {
-
-        return false; // return false to indicate that the event hasn't been handled yet
+    public ControlApplication getApp()
+    {
+        return (ControlApplication)this.getApplication();
     }
 
-
     @Override
-    public void onUserInteraction(){
-
+    public void onUserInteraction()
+    {
         super.onUserInteraction();
-
-        //Reset the timer on user interaction...
-        countDownTimer.cancel();
-        countDownTimer.start();
-    }
-
-    public class MyCountDownTimer extends CountDownTimer {
-        public MyCountDownTimer(long startTime, long interval) {
-            super(startTime, interval);
-        }
-
-        @Override
-        public void onFinish() {
-            //DO WHATEVER YOU WANT HERE
-            logoutAPI.logout(snakeOnClick, coordinatorLayout);
-
-        }
-
-        @Override
-        public void onTick(long millisUntilFinished) {
-        }
+        getApp().touch();
+        Log.e(TAG, "User interaction to "+this.toString());
     }
 
 }
