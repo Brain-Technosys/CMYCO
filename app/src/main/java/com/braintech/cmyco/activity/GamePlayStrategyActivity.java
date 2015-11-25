@@ -429,7 +429,14 @@ public class GamePlayStrategyActivity extends AppCompatActivity {
         }
     }
 
-//    public ControlApplication getApp()
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+        pollsPref.ActivityRunning(false);
+    }
+
+    //    public ControlApplication getApp()
 //    {
 //        return (ControlApplication)this.getApplication();
 //    }
