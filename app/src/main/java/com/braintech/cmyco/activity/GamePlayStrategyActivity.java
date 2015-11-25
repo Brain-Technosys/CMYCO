@@ -102,7 +102,7 @@ public class GamePlayStrategyActivity extends AppCompatActivity {
 
         setFont();
 
-        gamePlayStrategyActivity=this;
+        gamePlayStrategyActivity = this;
 
         pollsPref.ActivityRunning(true);
 
@@ -142,8 +142,11 @@ public class GamePlayStrategyActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-
-        new GetPollData().execute();
+        if (Utility.isNetworkAvailable(GamePlayStrategyActivity.this)) {
+            new GetPollData().execute();
+        } else {
+            //do nothing
+        }
     }
 
     private void getActiveUsers() {
@@ -205,7 +208,7 @@ public class GamePlayStrategyActivity extends AppCompatActivity {
 
                 String url = Const.GET_ACTIVE_GAME_DETAIL + "?" + Const.TAG_TEAMID + "=" + pollsPref.getTeamId();
 
-                Log.e("url",url);
+                Log.e("url", url);
                 String jsonString = jsonParser.getJSONFromUrl(url);
 
 
@@ -335,9 +338,9 @@ public class GamePlayStrategyActivity extends AppCompatActivity {
                 } else {
                     msg = jsonObject.getString(Const.KEY_MSG);
                 }
-            }catch (NullPointerException e) {
+            } catch (NullPointerException e) {
                 e.printStackTrace();
-            }  catch (JSONException e) {
+            } catch (JSONException e) {
                 e.printStackTrace();
             }
 
