@@ -282,6 +282,8 @@ public class HomeActivity extends AppCompatActivity {
                 }
 
 //                }
+            } catch (NullPointerException e) {
+                e.printStackTrace();
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -370,6 +372,8 @@ public class HomeActivity extends AppCompatActivity {
                     }
 
                 }
+            } catch (NullPointerException e) {
+                e.printStackTrace();
             } catch (JSONException e) {
                 e.printStackTrace();
             }

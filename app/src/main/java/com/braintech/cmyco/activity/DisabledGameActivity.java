@@ -484,7 +484,9 @@ public class DisabledGameActivity extends AppCompatActivity {
                         msg = jsonObject.getString(Const.KEY_MSG);
                     }
                 }
-            } catch (JSONException e) {
+            }catch (NullPointerException e) {
+                e.printStackTrace();
+            }  catch (JSONException e) {
                 e.printStackTrace();
             }
 

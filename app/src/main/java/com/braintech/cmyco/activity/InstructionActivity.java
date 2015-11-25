@@ -69,7 +69,7 @@ public class InstructionActivity extends AppCompatActivity {
 
     long postDelayedTime;
 
-    private static final String TAG= InstructionActivity.class.getName();
+    private static final String TAG = InstructionActivity.class.getName();
 
     private ServiceConnection sCon = new ServiceConnection() {
         @Override
@@ -134,9 +134,8 @@ public class InstructionActivity extends AppCompatActivity {
 
     }
 
-    public void setPostDelayedDuration(long duration)
-    {
-        postDelayedTime=duration;
+    public void setPostDelayedDuration(long duration) {
+        postDelayedTime = duration;
     }
 
     private void callingPollData() {
@@ -262,7 +261,7 @@ public class InstructionActivity extends AppCompatActivity {
 
             //
             String url = Const.GET_INSTRUCTION + page;
-           // Log.e(url, url);
+            // Log.e(url, url);
             String jsonString = jsonParser.getJSONFromUrl(url);
             try {
                 JSONObject jsonObject = new JSONObject(jsonString);
@@ -280,6 +279,8 @@ public class InstructionActivity extends AppCompatActivity {
 
                 }
 
+            } catch (NullPointerException e) {
+                e.printStackTrace();
             } catch (JSONException e) {
                 e.printStackTrace();
             }
