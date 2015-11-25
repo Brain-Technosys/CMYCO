@@ -137,7 +137,7 @@ public class CustomAdapterPollData extends BaseAdapter {
 
         if (!pollData.getMaxId().equals("null") && !pollData.getMaxValue().equals("null")) {
 
-            if(pollData.getMaxValue().equals("0")){
+            if(pollData.getMaxId().equals("0")){
                 holder.txtViewPollOptions.setVisibility(View.INVISIBLE);
                 holder.txtViewPollNo.setVisibility(View.INVISIBLE);
             }else{
@@ -161,7 +161,7 @@ public class CustomAdapterPollData extends BaseAdapter {
 //                holder.txtViewPollNo.setVisibility(View.INVISIBLE);
 //            }
 
-            if(pollData.getMaxValue().equals("0")){
+            if(pollData.getMaxId().equals("0")){
                 holder.txtViewPollOptions.setVisibility(View.INVISIBLE);
                 holder.txtViewPollNo.setVisibility(View.INVISIBLE);
             }else{
@@ -170,7 +170,7 @@ public class CustomAdapterPollData extends BaseAdapter {
             }
 
             if (!pollDataSubstitution.getMaxId().equals("null") && !pollDataSubstitution.getMaxValue().equals("null")) {
-                if(pollData.getMaxValue().equals("0")){
+                if(pollData.getMaxId().equals("0")){
                     holder.txtViewPollOptionsTwo.setVisibility(View.INVISIBLE);
                     holder.txtViewPollNoTwo.setVisibility(View.INVISIBLE);
                 }else{
