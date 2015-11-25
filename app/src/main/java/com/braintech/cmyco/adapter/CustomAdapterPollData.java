@@ -129,20 +129,17 @@ public class CustomAdapterPollData extends BaseAdapter {
 
 
         PollData pollData = rowItems.get(position);
-        Log.e("max Id", pollData.getMaxId().trim());
-        Log.e("max Id", pollData.getMaxId().trim());
-
 
         holder.txtViewPollName.setText(pollData.getPoll_name());
         holder.txtViewPollName.setTag(pollData.getPoll_id());
 
         if (!pollData.getMaxId().equals("null") && !pollData.getMaxValue().equals("null")) {
 
+            // data for all poll result
             if (Integer.parseInt(pollData.getMaxId().trim()) == 0) {
                 holder.txtViewPollOptions.setVisibility(View.INVISIBLE);
                 holder.txtViewPollNo.setVisibility(View.INVISIBLE);
             } else {
-
                 holder.txtViewPollOptions.setVisibility(View.VISIBLE);
                 holder.txtViewPollNo.setVisibility(View.VISIBLE);
 
@@ -156,16 +153,7 @@ public class CustomAdapterPollData extends BaseAdapter {
 
         if (pollData.getPoll_id() == 4) {
 
-            PollData pollDataSubstitution = getRowItems.get(position + 1);
-
-//            if (!pollData.getMaxId().equals("null") && !pollData.getMaxValue().equals("null")) {
-//                holder.txtViewPollNo.setText(pollData.getMaxId());
-//                holder.txtViewPollOptions.setText("Player In");
-//            }else{
-//                holder.txtViewPollOptions.setVisibility(View.INVISIBLE);
-//                holder.txtViewPollNo.setVisibility(View.INVISIBLE);
-//            }
-
+            // data for Substitution player In
             if (Integer.parseInt(pollData.getMaxId().trim()) == 0) {
                 holder.txtViewPollOptions.setVisibility(View.INVISIBLE);
                 holder.txtViewPollNo.setVisibility(View.INVISIBLE);
@@ -177,11 +165,10 @@ public class CustomAdapterPollData extends BaseAdapter {
                 holder.txtViewPollOptions.setText("Player In");
             }
 
+            // data for Substitution player out
+            PollData pollDataSubstitution = getRowItems.get(position + 1);
+
             if (!pollDataSubstitution.getMaxId().equals("null") && !pollDataSubstitution.getMaxValue().equals("null")) {
-
-                Log.e("max Id", pollData.getMaxId().trim());
-                Log.e("max Id", pollData.getMaxId().trim());
-
                 if (Integer.parseInt(pollDataSubstitution.getMaxId().trim()) == 0) {
                     holder.txtViewPollOptionsTwo.setVisibility(View.INVISIBLE);
                     holder.txtViewPollNoTwo.setVisibility(View.INVISIBLE);
