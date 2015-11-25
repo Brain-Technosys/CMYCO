@@ -160,7 +160,7 @@ public class PollService extends Service {
             String url = Const.GET_ACTIVE_GAME_DETAIL + "?" + Const.TAG_TEAMID + "=" + pollsPref.getTeamId();
             String jsonString = jsonParser.getJSONFromUrl(url);
 
-
+            Log.e("url",url);
             //Log.e("jsonString", jsonString);
 
             try {

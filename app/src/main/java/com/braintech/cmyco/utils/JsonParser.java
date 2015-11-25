@@ -67,9 +67,7 @@ public class JsonParser {
                     return sb.toString();
             }
 
-        } catch (ConnectException ex) {
-            ex.printStackTrace();
-        } catch (SocketTimeoutException ex) {
+        }catch (SocketTimeoutException ex) {
             ex.printStackTrace();
             message = context.getString(R.string.time_out);
 
