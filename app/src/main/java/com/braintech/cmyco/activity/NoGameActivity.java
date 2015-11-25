@@ -7,6 +7,7 @@ import android.os.Handler;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
@@ -194,6 +195,8 @@ public class NoGameActivity extends AppCompatActivity {
                 //Log.e("url", url);
 
                 String jsonString = jsonParser.getJSONFromUrl(url);
+
+                Log.e("jsonString", jsonString);
                 JSONObject jsonObject = new JSONObject(jsonString);
                 if (jsonObject != null) {
                     result = jsonObject.getInt(Const.KEY_RESULT);

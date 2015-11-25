@@ -130,6 +130,7 @@ public class InstructionActivity extends AppCompatActivity {
 
         setPostDelayedDuration(5000);
 
+        pollsPref.ActivityRunning(false);
 
     }
 
