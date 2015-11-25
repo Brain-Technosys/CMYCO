@@ -405,7 +405,7 @@ public class GamePlayStrategyActivity extends AppCompatActivity {
                 passIntentOnClick(position, poll_id);
             }
         } else {
-
+            pollsPref.pollActivated(false);
             passIntentOnClick(position, poll_id);
         }
     }
