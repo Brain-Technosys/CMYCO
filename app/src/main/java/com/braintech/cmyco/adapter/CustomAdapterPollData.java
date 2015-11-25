@@ -136,22 +136,47 @@ public class CustomAdapterPollData extends BaseAdapter {
         holder.txtViewPollName.setTag(pollData.getPoll_id());
 
         if (!pollData.getMaxId().equals("null") && !pollData.getMaxValue().equals("null")) {
-            holder.txtViewPollNo.setText(pollData.getMaxId());
-            holder.txtViewPollOptions.setText(pollData.getMaxValue());
+
+            if(pollData.getMaxValue().equals("0")){
+                holder.txtViewPollOptions.setVisibility(View.INVISIBLE);
+                holder.txtViewPollNo.setVisibility(View.INVISIBLE);
+            }else{
+                holder.txtViewPollNo.setText(pollData.getMaxId());
+                holder.txtViewPollOptions.setText(pollData.getMaxValue());
+            }
+
+
+
         }
 
         if (pollData.getPoll_id() == 4) {
 
             PollData pollDataSubstitution = getRowItems.get(position + 1);
 
-            if (!pollData.getMaxId().equals("null") && !pollData.getMaxValue().equals("null")) {
+//            if (!pollData.getMaxId().equals("null") && !pollData.getMaxValue().equals("null")) {
+//                holder.txtViewPollNo.setText(pollData.getMaxId());
+//                holder.txtViewPollOptions.setText("Player In");
+//            }else{
+//                holder.txtViewPollOptions.setVisibility(View.INVISIBLE);
+//                holder.txtViewPollNo.setVisibility(View.INVISIBLE);
+//            }
+
+            if(pollData.getMaxValue().equals("0")){
+                holder.txtViewPollOptions.setVisibility(View.INVISIBLE);
+                holder.txtViewPollNo.setVisibility(View.INVISIBLE);
+            }else{
                 holder.txtViewPollNo.setText(pollData.getMaxId());
                 holder.txtViewPollOptions.setText("Player In");
             }
 
             if (!pollDataSubstitution.getMaxId().equals("null") && !pollDataSubstitution.getMaxValue().equals("null")) {
-                holder.txtViewPollNoTwo.setText(pollDataSubstitution.getMaxId());
-                holder.txtViewPollOptionsTwo.setText("Player Out");
+                if(pollData.getMaxValue().equals("0")){
+                    holder.txtViewPollOptionsTwo.setVisibility(View.INVISIBLE);
+                    holder.txtViewPollNoTwo.setVisibility(View.INVISIBLE);
+                }else{
+                    holder.txtViewPollNoTwo.setText(pollDataSubstitution.getMaxId());
+                    holder.txtViewPollOptionsTwo.setText("Player Out");
+                }
             }
 
 

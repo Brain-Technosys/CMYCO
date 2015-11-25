@@ -248,7 +248,7 @@ public class DisabledGameActivity extends AppCompatActivity {
     //Handling Graph
     private void handleGraph(int maxY, BarChart chart) {
         if (maxY == 0) {
-            maxY = 1000;
+            maxY = 5;
         }
 
         //Handling graph X axis Content
