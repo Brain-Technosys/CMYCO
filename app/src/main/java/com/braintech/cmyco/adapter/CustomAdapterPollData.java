@@ -145,7 +145,7 @@ public class CustomAdapterPollData extends BaseAdapter {
 
                 holder.txtViewPollOptions.setVisibility(View.VISIBLE);
                 holder.txtViewPollNo.setVisibility(View.VISIBLE);
-                
+
                 holder.txtViewPollNo.setText(pollData.getMaxId());
                 holder.txtViewPollOptions.setText(pollData.getMaxValue());
 
