@@ -481,7 +481,16 @@ public class GameActivity extends AppCompatActivity {
 
                 int position = pollsPref.getPosition();
 
-                defenceRadioGroup.check(((RadioButton) defenceRadioGroup.getChildAt(position)).getId());
+                if(i==position)
+                {
+                    catRadioButtons[i].setChecked(true);
+                }
+
+                Log.e("position",""+position);
+
+
+
+               // defenceRadioGroup.check(((RadioButton) defenceRadioGroup.getChildAt(position)).getId());
             }
 
             //Applying click Listener on category radio button
@@ -491,11 +500,13 @@ public class GameActivity extends AppCompatActivity {
 
                     isButtonClicked = true;
 
-                    pollsPref.saveButtonClicked(true, pollId, tag);
+
 
                     disableRadioButtons();
 
                     tag = Integer.parseInt(compoundButton.getTag().toString());
+
+                    pollsPref.saveButtonClicked(true, pollId, tag);
 
 
                     callRatingApi(tag);
@@ -754,7 +765,7 @@ public class GameActivity extends AppCompatActivity {
         super.onPause();
 
         if (!isButtonClicked) {
-            pollsPref.saveButtonClicked(false, pollId, tag);
+            pollsPref.saveButtonClicked(false,0,0);
         }
     }
 

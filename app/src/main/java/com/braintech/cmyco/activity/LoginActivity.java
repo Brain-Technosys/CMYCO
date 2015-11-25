@@ -104,6 +104,9 @@ public class LoginActivity extends AppCompatActivity {
 
         pollsPref = new PollsPref(this);
 
+
+        pollsPref.clearPollData();
+
         handleSnakeRetryCall();
 
         setFont();

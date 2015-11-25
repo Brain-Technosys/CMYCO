@@ -204,7 +204,10 @@ public class GamePlayStrategyActivity extends AppCompatActivity {
                 JsonParser jsonParser = new JsonParser(GamePlayStrategyActivity.this);
 
                 String url = Const.GET_ACTIVE_GAME_DETAIL + "?" + Const.TAG_TEAMID + "=" + pollsPref.getTeamId();
+
+                Log.e("url",url);
                 String jsonString = jsonParser.getJSONFromUrl(url);
+
 
                 JSONObject jsonObject = new JSONObject(jsonString);
 
