@@ -117,7 +117,6 @@ public class CustomAdapterPollData extends BaseAdapter {
                 //for Substitution, setting visibility visible to views
                 holder.linLayoutPollTwo.setVisibility(View.VISIBLE);
 
-
                 //For Substitution
                 Fonts.robotoRegular(context, holder.txtViewPollOptionsTwo);
                 Fonts.robotoRegular(context, holder.txtViewPollNoTwo);
@@ -130,6 +129,8 @@ public class CustomAdapterPollData extends BaseAdapter {
 
 
         PollData pollData = rowItems.get(position);
+        Log.e("max Id", pollData.getMaxId().trim());
+        Log.e("max Id", pollData.getMaxId().trim());
 
 
         holder.txtViewPollName.setText(pollData.getPoll_name());
@@ -137,14 +138,18 @@ public class CustomAdapterPollData extends BaseAdapter {
 
         if (!pollData.getMaxId().equals("null") && !pollData.getMaxValue().equals("null")) {
 
-            if(pollData.getMaxValue().equals("0")){
+            if (Integer.parseInt(pollData.getMaxId().trim()) == 0) {
                 holder.txtViewPollOptions.setVisibility(View.INVISIBLE);
                 holder.txtViewPollNo.setVisibility(View.INVISIBLE);
-            }else{
+            } else {
+
+                holder.txtViewPollOptions.setVisibility(View.VISIBLE);
+                holder.txtViewPollNo.setVisibility(View.VISIBLE);
+
                 holder.txtViewPollNo.setText(pollData.getMaxId());
                 holder.txtViewPollOptions.setText(pollData.getMaxValue());
-            }
 
+            }
 
 
         }
@@ -161,19 +166,28 @@ public class CustomAdapterPollData extends BaseAdapter {
 //                holder.txtViewPollNo.setVisibility(View.INVISIBLE);
 //            }
 
-            if(pollData.getMaxValue().equals("0")){
+            if (Integer.parseInt(pollData.getMaxId().trim()) == 0) {
                 holder.txtViewPollOptions.setVisibility(View.INVISIBLE);
                 holder.txtViewPollNo.setVisibility(View.INVISIBLE);
-            }else{
+            } else {
+                holder.txtViewPollOptions.setVisibility(View.VISIBLE);
+                holder.txtViewPollNo.setVisibility(View.VISIBLE);
+
                 holder.txtViewPollNo.setText(pollData.getMaxId());
                 holder.txtViewPollOptions.setText("Player In");
             }
 
             if (!pollDataSubstitution.getMaxId().equals("null") && !pollDataSubstitution.getMaxValue().equals("null")) {
-                if(pollData.getMaxValue().equals("0")){
+
+                Log.e("max Id", pollData.getMaxId().trim());
+                Log.e("max Id", pollData.getMaxId().trim());
+
+                if (Integer.parseInt(pollDataSubstitution.getMaxId().trim()) == 0) {
                     holder.txtViewPollOptionsTwo.setVisibility(View.INVISIBLE);
                     holder.txtViewPollNoTwo.setVisibility(View.INVISIBLE);
-                }else{
+                } else {
+                    holder.txtViewPollOptionsTwo.setVisibility(View.VISIBLE);
+                    holder.txtViewPollNoTwo.setVisibility(View.VISIBLE);
                     holder.txtViewPollNoTwo.setText(pollDataSubstitution.getMaxId());
                     holder.txtViewPollOptionsTwo.setText("Player Out");
                 }
