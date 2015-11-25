@@ -78,10 +78,10 @@ public class CommonAPI {
             JsonParser jsonParser = new JsonParser(context);
 
             String url = Const.GET_LOG_OUT + strings[0];
-            Log.e("url",url);
+            Log.e("url", url);
             String jsonString = jsonParser.getJSONFromUrl(url);
 
-           // Log.e("jsonString", jsonString);
+            // Log.e("jsonString", jsonString);
 
             try {
                 JSONObject jsonObject = new JSONObject(jsonString);
@@ -91,6 +91,8 @@ public class CommonAPI {
                 } else {
                     msg = jsonObject.getString(Const.KEY_MSG);
                 }
+            } catch (NullPointerException e) {
+                e.printStackTrace();
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -165,6 +167,8 @@ public class CommonAPI {
                 } else {
                     msg = jsonObject.getString(Const.KEY_MSG);
                 }
+            } catch (NullPointerException e) {
+                e.printStackTrace();
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -221,7 +225,7 @@ public class CommonAPI {
             String url = Const.GET_ACTIVE_USERS;
             String jsonString = jsonParser.getJSONFromUrl(url);
 
-           // Log.e("jsonString", jsonString);
+            // Log.e("jsonString", jsonString);
 
             try {
                 JSONObject jsonObject = new JSONObject(jsonString);
@@ -229,12 +233,14 @@ public class CommonAPI {
                 if (jsonObject != null) {
                     result = jsonObject.getInt(Const.KEY_RESULT);
 
-                    String activeUsers=jsonObject.getString(Const.KEY_ACTIVE_USER);
+                    String activeUsers = jsonObject.getString(Const.KEY_ACTIVE_USER);
 
                     pollsPref.storeActiveUsers(activeUsers);
                 } else {
                     msg = jsonObject.getString(Const.KEY_MSG);
                 }
+            } catch (NullPointerException e) {
+                e.printStackTrace();
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -304,6 +310,8 @@ public class CommonAPI {
                 } else {
                     msg = jsonObject.getString(Const.KEY_MSG);
                 }
+            } catch (NullPointerException e) {
+                e.printStackTrace();
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -372,7 +380,7 @@ public class CommonAPI {
                     Const.TAG_POLL_OPTION + pollOption + Const.TAG_TEAM_ID + teamId;
             String jsonString = jsonParser.getJSONFromUrl(url);
 
-           // Log.e("jsonString", jsonString);
+            // Log.e("jsonString", jsonString);
 
             try {
                 JSONObject jsonObject = new JSONObject(jsonString);
@@ -387,6 +395,8 @@ public class CommonAPI {
                 } else {
                     msg = jsonObject.getString(Const.KEY_MSG);
                 }
+            } catch (NullPointerException e) {
+                e.printStackTrace();
             } catch (JSONException e) {
                 e.printStackTrace();
             }

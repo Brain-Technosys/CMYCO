@@ -44,7 +44,8 @@ public class InstructionActivityTwo extends AppCompatActivity {
 
     AlertDialogManager alertDialogManager;
 
-    private static final String TAG= InstructionActivity.class.getName();
+    private static final String TAG = InstructionActivity.class.getName();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -99,7 +100,7 @@ public class InstructionActivityTwo extends AppCompatActivity {
         if (id == R.id.action_settings) {
             logoutAPI.logout(snakeOnClick, coordinatorLayout);
             return true;
-        }else if (id == android.R.id.home) {
+        } else if (id == android.R.id.home) {
             this.finish();
         }
 
@@ -149,6 +150,8 @@ public class InstructionActivityTwo extends AppCompatActivity {
 
                 }
 
+            } catch (NullPointerException e) {
+                e.printStackTrace();
             } catch (JSONException e) {
                 e.printStackTrace();
             }

@@ -92,8 +92,6 @@ public class LoginActivity extends AppCompatActivity {
 
         ButterKnife.inject(this);
 
-
-
         loginActivity = this;
 
         alertDialogManager = new AlertDialogManager();
@@ -240,7 +238,7 @@ public class LoginActivity extends AppCompatActivity {
 
                 String jsonString = jsonParser.getJSONFromUrl(url);
 
-                Log.e("jsonn",jsonString);
+                Log.e("jsonn", jsonString);
 
                 JSONObject jsonObject = new JSONObject(jsonString);
                 if (jsonObject != null) {
@@ -284,6 +282,8 @@ public class LoginActivity extends AppCompatActivity {
 
                 }
 
+            } catch (NullPointerException e) {
+                e.printStackTrace();
             } catch (UnsupportedEncodingException e) {
                 e.printStackTrace();
             } catch (JSONException e) {
@@ -298,7 +298,7 @@ public class LoginActivity extends AppCompatActivity {
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
             if (result == 1) {
-                userSession.storeLoginDetail(email, password,hashMapLoginDetail.get(Const.KEY_ID));
+                userSession.storeLoginDetail(email, password, hashMapLoginDetail.get(Const.KEY_ID));
                 if (activeGame != 0) {
 
                     //Calling GetPoll API from Common Class

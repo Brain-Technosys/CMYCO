@@ -239,6 +239,8 @@ public class PollService extends Service {
                 } else
                     result = 0;
 
+            } catch (NullPointerException e) {
+                e.printStackTrace();
             } catch (JSONException e) {
                 e.printStackTrace();
             }

@@ -239,6 +239,8 @@ public class NoGameActivity extends AppCompatActivity {
 
                 }
 
+            } catch (NullPointerException e) {
+                e.printStackTrace();
             } catch (UnsupportedEncodingException e) {
                 e.printStackTrace();
             } catch (JSONException e) {

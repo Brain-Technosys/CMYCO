@@ -135,6 +135,8 @@ public class ForgetPasswordActivity extends AppCompatActivity {
                     msg = jsonObject.getString(Const.KEY_MSG);
 
                 }
+            } catch (NullPointerException e) {
+                e.printStackTrace();
             } catch (UnsupportedEncodingException e) {
                 e.printStackTrace();
             } catch (JSONException e) {

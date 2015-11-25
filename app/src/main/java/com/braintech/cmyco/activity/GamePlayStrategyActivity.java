@@ -335,7 +335,9 @@ public class GamePlayStrategyActivity extends AppCompatActivity {
                 } else {
                     msg = jsonObject.getString(Const.KEY_MSG);
                 }
-            } catch (JSONException e) {
+            }catch (NullPointerException e) {
+                e.printStackTrace();
+            }  catch (JSONException e) {
                 e.printStackTrace();
             }
 
