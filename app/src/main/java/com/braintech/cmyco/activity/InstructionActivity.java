@@ -1,5 +1,6 @@
 package com.braintech.cmyco.activity;
 
+import android.app.Activity;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -10,6 +11,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
 import android.support.design.widget.CoordinatorLayout;
+import android.support.v4.content.IntentCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -235,7 +237,16 @@ public class InstructionActivity extends AppCompatActivity {
             logoutAPI.logout(snakeOnClick, coordinatorLayout);
             return true;
         } else if (id == android.R.id.home) {
-            this.finish();
+//            this.finish();
+
+            Intent intent = new Intent(InstructionActivity.this, HomeActivity.class);
+
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK
+                    | Intent.FLAG_ACTIVITY_CLEAR_TOP
+                    | IntentCompat.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(intent);
+            pollsPref.clearPollData();
+            finish();
         }
 
         return super.onOptionsItemSelected(item);
@@ -316,8 +327,21 @@ public class InstructionActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
 
-//    public ControlApplication getApp()
+        Intent intent = new Intent(InstructionActivity.this, HomeActivity.class);
+
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK
+                | Intent.FLAG_ACTIVITY_CLEAR_TOP
+                | IntentCompat.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
+        pollsPref.clearPollData();
+        finish();
+    }
+
+    //    public ControlApplication getApp()
 //    {
 //        return (ControlApplication)this.getApplication();
 //    }
