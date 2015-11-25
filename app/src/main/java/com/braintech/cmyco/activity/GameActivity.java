@@ -745,7 +745,17 @@ public class GameActivity extends AppCompatActivity {
         }
     }
 
-//    public ControlApplication getApp()
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+        if(!isButtonClicked)
+        {
+            pollsPref.saveButtonClicked(false,pollId,tag);
+        }
+    }
+
+    //    public ControlApplication getApp()
 //    {
 //        return (ControlApplication)this.getApplication();
 //    }
