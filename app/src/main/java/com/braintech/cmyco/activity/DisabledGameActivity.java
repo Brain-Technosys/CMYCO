@@ -94,8 +94,10 @@ public class DisabledGameActivity extends AppCompatActivity {
 
     ArrayList<PollOptions> arrayListPollOpt;
 
-    String[] xTitle = {"1", "2", "3", "4", "5"};
-    String[] barDataStrings = {"0", "0", "0", "0", "0"};
+    String[] xTitle;
+    String[] xTitle2;
+    String[] barDataStrings;
+    String[] barDataStringsTwo;
 
     String pollName;
     int pollId;
@@ -124,7 +126,7 @@ public class DisabledGameActivity extends AppCompatActivity {
 
     boolean GRAPHONE = true;
 
-    private static final String TAG= InstructionActivity.class.getName();
+    private static final String TAG = InstructionActivity.class.getName();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -136,6 +138,7 @@ public class DisabledGameActivity extends AppCompatActivity {
         handleToolbar();
 
         //   playCallLayout.setVisibility(View.GONE);
+
 
         alertDialogManager = new AlertDialogManager();
 
@@ -300,6 +303,7 @@ public class DisabledGameActivity extends AppCompatActivity {
         chart.setDrawBarShadow(false);
         chart.setDrawGridBackground(false);
         chart.animateXY(2000, 2000);
+        chart.setDoubleTapToZoomEnabled(false);
         chart.invalidate();
 
 
@@ -438,12 +442,24 @@ public class DisabledGameActivity extends AppCompatActivity {
                             if (jsonObjectPollOption != null) {
                                 int pollLength = jsonObjectPollOption.length();
 
-                                xTitle = new String[pollLength];
-                                barDataStrings = new String[pollLength];
+                                if (GRAPHONE) {
+                                    xTitle = new String[pollLength];
+                                    barDataStrings = new String[pollLength];
+                                } else {
+                                    xTitle2 = new String[pollLength];
+                                    barDataStringsTwo = new String[pollLength];
+                                }
+
 
                                 for (int i = 0; i < pollLength; i++) {
-                                    xTitle[i] = String.valueOf(i + 1);
-                                    barDataStrings[i] = jsonObjectPollOption.getString(String.valueOf(i + 1));
+                                    if (GRAPHONE) {
+                                        xTitle[i] = String.valueOf(i + 1);
+                                        barDataStrings[i] = jsonObjectPollOption.getString(String.valueOf(i + 1));
+                                    } else {
+                                        xTitle2[i] = String.valueOf(i + 1);
+                                        barDataStringsTwo[i] = jsonObjectPollOption.getString(String.valueOf(i + 1));
+                                    }
+
 
                                 }
                             }
@@ -452,7 +468,7 @@ public class DisabledGameActivity extends AppCompatActivity {
                             resultMaxPoll = "PLAY CALL :" + jsonObjectData.getString(String.valueOf("max_id"));
                             maxId = jsonObjectData.getString(String.valueOf("max_id")) + "." + jsonObjectData.getString(String.valueOf("max"));
 
-                            sequence=jsonObjectData.getString(String.valueOf("sequence"));
+                            sequence = "PLAY CALL :" + jsonObjectData.getString(String.valueOf("sequence"));
 
                             //set max value for Graph Y axis
                             maxY = jsonObjectData.getInt("max_value");
@@ -479,24 +495,28 @@ public class DisabledGameActivity extends AppCompatActivity {
             Progress.stop();
 
             if (result == 1) {
-                getGraphData(xTitle, barDataStrings);
+
                 if (GRAPHONE) {
+                    Log.e("Disabled Game", "Inside Graph One");
+                    getGraphData(xTitle, barDataStrings);
+                    Log.e("Inside Graph One", java.util.Arrays.toString(xTitle));
                     handleGraph(maxY, chart);
                     txtPlayCallOne.setText(sequence);
                 }
 
                 if (!GRAPHONE) {
+                    getGraphData(xTitle, barDataStringsTwo);
+                    Log.e("Inside Graph Two", java.util.Arrays.toString(xTitle));
                     handleGraph(maxY, chartTwo);
                     txtPlayCallTwo.setText(sequence);
                 }
+
                 if (pollId == 4) {
                     txtTitleSubIn.setVisibility(View.VISIBLE);
                     pollId = 8;
                     setGraphColor();
                     GRAPHONE = false;
                     flay_chartTwo.setVisibility(View.VISIBLE);
-                    Log.e("calling 2nd graph", "true");
-
                     callgraphAPI(8);
 
                 }
@@ -509,16 +529,14 @@ public class DisabledGameActivity extends AppCompatActivity {
         }
     }
 
-    public ControlApplication getApp()
-    {
-        return (ControlApplication)this.getApplication();
-    }
-
-    @Override
-    public void onUserInteraction()
-    {
-        super.onUserInteraction();
-        getApp().touch();
-        Log.e(TAG, "User interaction to "+this.toString());
-    }
+//    public ControlApplication getApp() {
+//        return (ControlApplication) this.getApplication();
+//    }
+//
+//    @Override
+//    public void onUserInteraction() {
+//        super.onUserInteraction();
+//        getApp().touch();
+//        Log.e(TAG, "User interaction to " + this.toString());
+//    }
 }

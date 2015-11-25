@@ -7,17 +7,18 @@
     <uses-permission android:name="android.permission.VIBRATE" />
 
     <application
+        android:name=".application.ControlApplication"
         android:allowBackup="true"
         android:icon="@drawable/app_icon"
         android:label="@string/app_name"
         android:screenOrientation="portrait"
         android:supportsRtl="true"
-        android:name=".application.ControlApplication"
         android:theme="@style/AppTheme">
-        <activity android:name=".activity.SplashActivity">
+        <activity
+            android:name=".activity.SplashActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -68,10 +69,12 @@
         <activity
             android:name=".activity.InstructionActivityTwo"
             android:label="@string/title_activity_instruction_page_two"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity
             android:name=".activity.GamePlayStrategyActivity"
             android:label="@string/title_activity_master_page"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"></activity>
 
         <service
@@ -81,10 +84,12 @@
         <activity
             android:name=".activity.NoGameActivity"
             android:label="@string/title_activity_no_game"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity
             android:name=".activity.DisabledGameActivity"
             android:label="@string/title_activity_disabled_game"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 

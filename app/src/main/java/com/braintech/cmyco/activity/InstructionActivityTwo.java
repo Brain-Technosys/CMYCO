@@ -175,17 +175,17 @@ public class InstructionActivityTwo extends AppCompatActivity {
         }
     }
 
-    public ControlApplication getApp()
-    {
-        return (ControlApplication )this.getApplication();
-    }
-
-    @Override
-    public void onUserInteraction()
-    {
-        super.onUserInteraction();
-        getApp().touch();
-        Log.e(TAG, "User interaction to " + this.toString());
-    }
+//    public ControlApplication getApp()
+//    {
+//        return (ControlApplication )this.getApplication();
+//    }
+//
+//    @Override
+//    public void onUserInteraction()
+//    {
+//        super.onUserInteraction();
+//        getApp().touch();
+//        Log.e(TAG, "User interaction to " + this.toString());
+//    }
 
 }

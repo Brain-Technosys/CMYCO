@@ -674,7 +674,7 @@ public class GameActivity extends AppCompatActivity {
                             resultMaxPoll = "PLAY CALL :" + jsonObjectData.getString(String.valueOf("max_id"));
                             maxId = jsonObjectData.getString(String.valueOf("max_id")) + "." + jsonObjectData.getString(String.valueOf("max"));
 
-                            sequence=jsonObjectData.getString(String.valueOf("sequence"));
+                            sequence="PLAY CALL :" +jsonObjectData.getString(String.valueOf("sequence"));
 
                             //set max value for Graph Y axis
                             maxY = jsonObjectData.getInt("max_value");
@@ -741,16 +741,16 @@ public class GameActivity extends AppCompatActivity {
         }
     }
 
-    public ControlApplication getApp()
-    {
-        return (ControlApplication)this.getApplication();
-    }
-
-    @Override
-    public void onUserInteraction()
-    {
-        super.onUserInteraction();
-        getApp().touch();
-        Log.e(TAG, "User interaction to "+this.toString());
-    }
+//    public ControlApplication getApp()
+//    {
+//        return (ControlApplication)this.getApplication();
+//    }
+//
+//    @Override
+//    public void onUserInteraction()
+//    {
+//        super.onUserInteraction();
+//        getApp().touch();
+//        Log.e(TAG, "User interaction to "+this.toString());
+//    }
 }
