@@ -101,7 +101,7 @@ public class DisabledGameActivity extends AppCompatActivity {
 
     String pollName;
     int pollId;
-    int maxY = 1000;
+    int maxY = 5;
 
     String txtLogo;
 
@@ -247,6 +247,9 @@ public class DisabledGameActivity extends AppCompatActivity {
 
     //Handling Graph
     private void handleGraph(int maxY, BarChart chart) {
+        if (maxY == 0) {
+            maxY = 1000;
+        }
 
         //Handling graph X axis Content
         XAxis xAxis = chart.getXAxis();

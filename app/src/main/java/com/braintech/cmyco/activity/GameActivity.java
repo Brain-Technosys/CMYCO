@@ -129,7 +129,7 @@ public class GameActivity extends AppCompatActivity {
 
     AlertDialogManager alertDialogManager;
 
-    private static final String TAG= InstructionActivity.class.getName();
+    private static final String TAG = InstructionActivity.class.getName();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -279,6 +279,10 @@ public class GameActivity extends AppCompatActivity {
 
     //Handling Graph
     private void handleGraph(int maxY) {
+
+        if (maxY == 0) {
+            maxY = 5;
+        }
 
         //Handling graph X axis Content
         XAxis xAxis = chart.getXAxis();
@@ -475,9 +479,9 @@ public class GameActivity extends AppCompatActivity {
             if (isButtonClicked) {
                 disableRadioButtons();
 
-                int position=pollsPref.getPosition();
+                int position = pollsPref.getPosition();
 
-                defenceRadioGroup.check(((RadioButton)defenceRadioGroup.getChildAt(position)).getId());
+                defenceRadioGroup.check(((RadioButton) defenceRadioGroup.getChildAt(position)).getId());
             }
 
             //Applying click Listener on category radio button
@@ -487,7 +491,7 @@ public class GameActivity extends AppCompatActivity {
 
                     isButtonClicked = true;
 
-                    pollsPref.saveButtonClicked(true, pollId,tag);
+                    pollsPref.saveButtonClicked(true, pollId, tag);
 
                     disableRadioButtons();
 
@@ -678,7 +682,7 @@ public class GameActivity extends AppCompatActivity {
                             resultMaxPoll = "PLAY CALL :" + jsonObjectData.getString(String.valueOf("max_id"));
                             maxId = jsonObjectData.getString(String.valueOf("max_id")) + "." + jsonObjectData.getString(String.valueOf("max"));
 
-                            sequence="PLAY CALL :" +jsonObjectData.getString(String.valueOf("sequence"));
+                            sequence = "PLAY CALL :" + jsonObjectData.getString(String.valueOf("sequence"));
 
                             //set max value for Graph Y axis
                             maxY = jsonObjectData.getInt("max_value");
@@ -728,7 +732,7 @@ public class GameActivity extends AppCompatActivity {
                             // Log.e("isactivated",""+isActivityStarted);
 
                             if (!isActivityStarted) {
-                                pollsPref.saveButtonClicked(false, pollId,0);
+                                pollsPref.saveButtonClicked(false, pollId, 0);
                                 Intent intent = new Intent(GameActivity.this, GamePlayStrategyActivity.class);
                                 finish();
                                 startActivity(intent);
@@ -749,9 +753,8 @@ public class GameActivity extends AppCompatActivity {
     protected void onPause() {
         super.onPause();
 
-        if(!isButtonClicked)
-        {
-            pollsPref.saveButtonClicked(false,pollId,tag);
+        if (!isButtonClicked) {
+            pollsPref.saveButtonClicked(false, pollId, tag);
         }
     }
 

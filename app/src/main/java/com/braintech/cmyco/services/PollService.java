@@ -17,6 +17,7 @@ import android.os.IBinder;
 import android.os.Vibrator;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
+import android.support.v4.content.IntentCompat;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -343,8 +344,14 @@ public class PollService extends Service {
 
             } else if (result == 0) {
                 Intent intent = new Intent(context, NoGameActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK
+                        | Intent.FLAG_ACTIVITY_CLEAR_TOP
+                        | IntentCompat.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent);
+                pollsPref.clearPollData();
+                ((Activity) context).finish();
+
             } else {
                 Toast.makeText(context, getString(R.string.server_not_responding), Toast.LENGTH_LONG).show();
             }
