@@ -39,6 +39,9 @@ public class PollsPref {
 
     public static final String KEY_POLL_ACTIVATED = "pollActivated";
     public static final String KEY_TIME_PRESENT = "timePresent";
+    public static final String KEY_POSITION = "positions";
+
+    public static final String  KEY_ACTIVITY_RUNNING = "running";
 
 
     public PollsPref(Context _context) {
@@ -127,13 +130,19 @@ public class PollsPref {
         editor.commit();
     }
 
-    public void saveButtonClicked(Boolean value,int pollId)
+    public void saveButtonClicked(Boolean value,int pollId,int tag)
     {
         editor.putBoolean(Const.KEY_BUTTON_CLICKED, value);
         editor.putInt(Const.KEY_POLL_ID, pollId);
+        editor.putInt(KEY_POSITION, tag);
         editor.commit();
     }
 
+    public void ActivityRunning(Boolean value)
+    {
+        editor.putBoolean(KEY_ACTIVITY_RUNNING, value);
+        editor.commit();
+    }
 
 
     public String getCoachDetail() {
@@ -202,7 +211,15 @@ public class PollsPref {
         return pref.getBoolean(Const.KEY_BUTTON_CLICKED, false);
     }
 
+    public boolean isActivityRunning()
+    {
+        return pref.getBoolean(KEY_ACTIVITY_RUNNING,false);
+    }
 
+    public int getPosition() {
+        return pref.getInt(KEY_POSITION,0);
+
+    }
 
     public void clearPollData() {
         editor.clear();

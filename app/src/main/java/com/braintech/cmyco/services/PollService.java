@@ -22,6 +22,7 @@ import android.widget.Toast;
 
 import com.braintech.cmyco.R;
 import com.braintech.cmyco.activity.GameActivity;
+import com.braintech.cmyco.activity.GamePlayStrategyActivity;
 import com.braintech.cmyco.activity.HomeActivity;
 import com.braintech.cmyco.activity.LoginActivity;
 import com.braintech.cmyco.activity.NoGameActivity;
@@ -169,7 +170,7 @@ public class PollService extends Service {
 
                     result = jsonObject.getInt(Const.KEY_RESULT);
 
-                    if(result==1) {
+                    if (result == 1) {
 
                         serverTime = jsonObject.getString(Const.KEY_POLL_SERVER_TIME);
                         timeZone = jsonObject.getString(Const.KEY_TIME_ZONE);
@@ -293,6 +294,7 @@ public class PollService extends Service {
 
                                 if (pollsPref.getPollId() == poll_id) {
                                     isButtonClicked = pollsPref.isButtonClicked();
+
                                 } else {
                                     isButtonClicked = false;
                                 }
@@ -306,10 +308,10 @@ public class PollService extends Service {
                                 arrayListPollOpt = hashMapPollOptions.get(poll_id);
 
                                 if (poll_id == 4) {
-                                    poll_name = "Substitution player in";
+                                    poll_name = "Substitution Player In";
                                 } else if (poll_id == 8) {
 
-                                    poll_name = "Substitution player out";
+                                    poll_name = "Substitution Player Out";
                                 }
                                 Intent intent = new Intent(context, GameActivity.class);
                                 Bundle bundle = new Bundle();
@@ -321,6 +323,10 @@ public class PollService extends Service {
                                 bundle.putBoolean(Const.KEY_BUTTON_CLICKED, isButtonClicked);
                                 intent.putExtras(bundle);
                                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+
+                                if (pollsPref.isActivityRunning())
+                                    GamePlayStrategyActivity.gamePlayStrategyActivity.finish();
+
                                 startActivity(intent);
 
 
@@ -344,9 +350,6 @@ public class PollService extends Service {
             }
         }
     }
-
-
-
 
 
 }

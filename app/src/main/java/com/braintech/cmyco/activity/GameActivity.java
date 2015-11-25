@@ -474,6 +474,10 @@ public class GameActivity extends AppCompatActivity {
 
             if (isButtonClicked) {
                 disableRadioButtons();
+
+                int position=pollsPref.getPosition();
+
+                defenceRadioGroup.check(((RadioButton)defenceRadioGroup.getChildAt(position)).getId());
             }
 
             //Applying click Listener on category radio button
@@ -483,7 +487,7 @@ public class GameActivity extends AppCompatActivity {
 
                     isButtonClicked = true;
 
-                    pollsPref.saveButtonClicked(true, pollId);
+                    pollsPref.saveButtonClicked(true, pollId,tag);
 
                     disableRadioButtons();
 
@@ -724,7 +728,7 @@ public class GameActivity extends AppCompatActivity {
                             // Log.e("isactivated",""+isActivityStarted);
 
                             if (!isActivityStarted) {
-                                pollsPref.saveButtonClicked(false, pollId);
+                                pollsPref.saveButtonClicked(false, pollId,0);
                                 Intent intent = new Intent(GameActivity.this, GamePlayStrategyActivity.class);
                                 finish();
                                 startActivity(intent);

@@ -77,7 +77,9 @@ public class GamePlayStrategyActivity extends AppCompatActivity {
     private long startTime = 2 * 60 * 1000; // 15 MINS IDLE TIME
     private final long interval = 1 * 1000;
 
-    private static final String TAG= InstructionActivity.class.getName();
+    private static final String TAG = InstructionActivity.class.getName();
+
+    public static GamePlayStrategyActivity gamePlayStrategyActivity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -100,6 +102,9 @@ public class GamePlayStrategyActivity extends AppCompatActivity {
 
         setFont();
 
+        gamePlayStrategyActivity=this;
+
+        pollsPref.ActivityRunning(true);
 
     }
 
@@ -360,6 +365,8 @@ public class GamePlayStrategyActivity extends AppCompatActivity {
     @OnItemClick(R.id.listViewPoll)
     void onItemClick(int position) {
 
+        Log.e("in", "onclick");
+
 
         int poll_id = arrayListPollData.get(position - 1).getPoll_id();
 
@@ -381,8 +388,6 @@ public class GamePlayStrategyActivity extends AppCompatActivity {
                     Progress.start(this);
 
                     if (pollsPref.isTimePresent()) {
-
-                        Progress.stop();
                         //do nothing screen will automatically switch
                     } else {
 
@@ -418,8 +423,8 @@ public class GamePlayStrategyActivity extends AppCompatActivity {
             bundle.putString(Const.KEY_POLL_NAME, pollName);
             bundle.putSerializable(Const.TAG_POLL_OPTION, arrayListPollOpt);
             bundle.putInt(Const.KEY_POLL_ID, poll_id);
-
             intent.putExtras(bundle);
+
             startActivity(intent);
         }
     }

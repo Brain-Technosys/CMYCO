@@ -236,6 +236,9 @@ public class LoginActivity extends AppCompatActivity {
                 //Log.e("url", url);
 
                 String jsonString = jsonParser.getJSONFromUrl(url);
+
+                Log.e("jsonn",jsonString);
+
                 JSONObject jsonObject = new JSONObject(jsonString);
                 if (jsonObject != null) {
                     result = jsonObject.getInt(Const.KEY_RESULT);
