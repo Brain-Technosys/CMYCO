@@ -6,11 +6,13 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
+import android.support.v4.content.IntentCompat;
 import android.util.Log;
 
 import com.braintech.cmyco.R;
 import com.braintech.cmyco.activity.HomeActivity;
 import com.braintech.cmyco.activity.LoginActivity;
+import com.braintech.cmyco.application.ControlApplication;
 import com.braintech.cmyco.my_interface.SnakeOnClick;
 import com.braintech.cmyco.sessions.PollsPref;
 import com.braintech.cmyco.sessions.UserSession;
@@ -122,8 +124,17 @@ public class CommonAPI {
                 pollsPref.clearPollData();
 
                 Intent intent = new Intent((Activity) context, LoginActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK
+                        | Intent.FLAG_ACTIVITY_CLEAR_TOP
+                        | IntentCompat.FLAG_ACTIVITY_CLEAR_TASK);
 
-                ((Activity) context).finish();
+                if ((context instanceof ControlApplication)) {
+                    // do nothing
+                } else {
+                    ((Activity) context).finish();
+                }
+
+
                 context.startActivity(intent);
 
             } else if (result == 0) {
