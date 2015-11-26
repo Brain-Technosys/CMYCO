@@ -41,7 +41,7 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
 
-public class InstructionActivity extends AppCompatActivity {
+public class InstructionActivity extends MyBaseActivity {
 
 
     @InjectView(R.id.toolbar)

@@ -3,6 +3,7 @@ package com.braintech.cmyco.application;
 import android.app.Application;
 import android.util.Log;
 
+import com.braintech.cmyco.utils.Foreground;
 import com.braintech.cmyco.utils.Waiter;
 
 /**
@@ -10,21 +11,22 @@ import com.braintech.cmyco.utils.Waiter;
  */
 public class ControlApplication extends Application
 {
-//    private static final String TAG=ControlApplication.class.getName();
-//    private Waiter waiter;  //Thread which controls idle time
+    private static final String TAG=ControlApplication.class.getName();
+   private Waiter waiter;  //Thread which controls idle time
 
     // only lazy initializations here!
     @Override
     public void onCreate()
     {
         super.onCreate();
-//        Log.e(TAG, "Starting application" + this.toString());
-//        waiter=new Waiter(2*60*1000); //15 mins
-//        waiter.start();
-    }
 
-//    public void touch()
-//    {
-//        waiter.touch();
-//    }
+        Foreground.init(this);
+     /*  Log.e(TAG, "Starting application" + this.toString());
+      waiter=new Waiter(2*60*1000); //15 mins
+      waiter.start();*/
+    }
+   /* public void touch()
+    {
+        waiter.touch();
+    }*/
 }
