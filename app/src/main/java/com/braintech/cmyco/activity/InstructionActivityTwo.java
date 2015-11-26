@@ -30,7 +30,7 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
 
-public class InstructionActivityTwo extends AppCompatActivity {
+public class InstructionActivityTwo extends MyBaseActivity {
 
     @InjectView(R.id.coordinatorLayout)
     CoordinatorLayout coordinatorLayout;

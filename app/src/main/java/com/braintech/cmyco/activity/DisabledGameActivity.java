@@ -46,7 +46,7 @@ import java.util.HashMap;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
-public class DisabledGameActivity extends AppCompatActivity {
+public class DisabledGameActivity extends MyBaseActivity {
 
     @InjectView(R.id.coordinatorLayout)
     CoordinatorLayout coordinatorLayout;

@@ -41,7 +41,7 @@ import butterknife.OnClick;
 import butterknife.OnItemSelected;
 
 
-public class HomeActivity extends AppCompatActivity {
+public class HomeActivity extends MyBaseActivity {
 
     @InjectView(R.id.toolbar)
     Toolbar toolbar;
