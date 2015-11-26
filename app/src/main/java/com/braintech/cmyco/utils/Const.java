@@ -87,6 +87,7 @@ public class Const {
 
     //Background variables for logout
     public static String KEY_STATUS="&status=B";
+    public static String TAG_LOGOUT="logout";
 
     //Intent varaibles
     public static String KEY_BUTTON_CLICKED="isButtonClicked";

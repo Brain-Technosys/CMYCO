@@ -59,6 +59,15 @@ public class CommonAPI {
 
     }
 
+    public void logout() {
+        if (Utility.isNetworkAvailable(context)) {
+            new LogoutUser().execute(userSession.getUserID());
+        } else {
+
+            alertDialogManager.showAlertDialog(context, context.getString(R.string.internet_connectivity_message));
+        }
+    }
+
 
     //Asynchronous class to call logout API
 

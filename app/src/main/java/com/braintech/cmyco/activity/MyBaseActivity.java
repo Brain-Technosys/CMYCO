@@ -6,57 +6,60 @@ import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
+import com.braintech.cmyco.common.CommonAPI;
+
 /**
  * Created by Braintech on 11/26/2015.
  */
 public class MyBaseActivity extends AppCompatActivity {
 
 
-        public static final long DISCONNECT_TIMEOUT = 10000; // 5 min = 5 * 60 * 1000 ms
+    public static final long DISCONNECT_TIMEOUT = 10000; // 5 min = 5 * 60 * 1000 ms
 
-        private Handler disconnectHandler = new Handler(){
-            public void handleMessage(Message msg) {
-            }
-        };
-
-        private Runnable disconnectCallback = new Runnable() {
-            @Override
-            public void run() {
-
-                Log.e("timmer","running");
-                // Perform any required operation on disconnect
-            }
-        };
-
-        public void resetDisconnectTimer(){
-            disconnectHandler.removeCallbacks(disconnectCallback);
-            disconnectHandler.postDelayed(disconnectCallback, DISCONNECT_TIMEOUT);
+    private Handler disconnectHandler = new Handler() {
+        public void handleMessage(Message msg) {
         }
+    };
 
-        public void stopDisconnectTimer(){
-            disconnectHandler.removeCallbacks(disconnectCallback);
-        }
-
+    private Runnable disconnectCallback = new Runnable() {
         @Override
-        public void onUserInteraction(){
-            resetDisconnectTimer();
+        public void run() {
 
-            Log.e("user", "interaction");
+            CommonAPI commonAPI = new CommonAPI(MyBaseActivity.this);
+            commonAPI.logout();
+            // Perform any required operation on disconnect
         }
+    };
 
-        @Override
-        public void onResume() {
-            super.onResume();
-            resetDisconnectTimer();
-        }
+    public void resetDisconnectTimer() {
+        disconnectHandler.removeCallbacks(disconnectCallback);
+        disconnectHandler.postDelayed(disconnectCallback, DISCONNECT_TIMEOUT);
+    }
 
-        @Override
-        public void onStop() {
-            super.onStop();
-            stopDisconnectTimer();
+    public void stopDisconnectTimer() {
+        disconnectHandler.removeCallbacks(disconnectCallback);
+    }
 
-            Log.e("on","stop");
-        }
+    @Override
+    public void onUserInteraction() {
+        resetDisconnectTimer();
+
+        Log.e("user", "interaction");
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        resetDisconnectTimer();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        stopDisconnectTimer();
+
+        Log.e("on", "stop");
+    }
 }
 
 

@@ -10,6 +10,7 @@ import android.util.Log;
 
 import com.braintech.cmyco.R;
 import com.braintech.cmyco.adapter.SpinnerAdapter;
+import com.braintech.cmyco.common.CommonAPI;
 import com.braintech.cmyco.sessions.PollsPref;
 
 import org.json.JSONArray;
@@ -31,6 +32,8 @@ public class Foreground implements Application.ActivityLifecycleCallbacks {
 
     public static Context context;
     public static PollsPref pollsPref;
+
+    CommonAPI commonAPI;
 
     public interface Listener {
 
@@ -192,12 +195,18 @@ public class Foreground implements Application.ActivityLifecycleCallbacks {
     }
 
     private void callBackgroundApi() {
-        new PostBackgroundData().execute();
+        if (Utility.isNetworkAvailable(context))
+            new PostBackgroundData().execute();
+        else {
+            // do nothing
+        }
     }
 
     private class PostBackgroundData extends AsyncTask<String, String, String> {
         int result = -1;
+        int logout;
         String msg;
+
 
         @Override
         protected void onPreExecute() {
@@ -215,6 +224,21 @@ public class Foreground implements Application.ActivityLifecycleCallbacks {
             String urlString = jsonParser.getJSONFromUrl(url);
             Log.e("urlString", urlString);
 
+            try {
+                JSONObject jsonObject = new JSONObject(urlString);
+
+
+                if (jsonObject != null) {
+                    result = jsonObject.getInt(Const.KEY_RESULT);
+                    logout = jsonObject.getInt(Const.TAG_LOGOUT);
+
+                }
+            } catch (NullPointerException e) {
+                e.printStackTrace();
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
 
             return null;
         }
@@ -226,11 +250,18 @@ public class Foreground implements Application.ActivityLifecycleCallbacks {
             Progress.stop();
 
             if (result == 1) {
+                if (logout == 1) {
+                    commonAPI = new CommonAPI(context);
+                    commonAPI.logout();
+
+                } else {
+                    // do nothing
+                }
 
             } else if (result == 0) {
-
+                // do nothing
             } else {
-
+                // do nothing
             }
         }
     }
