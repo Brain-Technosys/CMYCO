@@ -85,7 +85,7 @@ public class Const {
     //Active Users
     public static String KEY_ACTIVE_USER = "active_user";
 
-    //Background variables
+    //Background variables for logout
     public static String KEY_STATUS="&status=B";
 
     //Intent varaibles
