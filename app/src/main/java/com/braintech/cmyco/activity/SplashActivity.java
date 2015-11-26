@@ -8,6 +8,7 @@ import android.view.Window;
 import android.view.WindowManager;
 
 import com.braintech.cmyco.R;
+import com.braintech.cmyco.sessions.PollsPref;
 import com.braintech.cmyco.sessions.UserSession;
 
 public class SplashActivity extends Activity {
@@ -21,6 +22,9 @@ public class SplashActivity extends Activity {
         super.onCreate(savedInstanceState);
 
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
+
+      UserSession userSession=new UserSession(this);
+        userSession.clearUserSession();
 
         //Remove notification bar
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
