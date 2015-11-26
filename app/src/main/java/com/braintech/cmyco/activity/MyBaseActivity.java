@@ -14,7 +14,7 @@ import com.braintech.cmyco.common.CommonAPI;
 public class MyBaseActivity extends AppCompatActivity {
 
 
-    public static final long DISCONNECT_TIMEOUT = 10000; // 5 min = 5 * 60 * 1000 ms
+    public static final long DISCONNECT_TIMEOUT = 3600000; // 1 hour
 
     private Handler disconnectHandler = new Handler() {
         public void handleMessage(Message msg) {

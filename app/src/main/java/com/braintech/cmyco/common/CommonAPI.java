@@ -123,7 +123,7 @@ public class CommonAPI {
                 userSession.logout();
                 pollsPref.clearPollData();
 
-                Intent intent = new Intent((Activity) context, LoginActivity.class);
+                Intent intent = new Intent(context, LoginActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK
                         | Intent.FLAG_ACTIVITY_CLEAR_TOP
                         | IntentCompat.FLAG_ACTIVITY_CLEAR_TASK);
