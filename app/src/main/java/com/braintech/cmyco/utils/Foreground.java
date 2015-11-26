@@ -3,10 +3,21 @@ package com.braintech.cmyco.utils;
 import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 
+import com.braintech.cmyco.R;
+import com.braintech.cmyco.adapter.SpinnerAdapter;
+import com.braintech.cmyco.sessions.PollsPref;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
@@ -17,6 +28,9 @@ public class Foreground implements Application.ActivityLifecycleCallbacks {
 
     public static final long CHECK_DELAY = 500;
     public static final String TAG = Foreground.class.getName();
+
+    public static Context context;
+    public static PollsPref pollsPref;
 
     public interface Listener {
 
@@ -42,26 +56,30 @@ public class Foreground implements Application.ActivityLifecycleCallbacks {
      * @param application
      * @return an initialised Foreground instance
      */
-    public static Foreground init(Application application){
+    public static Foreground init(Application application) {
         if (instance == null) {
             instance = new Foreground();
             application.registerActivityLifecycleCallbacks(instance);
+            context = application;
+
+            pollsPref = new PollsPref(context);
+
         }
         return instance;
     }
 
-    public static Foreground get(Application application){
+    public static Foreground get(Application application) {
         if (instance == null) {
             init(application);
         }
         return instance;
     }
 
-    public static Foreground get(Context ctx){
+    public static Foreground get(Context ctx) {
         if (instance == null) {
             Context appCtx = ctx.getApplicationContext();
             if (appCtx instanceof Application) {
-                init((Application)appCtx);
+                init((Application) appCtx);
             }
             throw new IllegalStateException(
                     "Foreground is not initialised and " +
@@ -70,7 +88,7 @@ public class Foreground implements Application.ActivityLifecycleCallbacks {
         return instance;
     }
 
-    public static Foreground get(){
+    public static Foreground get() {
         if (instance == null) {
             throw new IllegalStateException(
                     "Foreground is not initialised - invoke " +
@@ -79,19 +97,19 @@ public class Foreground implements Application.ActivityLifecycleCallbacks {
         return instance;
     }
 
-    public boolean isForeground(){
+    public boolean isForeground() {
         return foreground;
     }
 
-    public boolean isBackground(){
+    public boolean isBackground() {
         return !foreground;
     }
 
-    public void addListener(Listener listener){
+    public void addListener(Listener listener) {
         listeners.add(listener);
     }
 
-    public void removeListener(Listener listener){
+    public void removeListener(Listener listener) {
         listeners.remove(listener);
     }
 
@@ -104,7 +122,11 @@ public class Foreground implements Application.ActivityLifecycleCallbacks {
         if (check != null)
             handler.removeCallbacks(check);
 
-        if (wasBackground){
+        if (wasBackground) {
+
+            if (pollsPref.getUserID() != null)
+                callBackgroundApi();
+
             Log.i(TAG, "went foreground");
             for (Listener l : listeners) {
                 try {
@@ -125,11 +147,15 @@ public class Foreground implements Application.ActivityLifecycleCallbacks {
         if (check != null)
             handler.removeCallbacks(check);
 
-        handler.postDelayed(check = new Runnable(){
+        handler.postDelayed(check = new Runnable() {
             @Override
             public void run() {
                 if (foreground && paused) {
                     foreground = false;
+
+                    if (pollsPref.getUserID() != null)
+                        callBackgroundApi();
+
                     Log.i(TAG, "went background");
                     for (Listener l : listeners) {
                         try {
@@ -146,17 +172,66 @@ public class Foreground implements Application.ActivityLifecycleCallbacks {
     }
 
     @Override
-    public void onActivityCreated(Activity activity, Bundle savedInstanceState) {}
+    public void onActivityCreated(Activity activity, Bundle savedInstanceState) {
+    }
 
     @Override
-    public void onActivityStarted(Activity activity) {}
+    public void onActivityStarted(Activity activity) {
+    }
 
     @Override
-    public void onActivityStopped(Activity activity) {}
+    public void onActivityStopped(Activity activity) {
+    }
 
     @Override
-    public void onActivitySaveInstanceState(Activity activity, Bundle outState) {}
+    public void onActivitySaveInstanceState(Activity activity, Bundle outState) {
+    }
 
     @Override
-    public void onActivityDestroyed(Activity activity) {}
+    public void onActivityDestroyed(Activity activity) {
+    }
+
+    private void callBackgroundApi() {
+        new PostBackgroundData().execute();
+    }
+
+    private class PostBackgroundData extends AsyncTask<String, String, String> {
+        int result = -1;
+        String msg;
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+
+        }
+
+        @Override
+        protected String doInBackground(String... strings) {
+            JsonParser jsonParser = new JsonParser(context);
+
+
+            String url = Const.POST_BACKGROUND + Const.TAG_USER_ID + pollsPref.getUserID() + Const.KEY_STATUS;
+            Log.e("url", url);
+            String urlString = jsonParser.getJSONFromUrl(url);
+            Log.e("urlString", urlString);
+
+
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+
+            Progress.stop();
+
+            if (result == 1) {
+
+            } else if (result == 0) {
+
+            } else {
+
+            }
+        }
+    }
 }

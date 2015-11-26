@@ -23,6 +23,7 @@ public class Const {
     public static String GET_ACTIVE_GAME_DETAIL = BASE_URL + "games/app_active_game1";
     public static String RATING = BASE_URL + "ratings/app_add1";
     public static String GET_GRAPH=BASE_URL+ "ratings/app_ratings1?";
+    public static String POST_BACKGROUND=BASE_URL+"users/app_lastactivity?";
 
 
 
@@ -83,6 +84,9 @@ public class Const {
 
     //Active Users
     public static String KEY_ACTIVE_USER = "active_user";
+
+    //Background variables
+    public static String KEY_STATUS="&status=B";
 
     //Intent varaibles
     public static String KEY_BUTTON_CLICKED="isButtonClicked";
