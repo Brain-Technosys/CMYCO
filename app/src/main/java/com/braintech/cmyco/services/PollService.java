@@ -160,7 +160,7 @@ public class PollService extends Service {
             String url = Const.GET_ACTIVE_GAME_DETAIL + "?" + Const.TAG_TEAMID + "=" + pollsPref.getTeamId();
             String jsonString = jsonParser.getJSONFromUrl(url);
 
-            Log.e("url",url);
+            Log.e("url", url);
             //Log.e("jsonString", jsonString);
 
             try {
@@ -279,13 +279,6 @@ public class PollService extends Service {
 
                                 pollsPref.saveTimePresent(true);
 
-                                Vibrator v = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
-                                v.vibrate(500);
-
-                                Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-                                MediaPlayer mp = MediaPlayer.create(getApplicationContext(), notification);
-                                mp.start();
-
                                 /*//playing default notification
                                 try {
                                     Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
@@ -300,6 +293,13 @@ public class PollService extends Service {
 
                                 } else {
                                     isButtonClicked = false;
+
+                                    Vibrator v = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
+                                    v.vibrate(500);
+
+                                    Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+                                    MediaPlayer mp = MediaPlayer.create(getApplicationContext(), notification);
+                                    mp.start();
                                 }
 
                                 pollsPref.pollActivated(true);
@@ -331,7 +331,6 @@ public class PollService extends Service {
                                     GamePlayStrategyActivity.gamePlayStrategyActivity.finish();
 
                                 startActivity(intent);
-
 
                                 break;
                             } else
