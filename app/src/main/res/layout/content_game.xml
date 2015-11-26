@@ -8,7 +8,7 @@
     android:background="@color/home_screen_bg"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.braintech.cmyco.activity.GameActivity"
-    tools:showIn="@layout/activity_defence">
+    tools:showIn="@layout/activity_game">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -22,7 +22,7 @@
             android:id="@+id/lbl_defence"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/logo_defence"
+
             android:textColor="@color/white"
             android:textSize="@dimen/txt_title_size" />
 
@@ -42,20 +42,20 @@
 
                 <LinearLayout
                     android:id="@+id/ll_cat_no"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"></LinearLayout>
 
 
-                <RadioGroup
-                    android:id="@+id/rg_defence"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:orientation="vertical">
+                <!--<RadioGroup-->
+                    <!--android:id="@+id/rg_defence"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_gravity="center_vertical"-->
+                    <!--android:orientation="vertical">-->
 
 
-                </RadioGroup>
+                <!--</RadioGroup>-->
             </LinearLayout>
 
 

@@ -1,9 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<RadioButton xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/rbCat"
-    android:layout_width="match_parent"
-    android:layout_height="60px"
-    android:textColor="@color/white">
 
-</RadioButton>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal">
+
+    <TextView
+        android:id="@+id/tvCat"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_centerVertical="true"
+        android:padding="5dp"
+        android:textColor="@color/white"
+        android:textSize="@dimen/txt_normal_size" />
+
+    <RadioButton
+        android:id="@+id/rbCat"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:textColor="@color/white">
+
+    </RadioButton>
+</LinearLayout>

@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
@@ -61,8 +62,8 @@ public class GameActivity extends AppCompatActivity {
     @InjectView(R.id.lbl_defence)
     TextView defenceTextView;
 
-    @InjectView(R.id.rg_defence)
-    RadioGroup defenceRadioGroup;
+//    @InjectView(R.id.rg_defence)
+//    RadioGroup defenceRadioGroup;
 
     @InjectView(R.id.chart)
     BarChart chart;
@@ -451,21 +452,39 @@ public class GameActivity extends AppCompatActivity {
         //setting radio buttons
         for (int i = 0; i < catDefenceArrayList.size(); i++) {
 
+//            //Inflating textView
+//            View tvView = getLayoutInflater().inflate(R.layout.textview_layout, null);
+//            TextView textView = (TextView) tvView.findViewById(R.id.tvCat);
+//            textView.setText(String.valueOf(i + 1));
+//            ll_cat_no.addView(tvView);
+//
+//            //Creating Dynamic Radio Button
+//
+//            catRadioButtons[i] = new RadioButton(GameActivity.this);
+//            catRadioButtons[i].setId(Integer.parseInt(catDefenceArrayList.get(i).getPoll_id()));
+//            catRadioButtons[i].setText(catDefenceArrayList.get(i).getPoll_name());
+//            catRadioButtons[i].setTextColor(Color.parseColor("#FFFFFF"));
+//            catRadioButtons[i].setTag(i);
+
             //Inflating textView
-            View tvView = getLayoutInflater().inflate(R.layout.textview_layout, null);
+
+            View tvView = getLayoutInflater().inflate(R.layout.radio_btn_layout, null);
             TextView textView = (TextView) tvView.findViewById(R.id.tvCat);
+            catRadioButtons[i] = (RadioButton) tvView.findViewById(R.id.rbCat);
             textView.setText(String.valueOf(i + 1));
-            ll_cat_no.addView(tvView);
+            // ll_cat_no.addView(tvView);
 
             //Creating Dynamic Radio Button
 
-            catRadioButtons[i] = new RadioButton(GameActivity.this);
+            // catRadioButtons[i] = new RadioButton(GameActivity.this);
             catRadioButtons[i].setId(Integer.parseInt(catDefenceArrayList.get(i).getPoll_id()));
             catRadioButtons[i].setText(catDefenceArrayList.get(i).getPoll_name());
             catRadioButtons[i].setTextColor(Color.parseColor("#FFFFFF"));
             catRadioButtons[i].setTag(i);
+            ll_cat_no.addView(tvView);
 
             Fonts.robotoRegular(this, catRadioButtons[i]);
+
 
             // setting first radio button checked for the first time
 //            if (i == 0 && firstTime) {
@@ -474,19 +493,17 @@ public class GameActivity extends AppCompatActivity {
 //            }
 
             //Adding Views
-            defenceRadioGroup.addView(catRadioButtons[i]);
+            //  defenceRadioGroup.addView(catRadioButtons[i]);
 
             if (isButtonClicked) {
-                disableRadioButtons();
+
 
                 int position = pollsPref.getPosition();
 
                 if (i == position) {
                     catRadioButtons[i].setChecked(true);
+
                 }
-
-                Log.e("position", "" + position);
-
 
                 // defenceRadioGroup.check(((RadioButton) defenceRadioGroup.getChildAt(position)).getId());
             }
@@ -498,28 +515,36 @@ public class GameActivity extends AppCompatActivity {
 
                     isButtonClicked = true;
 
-
                     disableRadioButtons();
 
                     tag = Integer.parseInt(compoundButton.getTag().toString());
 
                     pollsPref.saveButtonClicked(true, pollId, tag);
 
-
                     callRatingApi(tag);
 
                 }
             });
 
+
+        }
+        if (isButtonClicked) {
+            disableRadioButtons();
         }
     }
 
     private void disableRadioButtons() {
 
-        callgraphAPI();
-        for (int i = 0; i < defenceRadioGroup.getChildCount(); i++) {
-            ((RadioButton) defenceRadioGroup.getChildAt(i)).setEnabled(false);
+
+        for (int i = 0; i < catRadioButtons.length; i++) {
+            catRadioButtons[i].setEnabled(false);
+
         }
+        callgraphAPI();
+
+//        for (int i = 0; i < defenceRadioGroup.getChildCount(); i++) {
+//            ((RadioButton) defenceRadioGroup.getChildAt(i)).setEnabled(false);
+//        }
     }
 
 
@@ -581,9 +606,9 @@ public class GameActivity extends AppCompatActivity {
                     }
 
                 }
-            }catch (NullPointerException e) {
+            } catch (NullPointerException e) {
                 e.printStackTrace();
-            }  catch (JSONException e) {
+            } catch (JSONException e) {
                 e.printStackTrace();
             }
 
