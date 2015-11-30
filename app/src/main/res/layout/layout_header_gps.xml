@@ -24,19 +24,19 @@
             android:textSize="@dimen/txt_normal_size" />
 
 
-        <TextView
-            android:id="@+id/txt_active_users"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:layout_marginLeft="2dp"
-            android:layout_marginTop="10dp"
-            android:layout_weight="1"
-            android:background="@drawable/bg_edittext"
-            android:padding="@dimen/padding_size"
-            android:text="ACTIVE USERS"
-            android:textColor="@color/white"
-            android:textSize="@dimen/txt_normal_size" />
+        <!--<TextView-->
+            <!--android:id="@+id/txt_active_users"-->
+            <!--android:layout_width="0dp"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginBottom="10dp"-->
+            <!--android:layout_marginLeft="2dp"-->
+            <!--android:layout_marginTop="10dp"-->
+            <!--android:layout_weight="1"-->
+            <!--android:background="@drawable/bg_edittext"-->
+            <!--android:padding="@dimen/padding_size"-->
+            <!--android:text="ACTIVE USERS"-->
+            <!--android:textColor="@color/white"-->
+            <!--android:textSize="@dimen/txt_normal_size" />-->
 
     </LinearLayout>
 
