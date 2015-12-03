@@ -18,6 +18,7 @@ public class PollsPref {
 
     // Shared preferences file name
     private static final String PREF_NAME = "polls_pref";
+
     private static final String KEY_COACH = "coach";
     private static final String KEY_TEAM = "team";
 
@@ -27,12 +28,11 @@ public class PollsPref {
     private static final String KEY_OPTIONS = "options";
 
 
+    private static final String KEY_USER_ID = "user_id";
+    private static final String KEY_UESRNAME = "username";
+    private static final String KEY_EMAIL = "email";
 
-    private static final String KEY_USER_ID="user_id";
-    private static final String KEY_UESRNAME="username";
-    private static final String KEY_EMAIL="email";
-
-    private static final String KEY_ACTIVE_GAME="active_game";
+    private static final String KEY_ACTIVE_GAME = "active_game";
 
 
     private static final String KEY_ACTIVE_USERS = "active_users";
@@ -41,7 +41,7 @@ public class PollsPref {
     public static final String KEY_TIME_PRESENT = "timePresent";
     public static final String KEY_POSITION = "positions";
 
-    public static final String  KEY_ACTIVITY_RUNNING = "running";
+    public static final String KEY_ACTIVITY_RUNNING = "running";
 
 
     public PollsPref(Context _context) {
@@ -51,15 +51,12 @@ public class PollsPref {
     }
 
 
-
     public void storePLAY(String playId) {
         editor.putString(KEY_PLAY, playId);
     }
 
-  
 
-    public void storeUserInfo(String user_id,String username,String email)
-    {
+    public void storeUserInfo(String user_id, String username, String email) {
         editor.putString(KEY_USER_ID, user_id);
         editor.putString(KEY_UESRNAME, username);
         editor.putString(KEY_EMAIL, email);
@@ -68,8 +65,7 @@ public class PollsPref {
     }
 
 
-
-    public void storeCoachTeamDetail(String coach, String team,String teamId) {
+    public void storeCoachTeamDetail(String coach, String team, String teamId) {
 
         editor.putString(KEY_COACH, coach);
         editor.putString(KEY_TEAM, team);
@@ -105,41 +101,35 @@ public class PollsPref {
         editor.commit();
     }
 
-    public void saveActiveGame(int activeGame)
-    {
+    public void saveActiveGame(int activeGame) {
         editor.putInt(Const.KEY_ACTIVE_GAME, activeGame);
         editor.commit();
     }
 
-    public void saveOptions(String options)
-    {
+    public void saveOptions(String options) {
         editor.putString(KEY_OPTIONS, options);
         editor.commit();
     }
 
-    public void pollActivated(Boolean value)
-    {
+    public void pollActivated(Boolean value) {
         editor.putBoolean(KEY_POLL_ACTIVATED, value);
         editor.commit();
     }
 
 
-    public void saveTimePresent(Boolean value)
-    {
+    public void saveTimePresent(Boolean value) {
         editor.putBoolean(KEY_TIME_PRESENT, value);
         editor.commit();
     }
 
-    public void saveButtonClicked(Boolean value,int pollId,int tag)
-    {
+    public void saveButtonClicked(Boolean value, int pollId, int tag) {
         editor.putBoolean(Const.KEY_BUTTON_CLICKED, value);
         editor.putInt(Const.KEY_POLL_ID, pollId);
         editor.putInt(KEY_POSITION, tag);
         editor.commit();
     }
 
-    public void ActivityRunning(Boolean value)
-    {
+    public void ActivityRunning(Boolean value) {
         editor.putBoolean(KEY_ACTIVITY_RUNNING, value);
         editor.commit();
     }
@@ -196,33 +186,51 @@ public class PollsPref {
 
     }
 
-    public boolean isPollActivated()
-    {
+    public boolean isPollActivated() {
         return pref.getBoolean(KEY_POLL_ACTIVATED, false);
     }
 
-    public boolean isTimePresent()
-    {
+    public boolean isTimePresent() {
         return pref.getBoolean(KEY_TIME_PRESENT, false);
     }
 
-    public boolean isButtonClicked()
-    {
+    public boolean isButtonClicked() {
         return pref.getBoolean(Const.KEY_BUTTON_CLICKED, false);
     }
 
-    public boolean isActivityRunning()
-    {
-        return pref.getBoolean(KEY_ACTIVITY_RUNNING,false);
+    public boolean isActivityRunning() {
+        return pref.getBoolean(KEY_ACTIVITY_RUNNING, false);
     }
 
     public int getPosition() {
-        return pref.getInt(KEY_POSITION,0);
+        return pref.getInt(KEY_POSITION, 0);
 
     }
 
-    public void clearPollData() {
-        editor.clear();
+//    public void clearPollData() {
+//        editor.clear();
+//        editor.commit();
+//    }
+
+    public void ClearPollData() {
+
+        editor.remove(KEY_COACH);
+        editor.remove(KEY_TEAM);
+        // editor.remove(KEY_PLAY);
+        editor.remove(KEY_TEAM_ID);
+        editor.remove(KEY_OPTIONS);
+        // editor.remove(Const.KEY_POLL_ID);
+        //editor.remove(Const.KEY_BUTTON_CLICKED);
+        // editor.remove(KEY_USER_ID);
+        //  editor.remove(KEY_UESRNAME);
+        editor.remove(KEY_ACTIVE_USERS);
+      //  editor.remove(KEY_ACTIVE_GAME);
+        editor.remove(KEY_POLL_ACTIVATED);
+        editor.remove(KEY_TIME_PRESENT);
+        // editor.remove(KEY_POSITION);
+        editor.remove(KEY_ACTIVITY_RUNNING);
         editor.commit();
     }
+
+
 }

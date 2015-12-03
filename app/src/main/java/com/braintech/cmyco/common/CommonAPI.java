@@ -89,7 +89,7 @@ public class CommonAPI {
             JsonParser jsonParser = new JsonParser(context);
 
             String url = Const.GET_LOG_OUT + strings[0];
-           
+
             String jsonString = jsonParser.getJSONFromUrl(url);
 
             try {
