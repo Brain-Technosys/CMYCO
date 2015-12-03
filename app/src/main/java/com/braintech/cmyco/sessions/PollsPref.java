@@ -210,6 +210,7 @@ public class PollsPref {
 //    public void clearPollData() {
 //        editor.clear();
 //        editor.commit();
+    //
 //    }
 
     public void ClearPollData() {
