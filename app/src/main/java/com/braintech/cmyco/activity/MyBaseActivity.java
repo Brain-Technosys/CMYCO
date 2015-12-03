@@ -43,8 +43,6 @@ public class MyBaseActivity extends AppCompatActivity {
     @Override
     public void onUserInteraction() {
         resetDisconnectTimer();
-
-        Log.e("user", "interaction");
     }
 
     @Override
@@ -57,8 +55,6 @@ public class MyBaseActivity extends AppCompatActivity {
     public void onStop() {
         super.onStop();
         stopDisconnectTimer();
-
-        Log.e("on", "stop");
     }
 }
 

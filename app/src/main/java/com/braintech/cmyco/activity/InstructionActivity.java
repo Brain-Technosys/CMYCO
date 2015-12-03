@@ -142,9 +142,6 @@ public class InstructionActivity extends MyBaseActivity {
 
     private void callingPollData() {
 
-//        //setting default id
-//      //  pollsPref.storePLAY("KEY");
-
         final Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
             @Override
@@ -237,7 +234,6 @@ public class InstructionActivity extends MyBaseActivity {
             logoutAPI.logout(snakeOnClick, coordinatorLayout);
             return true;
         } else if (id == android.R.id.home) {
-//            this.finish();
 
             Intent intent = new Intent(InstructionActivity.this, HomeActivity.class);
 
@@ -270,9 +266,8 @@ public class InstructionActivity extends MyBaseActivity {
         protected String doInBackground(String... strings) {
             JsonParser jsonParser = new JsonParser(InstructionActivity.this);
 
-            //
             String url = Const.GET_INSTRUCTION + page;
-            // Log.e(url, url);
+
             String jsonString = jsonParser.getJSONFromUrl(url);
             try {
                 JSONObject jsonObject = new JSONObject(jsonString);
@@ -340,18 +335,5 @@ public class InstructionActivity extends MyBaseActivity {
         pollsPref.clearPollData();
         finish();
     }
-
-    //    public ControlApplication getApp()
-//    {
-//        return (ControlApplication)this.getApplication();
-//    }
-//
-//    @Override
-//    public void onUserInteraction()
-//    {
-//        super.onUserInteraction();
-//        getApp().touch();
-//        Log.e(TAG, "User interaction to " + this.toString());
-//    }
 
 }

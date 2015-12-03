@@ -102,13 +102,6 @@ public class NoGameActivity extends AppCompatActivity {
             }
         };
 
-//        snakeOnClickPollRetry = new SnakeOnClick() {
-//            @Override
-//            public void onRetryClick() {
-//                commonAPI.getPollData(snakeOnClickPollRetry, coordinatorLayout);
-//            }
-//        };
-
         snakeRetryLogout = new SnakeOnClick() {
             @Override
             public void onRetryClick() {
@@ -151,8 +144,6 @@ public class NoGameActivity extends AppCompatActivity {
 
     @OnClick(R.id.btn_refresh)
     void doRefresh() {
-        //add resume
-
         doLogin();
     }
 
@@ -192,8 +183,6 @@ public class NoGameActivity extends AppCompatActivity {
                 String url = Const.SIGN_IN + Const.TAG_EMAIL + URLEncoder.encode(email, "UTF-8") +
                         Const.TAG_PASSWORD + URLEncoder.encode(password, "UTF-8");
 
-                //Log.e("url", url);
-
                 String jsonString = jsonParser.getJSONFromUrl(url);
 
                 Log.e("jsonString", jsonString);
@@ -224,17 +213,7 @@ public class NoGameActivity extends AppCompatActivity {
                             JSONObject jsonObjectGame = jsonObjectGameData.getJSONObject(Const.KEY_GAME);
                             pollsPref.storeGameJson(jsonObjectGame.toString());
 
-//                            //Storing team1 json in sheared pref
-//                            JSONObject jsonObjectTeam1 = jsonObjectGameData.getJSONObject(Const.KEY_TEAM1);
-//                            pollsPref.storeTeam1Json(jsonObjectTeam1.toString());
-//
-//                            //Storing team2 json in sheared pref
-//                            JSONObject jsonObjectTeam2 = jsonObjectGameData.getJSONObject(Const.KEY_TEAM2);
-//                            pollsPref.storeTeam2Json(jsonObjectTeam2.toString());
-
                         }
-
-
                     }
 
                 }

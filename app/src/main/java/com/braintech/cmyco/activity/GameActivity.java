@@ -262,14 +262,12 @@ public class GameActivity extends AppCompatActivity {
         //X axis title, currently it is static
         graphLabelXAxis = new ArrayList<>();
         for (int i = 0; i < xTStrings.length; i++) {
-            // Log.e("xAxis", xTStrings[i]);
             graphLabelXAxis.add(xTStrings[i]);
         }
 
         //getting data for
         valueSet = new ArrayList<>();
         for (int i = 0; i < barStrings.length; i++) {
-            // Log.e("data", barStrings[i]);
             BarEntry v1e1 = new BarEntry(Float.parseFloat(barStrings[i]), i); // 1
             valueSet.add(v1e1);
         }
@@ -332,10 +330,7 @@ public class GameActivity extends AppCompatActivity {
 
         //You can add grid (background through here,currently it is no needed
         chart.setDrawGridBackground(false);
-        //  chart.setGridBackgroundColor(Color.parseColor("#010f1a"));
-
         chart.setPinchZoom(false);
-        // chart.setScaleMinima(2f, 1f);
         chart.setDoubleTapToZoomEnabled(false);
         chart.setDrawBarShadow(false);
         chart.setDrawGridBackground(false);
@@ -386,7 +381,7 @@ public class GameActivity extends AppCompatActivity {
     private void handleToolbar() {
         toolbar.setTitle(getTitle());
         setSupportActionBar(toolbar);
-        // getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
     }
 
 
@@ -424,18 +419,13 @@ public class GameActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-
-
         super.onBackPressed();
         passIntent();
-
-
     }
 
     private void passIntent() {
 
         Intent intent = new Intent(GameActivity.this, GamePlayStrategyActivity.class);
-        Log.e("intent", "" + isButtonClicked);
         intent.putExtra(Const.TAG_POLL_ID, pollId);
         isActivityStarted = true;
         finish();
@@ -452,31 +442,15 @@ public class GameActivity extends AppCompatActivity {
         //setting radio buttons
         for (int i = 0; i < catDefenceArrayList.size(); i++) {
 
-//            //Inflating textView
-//            View tvView = getLayoutInflater().inflate(R.layout.textview_layout, null);
-//            TextView textView = (TextView) tvView.findViewById(R.id.tvCat);
-//            textView.setText(String.valueOf(i + 1));
-//            ll_cat_no.addView(tvView);
-//
-//            //Creating Dynamic Radio Button
-//
-//            catRadioButtons[i] = new RadioButton(GameActivity.this);
-//            catRadioButtons[i].setId(Integer.parseInt(catDefenceArrayList.get(i).getPoll_id()));
-//            catRadioButtons[i].setText(catDefenceArrayList.get(i).getPoll_name());
-//            catRadioButtons[i].setTextColor(Color.parseColor("#FFFFFF"));
-//            catRadioButtons[i].setTag(i);
-
             //Inflating textView
 
             View tvView = getLayoutInflater().inflate(R.layout.radio_btn_layout, null);
             TextView textView = (TextView) tvView.findViewById(R.id.tvCat);
             catRadioButtons[i] = (RadioButton) tvView.findViewById(R.id.rbCat);
             textView.setText(String.valueOf(i + 1));
-            // ll_cat_no.addView(tvView);
 
             //Creating Dynamic Radio Button
 
-            // catRadioButtons[i] = new RadioButton(GameActivity.this);
             catRadioButtons[i].setId(Integer.parseInt(catDefenceArrayList.get(i).getPoll_id()));
             catRadioButtons[i].setText(catDefenceArrayList.get(i).getPoll_name());
             catRadioButtons[i].setTextColor(Color.parseColor("#FFFFFF"));
@@ -485,27 +459,16 @@ public class GameActivity extends AppCompatActivity {
 
             Fonts.robotoRegular(this, catRadioButtons[i]);
 
-
-            // setting first radio button checked for the first time
-//            if (i == 0 && firstTime) {
-//                catRadioButtons[i].setChecked(true);
-//                firstTime = false;
-//            }
-
             //Adding Views
-            //  defenceRadioGroup.addView(catRadioButtons[i]);
 
             if (isButtonClicked) {
-
-
                 int position = pollsPref.getPosition();
-
                 if (i == position) {
                     catRadioButtons[i].setChecked(true);
 
                 }
 
-                // defenceRadioGroup.check(((RadioButton) defenceRadioGroup.getChildAt(position)).getId());
+
             }
 
             //Applying click Listener on category radio button
@@ -542,9 +505,6 @@ public class GameActivity extends AppCompatActivity {
         }
         callgraphAPI();
 
-//        for (int i = 0; i < defenceRadioGroup.getChildCount(); i++) {
-//            ((RadioButton) defenceRadioGroup.getChildAt(i)).setEnabled(false);
-//        }
     }
 
 
@@ -592,8 +552,6 @@ public class GameActivity extends AppCompatActivity {
             try {
 
                 String url = Const.RATING + "?user_id=" + pollsPref.getUserID() + "&game_id=" + pollsPref.getActiveGame() + "&poll_id=" + pollId + "&poll_option=" + catDefenceArrayList.get(position).getPoll_id() + "&team_id=" + pollsPref.getTeamId();
-
-                //Log.e("url", url);
 
                 String jsonString = jsonParser.getJSONFromUrl(url);
                 JSONObject jsonObject = new JSONObject(jsonString);
@@ -679,16 +637,12 @@ public class GameActivity extends AppCompatActivity {
 
             String url = Const.GET_GRAPH + "team_id=" + pollsPref.getTeamId() + Const.TAG_GAME_ID + pollsPref.getActiveGame() + Const.TAG_POLL_ID + pollId;
 
-            Log.e("url", url);
+
 
             String jsonString = jsonParser.getJSONFromUrl(url);
 
-            // Log.e("jsonString", jsonString);
-
             try {
                 JSONObject jsonObject = new JSONObject(jsonString);
-
-                Log.e("Enable game", jsonObject.toString());
 
                 if (jsonObject != null) {
                     result = jsonObject.getInt(Const.KEY_RESULT);
@@ -725,7 +679,7 @@ public class GameActivity extends AppCompatActivity {
                             //set duration
                             playCallDur = Long.parseLong(jsonObjectData.getString("playcall_time"));
                             playCallDur = playCallDur * 1000;
-                            //Log.e("playCallDur", "" + playCallDur);
+
                         }
 
 
@@ -766,8 +720,6 @@ public class GameActivity extends AppCompatActivity {
                             pollsPref.saveOptions(maxId);
                             pollsPref.pollActivated(false);
 
-                            // Log.e("isactivated",""+isActivityStarted);
-
                             if (!isActivityStarted) {
                                 pollsPref.saveButtonClicked(false, pollId, 0);
                                 Intent intent = new Intent(GameActivity.this, GamePlayStrategyActivity.class);
@@ -795,16 +747,4 @@ public class GameActivity extends AppCompatActivity {
         }
     }
 
-    //    public ControlApplication getApp()
-//    {
-//        return (ControlApplication)this.getApplication();
-//    }
-//
-//    @Override
-//    public void onUserInteraction()
-//    {
-//        super.onUserInteraction();
-//        getApp().touch();
-//        Log.e(TAG, "User interaction to "+this.toString());
-//    }
 }

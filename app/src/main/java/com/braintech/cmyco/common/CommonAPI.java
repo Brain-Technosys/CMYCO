@@ -89,10 +89,8 @@ public class CommonAPI {
             JsonParser jsonParser = new JsonParser(context);
 
             String url = Const.GET_LOG_OUT + strings[0];
-            Log.e("url", url);
+           
             String jsonString = jsonParser.getJSONFromUrl(url);
-
-            // Log.e("jsonString", jsonString);
 
             try {
                 JSONObject jsonObject = new JSONObject(jsonString);
@@ -177,8 +175,6 @@ public class CommonAPI {
             String url = Const.GET_PLAY_CALL_TIME;
             String jsonString = jsonParser.getJSONFromUrl(url);
 
-            //Log.e("jsonString", jsonString);
-
             try {
                 JSONObject jsonObject = new JSONObject(jsonString);
 
@@ -244,8 +240,6 @@ public class CommonAPI {
 
             String url = Const.GET_ACTIVE_USERS;
             String jsonString = jsonParser.getJSONFromUrl(url);
-
-            // Log.e("jsonString", jsonString);
 
             try {
                 JSONObject jsonObject = new JSONObject(jsonString);
@@ -314,8 +308,6 @@ public class CommonAPI {
 
             String url = Const.GET_ACTIVE_GAME_DETAIL;
             String jsonString = jsonParser.getJSONFromUrl(url);
-
-            //Log.e("jsonString", jsonString);
 
             try {
                 JSONObject jsonObject = new JSONObject(jsonString);
@@ -399,9 +391,6 @@ public class CommonAPI {
             String url = Const.RATING + Const.TAG_USER_ID + userSession.getUserID() + Const.TAG_GAME_ID + gameId + Const.TAG_POLL_ID + pollId +
                     Const.TAG_POLL_OPTION + pollOption + Const.TAG_TEAM_ID + teamId;
             String jsonString = jsonParser.getJSONFromUrl(url);
-
-            // Log.e("jsonString", jsonString);
-
             try {
                 JSONObject jsonObject = new JSONObject(jsonString);
 

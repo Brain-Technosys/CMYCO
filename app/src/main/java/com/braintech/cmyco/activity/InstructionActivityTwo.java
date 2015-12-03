@@ -132,7 +132,6 @@ public class InstructionActivityTwo extends MyBaseActivity {
             JsonParser jsonParser = new JsonParser(InstructionActivityTwo.this);
 
             String url = Const.GET_INSTRUCTION2;
-            //Log.e(url, url);
             String jsonString = jsonParser.getJSONFromUrl(url);
             try {
                 JSONObject jsonObject = new JSONObject(jsonString);
@@ -177,18 +176,5 @@ public class InstructionActivityTwo extends MyBaseActivity {
             }
         }
     }
-
-//    public ControlApplication getApp()
-//    {
-//        return (ControlApplication )this.getApplication();
-//    }
-//
-//    @Override
-//    public void onUserInteraction()
-//    {
-//        super.onUserInteraction();
-//        getApp().touch();
-//        Log.e(TAG, "User interaction to " + this.toString());
-//    }
 
 }
