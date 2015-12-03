@@ -78,9 +78,6 @@ public class DisabledGameActivity extends MyBaseActivity {
     @InjectView(R.id.txtPlayCallTwo)
     TextView txtPlayCallTwo;
 
-//    @InjectView(R.id.playCallLayout)
-//    LinearLayout playCallLayout;
-
     RadioButton[] catRadioButtons;
 
     UserSession userSession;
@@ -137,9 +134,6 @@ public class DisabledGameActivity extends MyBaseActivity {
 
         handleToolbar();
 
-        //   playCallLayout.setVisibility(View.GONE);
-
-
         alertDialogManager = new AlertDialogManager();
 
         catDefenceArrayList = new ArrayList<>();
@@ -149,15 +143,8 @@ public class DisabledGameActivity extends MyBaseActivity {
         userSession = new UserSession(this);
         pollsPref = new PollsPref(this);
 
-
-        //Preparing data for graph
-        // getGraphData(xTitle, barDataStrings);
-
         handleLogoutRetry();
         handleGraphRetry();
-
-        // here we are Showing graph
-        //  handleGraph(maxY);
 
         if (getIntent().hasExtra(Const.TAG_POLL_OPTION)) {
 
@@ -420,18 +407,12 @@ public class DisabledGameActivity extends MyBaseActivity {
 
             String url = Const.GET_GRAPH + "team_id=" + pollsPref.getTeamId() + Const.TAG_GAME_ID + pollsPref.getActiveGame() + Const.TAG_POLL_ID + param[0];
 
-            // Log.e("url", url);
-
             String jsonString = jsonParser.getJSONFromUrl(url);
-
-            //Log.e("jsonString", jsonString);
 
             try {
                 JSONObject jsonObject = new JSONObject(jsonString);
 
-                Log.e("Disabled game", jsonObject.toString());
                 if (jsonObject != null) {
-
 
                     result = jsonObject.getInt(Const.KEY_RESULT);
                     if (result == 1) {
@@ -502,16 +483,13 @@ public class DisabledGameActivity extends MyBaseActivity {
             if (result == 1) {
 
                 if (GRAPHONE) {
-                    Log.e("Disabled Game", "Inside Graph One");
                     getGraphData(xTitle, barDataStrings);
-                    Log.e("Inside Graph One", java.util.Arrays.toString(xTitle));
                     handleGraph(maxY, chart);
                     txtPlayCallOne.setText(sequence);
                 }
 
                 if (!GRAPHONE) {
                     getGraphData(xTitle, barDataStringsTwo);
-                    Log.e("Inside Graph Two", java.util.Arrays.toString(xTitle));
                     handleGraph(maxY, chartTwo);
                     txtPlayCallTwo.setText(sequence);
                 }
@@ -534,14 +512,4 @@ public class DisabledGameActivity extends MyBaseActivity {
         }
     }
 
-//    public ControlApplication getApp() {
-//        return (ControlApplication) this.getApplication();
-//    }
-//
-//    @Override
-//    public void onUserInteraction() {
-//        super.onUserInteraction();
-//        getApp().touch();
-//        Log.e(TAG, "User interaction to " + this.toString());
-//    }
 }

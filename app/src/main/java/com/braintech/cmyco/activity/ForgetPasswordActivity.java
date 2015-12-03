@@ -126,8 +126,7 @@ public class ForgetPasswordActivity extends AppCompatActivity {
                 String url = Const.FORGET_PASSWORD + Const.TAG_EMAIL + URLEncoder.encode(email, "UTF-8");
 
                 String jsonString = jsonParser.getJSONFromUrl(url);
-               /* Log.d("url", url);
-                Log.d("jsonString", jsonString);*/
+
                 JSONObject jsonObject = new JSONObject(jsonString);
 
                 if (jsonObject != null) {

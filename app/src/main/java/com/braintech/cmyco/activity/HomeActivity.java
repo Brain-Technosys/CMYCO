@@ -126,7 +126,7 @@ public class HomeActivity extends MyBaseActivity {
     private void manageToolbar() {
         toolbar.setTitle(getString(R.string.app_name));
         setSupportActionBar(toolbar);
-        // getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
     }
 
     private void setFont() {
@@ -241,25 +241,19 @@ public class HomeActivity extends MyBaseActivity {
             hashMapCoachTitle.put(Const.KEY_NAME, getString(R.string.spn_coach_title));
 
 
-            // result = 1;
+
 
             arrayListCoach.add(hashMapCoachTitle);
 
             String url = Const.GET_COACH_RESULT;
-            //Log.e("url", url);
+
             String urlString = jsonParser.getJSONFromUrl(url);
-            // Log.e("urlString", urlString);
+
             try {
 
-//                for (int j = 0; j < 2; j++) {
-//                    result = 0;
+
                 JSONObject jsonObject = new JSONObject(urlString);
 
-//                    if (j == 0) {
-//                        jsonObject = new JSONObject(pollsPref.getTeam1Detail().toString());
-//                    } else {
-//                        jsonObject = new JSONObject(pollsPref.getTeam2Detail().toString());
-//                    }
                 if (jsonObject != null) {
                     result = jsonObject.getInt(Const.KEY_RESULT);
                     if (result == 1) {
@@ -281,7 +275,7 @@ public class HomeActivity extends MyBaseActivity {
 
                 }
 
-//                }
+
             } catch (NullPointerException e) {
                 e.printStackTrace();
             } catch (JSONException e) {
@@ -337,16 +331,9 @@ public class HomeActivity extends MyBaseActivity {
 
                 String url = Const.GET_TEAM_RESULT + strings[0];
                 String urlString = jsonParser.getJSONFromUrl(url);
-//                result = 1;
+
 
                 JSONObject jsonObject = new JSONObject(urlString);
-                //Log.d("jsonObject", jsonObject.toString());
-
-//                if (Integer.parseInt(strings[0]) == 1) {
-//                    jsonObject = new JSONObject(pollsPref.getTeam1Detail());
-//                } else {
-//                    jsonObject = new JSONObject(pollsPref.getTeam2Detail());
-//                }
 
                 if (jsonObject != null) {
                     result = jsonObject.getInt(Const.KEY_RESULT);
