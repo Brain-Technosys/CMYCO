@@ -185,7 +185,6 @@ public class NoGameActivity extends AppCompatActivity {
 
                 String jsonString = jsonParser.getJSONFromUrl(url);
 
-                Log.e("jsonString", jsonString);
                 JSONObject jsonObject = new JSONObject(jsonString);
                 if (jsonObject != null) {
                     result = jsonObject.getInt(Const.KEY_RESULT);

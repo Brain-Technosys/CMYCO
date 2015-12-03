@@ -26,12 +26,6 @@ public class UserSession {
     public static final String KEY_PROFILE_IMAGE = "profile_image";
 
 
-    //Search Tab fragment get users location permission
-    public static final String KEY_LOCATION_PERM = "location_permission";
-    public static final String KEY_APP_LAUNCH = "launch";
-
-    public static final String KEY_USER_LOCATION = "user_loc";
-
     public UserSession(Context _context) {
         this.context = _context;
         pref = _context.getSharedPreferences(PREF_NAME, PRIVATE_MODE);
@@ -103,19 +97,6 @@ public class UserSession {
         editor.remove(KEY_USER_ID);
         editor.remove(KEY_NAME);
         editor.commit();
-    }
-
-    /**
-     * Quick check for login
-     * *
-     */
-    // Get Login State
-    public boolean isUserLoggedIn() {
-        return pref.getBoolean(IS_LOGIN, false);
-    }
-
-    public boolean isRemembered() {
-        return pref.getBoolean(IS_REMEMBERED, false);
     }
 
 }

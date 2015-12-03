@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.os.Handler;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -68,14 +69,14 @@ public class GamePlayStrategyActivity extends AppCompatActivity {
 
     String[] pollName;
 
+    int poll_id;
+    int pollId;
+
     HashMap<Integer, ArrayList<PollOptions>> hashMapPollOptions;
 
     ArrayList<PollData> arrayListPollData;
 
     AlertDialogManager alertDialogManager;
-
-    private long startTime = 2 * 60 * 1000; // 15 MINS IDLE TIME
-    private final long interval = 1 * 1000;
 
     private static final String TAG = InstructionActivity.class.getName();
 
@@ -102,9 +103,6 @@ public class GamePlayStrategyActivity extends AppCompatActivity {
 
         setFont();
 
-        gamePlayStrategyActivity = this;
-
-        pollsPref.ActivityRunning(true);
 
     }
 
@@ -118,7 +116,7 @@ public class GamePlayStrategyActivity extends AppCompatActivity {
         listViewPoll.addHeaderView(header, null, false);
         txt_team_name = (TextView) header.findViewById(R.id.txt_team_name);
         txt_playCall = (TextView) header.findViewById(R.id.txt_playCall);
-      //  txt_active_users = (TextView) header.findViewById(R.id.txt_active_users);
+
 
 
         //footer listView
@@ -142,6 +140,11 @@ public class GamePlayStrategyActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+
+        gamePlayStrategyActivity = this;
+
+        pollsPref.ActivityRunning(true);
+
         if (Utility.isNetworkAvailable(GamePlayStrategyActivity.this)) {
             new GetPollData().execute();
         } else {
@@ -326,7 +329,7 @@ public class GamePlayStrategyActivity extends AppCompatActivity {
             String url = Const.GET_ACTIVE_USERS;
             String jsonString = jsonParser.getJSONFromUrl(url);
 
-            //Log.e("jsonString", jsonString);
+            Log.e("jsonStringurl", url);
 
             try {
                 JSONObject jsonObject = new JSONObject(jsonString);
@@ -371,27 +374,23 @@ public class GamePlayStrategyActivity extends AppCompatActivity {
     }
 
     @OnItemClick(R.id.listViewPoll)
-    void onItemClick(int position) {
-
-        Log.e("in", "onclick");
+    void onItemClick(final int position) {
 
 
-        int poll_id = arrayListPollData.get(position - 1).getPoll_id();
+        poll_id = arrayListPollData.get(position - 1).getPoll_id();
 
-        Log.e("pollidClick", "" + poll_id);
+        if (pollsPref.getCurrentPollId() != -1) {
 
+            //  pollId = getIntent().getExtras().getInt(Const.TAG_POLL_ID);
+            pollId = pollsPref.getCurrentPollId();
 
-        if (getIntent().hasExtra(Const.TAG_POLL_ID)) {
-            int pollId = getIntent().getExtras().getInt(Const.TAG_POLL_ID);
-            Log.e("pollidintent", "" + pollId);
             if (poll_id == 4 && pollId == 8) {
                 poll_id = pollId;
-
-                Log.e("inside", "com");
             }
             if (poll_id == pollId) {
                 if (pollsPref.isPollActivated()) {
                     pollsPref.pollActivated(false);
+                    pollsPref.saveCurrentPollId(-1);
 
                     Progress.start(this);
 
@@ -399,6 +398,7 @@ public class GamePlayStrategyActivity extends AppCompatActivity {
                         //do nothing screen will automatically switch
                     } else {
 
+                        // This method will be executed once the timer is over
                         Progress.stop();
                         pollId = poll_id;
                         passIntentOnClick(position, pollId);
@@ -444,17 +444,5 @@ public class GamePlayStrategyActivity extends AppCompatActivity {
         pollsPref.ActivityRunning(false);
     }
 
-    //    public ControlApplication getApp()
-//    {
-//        return (ControlApplication)this.getApplication();
-//    }
-//
-//    @Override
-//    public void onUserInteraction()
-//    {
-//        super.onUserInteraction();
-//        getApp().touch();
-//        Log.e(TAG, "User interaction to "+this.toString());
-//    }
 
 }

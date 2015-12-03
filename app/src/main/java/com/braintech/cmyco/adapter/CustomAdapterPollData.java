@@ -1,8 +1,5 @@
 package com.braintech.cmyco.adapter;
 
-/**
- * Created by Braintech on 11/6/2015.
- */
 
 import android.app.Activity;
 import android.content.Context;
@@ -68,10 +65,6 @@ public class CustomAdapterPollData extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder holder = null;
 
-        //  PollData pollDataParent = rowItems.get(position);
-//        if (pollDataParent.getPoll_id() != 5) {
-
-
         if (convertView == null) {
 
 
@@ -110,8 +103,6 @@ public class CustomAdapterPollData extends BaseAdapter {
 
             convertView.setTag(holder);
 
-//            convertView.setVisibility((pollData.getPoll_id() == 8) ? View.GONE : View.VISIBLE);
-//            notifyDataSetChanged();
 
             if (pollData.getPoll_id() == 4) {
                 //for Substitution, setting visibility visible to views

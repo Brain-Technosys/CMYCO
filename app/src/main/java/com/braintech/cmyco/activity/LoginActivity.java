@@ -148,8 +148,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void doLogin() {
-//
-//        Utility.hideSoftKeyboard(LoginActivity.this);
+
         getData();
         validateData();
     }
@@ -234,11 +233,8 @@ public class LoginActivity extends AppCompatActivity {
                 String url = Const.SIGN_IN + Const.TAG_EMAIL + URLEncoder.encode(email, "UTF-8") +
                         Const.TAG_PASSWORD + URLEncoder.encode(password, "UTF-8");
 
-                //Log.e("url", url);
 
                 String jsonString = jsonParser.getJSONFromUrl(url);
-
-                Log.e("jsonn", jsonString);
 
                 JSONObject jsonObject = new JSONObject(jsonString);
                 if (jsonObject != null) {
@@ -267,14 +263,6 @@ public class LoginActivity extends AppCompatActivity {
                             JSONObject jsonObjectGame = jsonObjectGameData.getJSONObject(Const.KEY_GAME);
                             pollsPref.storeGameJson(jsonObjectGame.toString());
 
-//                            //Storing team1 json in sheared pref
-//                            JSONObject jsonObjectTeam1 = jsonObjectGameData.getJSONObject(Const.KEY_TEAM1);
-//                            pollsPref.storeTeam1Json(jsonObjectTeam1.toString());
-//
-//                            //Storing team2 json in sheared pref
-//                            JSONObject jsonObjectTeam2 = jsonObjectGameData.getJSONObject(Const.KEY_TEAM2);
-//                            pollsPref.storeTeam2Json(jsonObjectTeam2.toString());
-
                         }
 
 
@@ -301,12 +289,6 @@ public class LoginActivity extends AppCompatActivity {
                 userSession.storeLoginDetail(email, password, hashMapLoginDetail.get(Const.KEY_ID));
                 if (activeGame != 0) {
 
-                    //Calling GetPoll API from Common Class
-                    //commonAPI.getPollData(snakeOnClickPollRetry, coordinatorLayout);
-
-                    //Saving Password and email in sheared pref
-
-
                     //Go to Home activity
                     Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
                     startActivity(intent);
@@ -314,7 +296,6 @@ public class LoginActivity extends AppCompatActivity {
 
 
                 } else {
-                    //  alertDialogManager.showAlertDialog(LoginActivity.this, getString(R.string.alert_no_active_game));
                     Intent intent = new Intent(LoginActivity.this, NoGameActivity.class);
                     startActivity(intent);
                     finish();
@@ -325,7 +306,6 @@ public class LoginActivity extends AppCompatActivity {
                 alertDialogManager.showAlertDialog(LoginActivity.this, getString(R.string.server_not_responding));
             }
 
-//
             Progress.stop();
         }
     }

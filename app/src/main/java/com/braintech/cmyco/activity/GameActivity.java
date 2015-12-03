@@ -62,8 +62,6 @@ public class GameActivity extends AppCompatActivity {
     @InjectView(R.id.lbl_defence)
     TextView defenceTextView;
 
-//    @InjectView(R.id.rg_defence)
-//    RadioGroup defenceRadioGroup;
 
     @InjectView(R.id.chart)
     BarChart chart;
@@ -95,7 +93,6 @@ public class GameActivity extends AppCompatActivity {
     String[] xTitle = {"1", "2", "3", "4", "5"};
     String[] barDataStrings = {"750", "600", "300", "450", "500"};
 
-    String txtLogo;
 
     int pollId;
     int tag; //for rating
@@ -427,6 +424,9 @@ public class GameActivity extends AppCompatActivity {
 
         Intent intent = new Intent(GameActivity.this, GamePlayStrategyActivity.class);
         intent.putExtra(Const.TAG_POLL_ID, pollId);
+
+        pollsPref.saveCurrentPollId(pollId);
+
         isActivityStarted = true;
         finish();
         startActivity(intent);
@@ -637,7 +637,7 @@ public class GameActivity extends AppCompatActivity {
 
             String url = Const.GET_GRAPH + "team_id=" + pollsPref.getTeamId() + Const.TAG_GAME_ID + pollsPref.getActiveGame() + Const.TAG_POLL_ID + pollId;
 
-
+            Log.e("graphurl", url);
 
             String jsonString = jsonParser.getJSONFromUrl(url);
 
@@ -721,7 +721,8 @@ public class GameActivity extends AppCompatActivity {
                             pollsPref.pollActivated(false);
 
                             if (!isActivityStarted) {
-                                pollsPref.saveButtonClicked(false, pollId, 0);
+                                pollsPref.saveButtonClicked(false, 0, 0);
+                                pollsPref.saveCurrentPollId(-1);
                                 Intent intent = new Intent(GameActivity.this, GamePlayStrategyActivity.class);
                                 finish();
                                 startActivity(intent);

@@ -120,6 +120,7 @@ public class CommonAPI {
                 pollsPref.pollActivated(true);
                 userSession.logout();
                 pollsPref.clearPollData();
+                pollsPref.clearVotingData();
 
                 Intent intent = new Intent(context, LoginActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK

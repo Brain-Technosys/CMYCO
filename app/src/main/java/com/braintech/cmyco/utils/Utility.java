@@ -33,7 +33,6 @@ public class Utility {
 
     // Method to check Internet connectivity
     public static boolean isNetworkAvailable(Context context) {
-        //return ((ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE)).getActiveNetworkInfo() != null;
         ConnectivityManager connectivityManager = ((ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE));
         return connectivityManager.getActiveNetworkInfo() != null && connectivityManager.getActiveNetworkInfo().isConnected();
     }
@@ -93,16 +92,6 @@ public class Utility {
             Date Date2 = format.parse(startTime);
             mills = Date1.getTime() - Date2.getTime();
 
-           /* Log.v("Data1", "" + Date1.getTime());
-            Log.v("Data2", "" + Date2.getTime());
-            int Hours = (int) (mills / (1000 * 60 * 60));
-            int Mins = (int) (mills / (1000 * 60)) % 60;
-            int seconds=(int)(mills/1000)%60;
-
-            diff = Hours*3600+Mins*60+seconds;
-
-            Log.e("diff",""+diff);*/
-            // Log.e("mills",""+mills);
         } catch (ParseException ex) {
             ex.printStackTrace();
         }

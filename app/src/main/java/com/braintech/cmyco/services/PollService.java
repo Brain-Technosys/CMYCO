@@ -103,7 +103,6 @@ public class PollService extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
 
-        //Log.e("Service", "Started");
         return START_STICKY;
     }
 
@@ -111,7 +110,6 @@ public class PollService extends Service {
     public void onDestroy() {
         super.onDestroy();
 
-        // Log.e("Service", "Destroyed");
     }
 
 
@@ -122,8 +120,6 @@ public class PollService extends Service {
         if (Utility.isNetworkAvailable(getApplicationContext())) {
             new GetPollData().execute();
         } else {
-//            if (LoginActivity.class.isInstance(getApplicationContext()))
-//                SnackNotify.showSnakeBar((Activity) context, snakeOnClick, coordinatorLayout);
         }
     }
 
@@ -159,9 +155,6 @@ public class PollService extends Service {
 
             String url = Const.GET_ACTIVE_GAME_DETAIL + "?" + Const.TAG_TEAMID + "=" + pollsPref.getTeamId();
             String jsonString = jsonParser.getJSONFromUrl(url);
-
-            Log.e("url", url);
-            //Log.e("jsonString", jsonString);
 
             try {
                 JSONObject jsonObject = new JSONObject(jsonString);
@@ -260,10 +253,6 @@ public class PollService extends Service {
 
                 String currentTime = Utility.getCurrentTime(server_time, timeZone);
 
-               /* Log.e("server", server_time);
-                Log.e("currentTime", currentTime);*/
-
-
                 for (int i = 0; i < arrayListPollData.size(); i++) {
                     String startTime = arrayListPollData.get(i).getPoll_start_time();
                     String endTime = arrayListPollData.get(i).getPoll_end_time();
@@ -278,15 +267,6 @@ public class PollService extends Service {
                             if (TimeCheck.isTimeBetweenTwoTime(startTime, endTime, currentTime)) {
 
                                 pollsPref.saveTimePresent(true);
-
-                                /*//playing default notification
-                                try {
-                                    Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-                                    Ringtone r = RingtoneManager.getRingtone(getApplicationContext(), notification);
-                                    r.play();
-                                } catch (Exception e) {
-                                    e.printStackTrace();
-                                }*/
 
                                 if (pollsPref.getPollId() == poll_id) {
                                     isButtonClicked = pollsPref.isButtonClicked();
@@ -322,7 +302,6 @@ public class PollService extends Service {
                                 bundle.putInt(Const.KEY_POLL_ID, poll_id);
                                 bundle.putLong(Const.KEY_POLL_DURATION, poll_duration);
                                 bundle.putSerializable(Const.TAG_POLL_OPTION, arrayListPollOpt);
-                                bundle.putBoolean(Const.KEY_BUTTON_CLICKED, false);
                                 bundle.putBoolean(Const.KEY_BUTTON_CLICKED, isButtonClicked);
                                 intent.putExtras(bundle);
                                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

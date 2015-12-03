@@ -45,7 +45,6 @@ public class JsonParser {
             c = (HttpURLConnection) u.openConnection();
             c.setRequestMethod("GET");
             c.setRequestProperty("Content-length", "0");
-            //c.setRequestProperty("appKey",Const.APP_KEY);
             c.setUseCaches(false);
             c.setAllowUserInteraction(false);
             c.setConnectTimeout(timeout);
@@ -112,9 +111,6 @@ public class JsonParser {
 
             connection.setRequestProperty("Content-Length",
                     "" + Integer.toString(urlParameters.getBytes().length));
-            //connection.setRequestProperty("Content-Language", "en-US");
-
-            //connection.setRequestProperty("appKey", Const.APP_KEY);
 
             connection.setUseCaches(false);
             connection.setDoInput(true);
@@ -127,7 +123,7 @@ public class JsonParser {
             DataOutputStream wr = new DataOutputStream(
                     connection.getOutputStream());
             wr.writeBytes(urlParameters);
-            // wr.writeBytes(URLEncoder.encode(urlParameters, "UTF-8"));
+
             wr.flush();
             wr.close();
 
@@ -183,9 +179,6 @@ public class JsonParser {
             connection.setRequestProperty("Content-Length",
                     "" + Integer.toString(urlParameters.getBytes().length));
             connection.setRequestProperty("Content-Language", "en-US");
-
-            //connection.setRequestProperty("appKey", Const.APP_KEY);
-            //connection.setRequestProperty("userId",userID);
 
             connection.setUseCaches(false);
             connection.setDoInput(true);

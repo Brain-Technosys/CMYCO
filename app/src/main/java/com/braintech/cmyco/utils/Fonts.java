@@ -31,28 +31,13 @@ public class Fonts {
         editText.setTypeface(tf);
     }
 
-    //
-//    public static void setmyriadProRegularToCheckBox(Context context, CheckBox checkBox)
-//    {
-//        String path = "fonts/MYRIADPRO-REGULAR.OTF";
-//        // Loading Font Face
-//        Typeface tf = Typeface.createFromAsset(context.getAssets(), path);
-//        checkBox.setTypeface(tf);
-//    }
-//
+
     public static void robotoRegularToButton(Context context, Button button) {
         String path = "fonts/Roboto-Regular.ttf";
         // Loading Font Face
         Typeface tf = Typeface.createFromAsset(context.getAssets(), path);
         button.setTypeface(tf);
     }
-//
-//    public static void setmyriadProRegularToRadioButton(Context context, RadioButton radioButton)
-//    {
-//        String path = "fonts/MYRIADPRO-REGULAR.OTF";
-//        // Loading Font Face
-//        Typeface tf = Typeface.createFromAsset(context.getAssets(), path);
-//        radioButton.setTypeface(tf);
-//    }
+
 
 }

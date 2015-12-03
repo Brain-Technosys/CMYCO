@@ -100,9 +100,6 @@ public class DisabledGameActivity extends MyBaseActivity {
     int pollId;
     int maxY = 5;
 
-    String txtLogo;
-
-    boolean firstTime = true;
 
     String graphItemColor = "#14DDF9";
     String graphBgColor = "#010f1a";

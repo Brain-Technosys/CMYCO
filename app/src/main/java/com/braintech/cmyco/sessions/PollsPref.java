@@ -40,6 +40,7 @@ public class PollsPref {
     public static final String KEY_POLL_ACTIVATED = "pollActivated";
     public static final String KEY_TIME_PRESENT = "timePresent";
     public static final String KEY_POSITION = "positions";
+    public static final String KEY_CURRENT_POLL_ID = "pollId";
 
     public static final String KEY_ACTIVITY_RUNNING = "running";
 
@@ -111,6 +112,12 @@ public class PollsPref {
         editor.commit();
     }
 
+    public void saveCurrentPollId( int pollId)
+    {
+        editor.putInt(KEY_CURRENT_POLL_ID, pollId);
+        editor.commit();
+    }
+
     public void pollActivated(Boolean value) {
         editor.putBoolean(KEY_POLL_ACTIVATED, value);
         editor.commit();
@@ -135,32 +142,12 @@ public class PollsPref {
     }
 
 
-    public String getCoachDetail() {
-        return pref.getString(KEY_COACH, null);
-    }
-
     public String getUserID() {
         return pref.getString(KEY_USER_ID, null);
     }
 
     public String getTeamDetail() {
         return pref.getString(KEY_TEAM, null);
-    }
-
-    public String getTeam1Detail() {
-        return pref.getString(Const.KEY_TEAM1, null);
-    }
-
-    public String getTeam2Detail() {
-        return pref.getString(Const.KEY_TEAM2, null);
-    }
-
-    public String getPollData() {
-        return pref.getString(Const.KEY_POLL_DATA, null);
-    }
-
-    public String getOptions() {
-        return pref.getString(KEY_OPTIONS, null);
     }
 
     public String getTeamId() {
@@ -172,10 +159,6 @@ public class PollsPref {
     }
 
 
-    public String getPlayOption() {
-        return pref.getString(KEY_PLAY, "KEY");
-    }
-
     public int getActiveGame() {
         return pref.getInt(KEY_ACTIVE_GAME, 0);
 
@@ -183,7 +166,10 @@ public class PollsPref {
 
     public int getPollId() {
         return pref.getInt(Const.KEY_POLL_ID, 0);
+    }
 
+    public int getCurrentPollId() {
+        return pref.getInt(KEY_CURRENT_POLL_ID, -1);
     }
 
     public boolean isPollActivated() {
@@ -212,7 +198,7 @@ public class PollsPref {
 //        editor.commit();
 //    }
 
-    public void ClearPollData() {
+    public void clearPollData() {
 
         editor.remove(KEY_COACH);
         editor.remove(KEY_TEAM);
@@ -229,6 +215,15 @@ public class PollsPref {
         editor.remove(KEY_TIME_PRESENT);
         // editor.remove(KEY_POSITION);
         editor.remove(KEY_ACTIVITY_RUNNING);
+        editor.remove(KEY_CURRENT_POLL_ID);
+        editor.commit();
+    }
+
+    public void clearVotingData()
+    {
+        editor.remove(Const.KEY_POLL_ID);
+        editor.remove(Const.KEY_BUTTON_CLICKED);
+        editor.remove(KEY_POSITION);
         editor.commit();
     }
 
