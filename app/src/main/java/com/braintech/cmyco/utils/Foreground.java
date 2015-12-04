@@ -12,6 +12,7 @@ import com.braintech.cmyco.R;
 import com.braintech.cmyco.adapter.SpinnerAdapter;
 import com.braintech.cmyco.common.CommonAPI;
 import com.braintech.cmyco.sessions.PollsPref;
+import com.braintech.cmyco.sessions.UserSession;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -31,7 +32,7 @@ public class Foreground implements Application.ActivityLifecycleCallbacks {
     public static final String TAG = Foreground.class.getName();
 
     public static Context context;
-    public static PollsPref pollsPref;
+    public static UserSession userSession;
 
     CommonAPI commonAPI;
 
@@ -65,7 +66,7 @@ public class Foreground implements Application.ActivityLifecycleCallbacks {
             application.registerActivityLifecycleCallbacks(instance);
             context = application;
 
-            pollsPref = new PollsPref(context);
+            userSession = new UserSession(context);
 
         }
         return instance;
@@ -127,7 +128,7 @@ public class Foreground implements Application.ActivityLifecycleCallbacks {
 
         if (wasBackground) {
 
-            if (pollsPref.getUserID() != null)
+            if (userSession.getUserID() != null)
                 callBackgroundApi();
 
             Log.i(TAG, "went foreground");
@@ -156,8 +157,10 @@ public class Foreground implements Application.ActivityLifecycleCallbacks {
                 if (foreground && paused) {
                     foreground = false;
 
-                    if (pollsPref.getUserID() != null)
+                    if (userSession.getUserID() != null)
                         callBackgroundApi();
+
+
 
                     Log.i(TAG, "went background");
                     for (Listener l : listeners) {
@@ -219,7 +222,7 @@ public class Foreground implements Application.ActivityLifecycleCallbacks {
             JsonParser jsonParser = new JsonParser(context);
 
 
-            String url = Const.POST_BACKGROUND + Const.TAG_USER_ID + pollsPref.getUserID() + Const.KEY_STATUS;
+            String url = Const.POST_BACKGROUND + Const.TAG_USER_ID + userSession.getUserID() + Const.KEY_STATUS;
             Log.e("url", url);
             String urlString = jsonParser.getJSONFromUrl(url);
             Log.e("urlString", urlString);

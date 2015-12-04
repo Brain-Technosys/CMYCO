@@ -26,6 +26,10 @@ public class SplashActivity extends Activity {
       UserSession userSession=new UserSession(this);
         userSession.clearUserSession();
 
+        PollsPref pollsPref=new PollsPref(this);
+        pollsPref.clearVotingData();
+        pollsPref.clearPollData();
+
         //Remove notification bar
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 

@@ -36,17 +36,21 @@ public class AlertDialogManager {
                     }
                 });
 
+        try {
+            // Showing Alert Message
+            AlertDialog alert = alertDialog.show();
+            TextView messageText = (TextView) alert
+                    .findViewById(android.R.id.message);
+            messageText.setTextColor(Color.parseColor("#000000"));
+            Fonts.robotoRegular(context, messageText);
+            messageText.setGravity(Gravity.CENTER);
 
-        // Showing Alert Message
-        AlertDialog alert = alertDialog.show();
-        TextView messageText = (TextView) alert
-                .findViewById(android.R.id.message);
-        messageText.setTextColor(Color.parseColor("#000000"));
-        Fonts.robotoRegular(context, messageText);
-        messageText.setGravity(Gravity.CENTER);
-
-        alert.show();
+            alert.show();
+        } catch (RuntimeException ex) {
+            ex.printStackTrace();
+        }
     }
+
 
     public void showAlertForFinish(final Context context, String message) {
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(context);
@@ -62,16 +66,19 @@ public class AlertDialogManager {
                     }
                 });
 
+        try {
+            // Showing Alert Message
+            AlertDialog alert = alertDialog.show();
+            TextView messageText = (TextView) alert
+                    .findViewById(android.R.id.message);
+            Fonts.robotoRegular(context, messageText);
+            messageText.setTextColor(Color.parseColor("#000000"));
+            messageText.setGravity(Gravity.CENTER);
 
-        // Showing Alert Message
-        AlertDialog alert = alertDialog.show();
-        TextView messageText = (TextView) alert
-                .findViewById(android.R.id.message);
-        Fonts.robotoRegular(context, messageText);
-        messageText.setTextColor(Color.parseColor("#000000"));
-        messageText.setGravity(Gravity.CENTER);
-
-        alert.show();
+            alert.show();
+        } catch (RuntimeException ex) {
+        ex.printStackTrace();
+    }
 
     }
 
