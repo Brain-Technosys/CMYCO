@@ -10,7 +10,10 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
+import android.widget.Button;
 
 import com.braintech.cmyco.R;
 import com.braintech.cmyco.application.ControlApplication;
@@ -37,6 +40,9 @@ public class InstructionActivityTwo extends MyBaseActivity {
 
     @InjectView(R.id.wv_instruction)
     WebView instructionWebView;
+
+    @InjectView(R.id.btn_continue)
+    Button btn_continue;
 
     SnakeOnClick snakeOnClick;
 
@@ -168,6 +174,14 @@ public class InstructionActivityTwo extends MyBaseActivity {
                 String text = "<html><body style=\"text-align:justify\"> %s </body></Html>";
                 instructionWebView.loadData(String.format(text, instruction), "text/html", "UTF-8");
                 instructionWebView.setBackgroundColor(Color.TRANSPARENT);
+
+                instructionWebView.setWebViewClient(new WebViewClient() {
+
+                    public void onPageFinished(WebView view, String url) {
+                        // do your stuff here
+                        btn_continue.setVisibility(View.VISIBLE);
+                    }
+                });
 
             } else if (result == 0) {
                 alertDialogManager.showAlertDialog(InstructionActivityTwo.this, msg);

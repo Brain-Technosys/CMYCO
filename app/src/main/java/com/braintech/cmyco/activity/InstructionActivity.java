@@ -17,7 +17,10 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.braintech.cmyco.R;
@@ -52,6 +55,9 @@ public class InstructionActivity extends MyBaseActivity {
 
     @InjectView(R.id.coordinatorLayout)
     CoordinatorLayout coordinatorLayout;
+
+    @InjectView(R.id.btn_continue)
+    Button btn_continue;
 
     AlertDialogManager alertDialogManager;
 
@@ -305,6 +311,15 @@ public class InstructionActivity extends MyBaseActivity {
                 instructionWebView.loadData(String.format(text, instruction), "text/html", "UTF-8");
 
                 instructionWebView.setBackgroundColor(Color.TRANSPARENT);
+
+                instructionWebView.setWebViewClient(new WebViewClient() {
+
+                    public void onPageFinished(WebView view, String url) {
+                        // do your stuff here
+                        btn_continue.setVisibility(View.VISIBLE);
+                    }
+                });
+
 
             } else if (result == 0) {
                 alertDialogManager.showAlertDialog(InstructionActivity.this, msg);

@@ -28,28 +28,43 @@
             android:textColor="@color/white"
             android:textSize="@dimen/txt_title_size" />
 
-        <LinearLayout
-            android:id="@+id/linLayTextView"
+        <RelativeLayout
+            android:id="@+id/rlayCat"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_below="@+id/lbl_defence"
-            android:layout_margin="10dp"
-            android:orientation="vertical">
+            android:layout_below="@+id/lbl_defence">
+
+            <LinearLayout
+                android:id="@+id/linLayTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_margin="10dp"
+                android:orientation="vertical">
 
 
-        </LinearLayout>
+            </LinearLayout>
 
+            <com.braintech.cmyco.common.ExpandableGridView
+                android:id="@+id/gridview_cat"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:numColumns="2"
+                android:isScrollContainer="false"
+                android:stretchMode="columnWidth"
+                android:visibility="gone" />
+        </RelativeLayout>
 
         <LinearLayout
             android:id="@+id/flay_chart"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/linLayTextView"
+            android:layout_below="@+id/rlayCat"
             android:layout_marginTop="15dp"
-            android:paddingTop="20dp"
+            android:orientation="vertical"
             android:paddingBottom="20dp"
-            android:orientation="vertical">
+            android:paddingTop="20dp">
 
             <TextView
                 android:id="@+id/txtTitleSubIn"
@@ -58,28 +73,27 @@
                 android:background="@drawable/bg_edittext"
                 android:gravity="center_horizontal|center_vertical"
                 android:padding="10dp"
-                android:visibility="gone"
                 android:text="@string/title_substitution_in"
-                android:textAppearance="?android:attr/textAppearance" />
+                android:textAppearance="?android:attr/textAppearance"
+                android:visibility="gone" />
 
             <com.github.mikephil.charting.charts.BarChart
                 android:id="@+id/chart"
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
                 android:paddingBottom="10dp"
-                android:paddingTop="10dp"/>
+                android:paddingTop="10dp" />
 
             <LinearLayout
 
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/chart"
-                android:background="@color/play_call_bg"
                 android:layout_marginTop="25dp"
+                android:background="@color/play_call_bg"
                 android:gravity="center_horizontal"
                 android:padding="10dp"
-                android:visibility="visible"
-                >
+                android:visibility="visible">
 
                 <TextView
                     android:id="@+id/txtPlayCallOne"
@@ -100,10 +114,11 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/flay_chart"
             android:layout_marginTop="15dp"
-            android:paddingTop="20dp"
+            android:orientation="vertical"
             android:paddingBottom="20dp"
-            android:visibility="gone"
-            android:orientation="vertical">
+            android:paddingTop="20dp"
+            android:visibility="gone">
+
             <TextView
                 android:id="@+id/txtTitleSubOut"
                 android:layout_width="match_parent"
@@ -127,10 +142,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/chart"
+                android:layout_marginTop="25dp"
                 android:background="@color/play_call_bg"
                 android:gravity="center_horizontal"
                 android:padding="10dp"
-                android:layout_marginTop="25dp"
                 android:visibility="visible">
 
                 <TextView

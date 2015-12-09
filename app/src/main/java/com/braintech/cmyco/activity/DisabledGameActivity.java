@@ -4,20 +4,19 @@ import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.FrameLayout;
+import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.TextView;
 
 import com.braintech.cmyco.R;
-import com.braintech.cmyco.application.ControlApplication;
 import com.braintech.cmyco.common.CommonAPI;
+import com.braintech.cmyco.common.ExpandableGridView;
 import com.braintech.cmyco.my_interface.SnakeOnClick;
 import com.braintech.cmyco.objectclasses.PollOptions;
 import com.braintech.cmyco.sessions.PollsPref;
@@ -41,6 +40,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 
 import butterknife.ButterKnife;
@@ -78,6 +78,9 @@ public class DisabledGameActivity extends MyBaseActivity {
     @InjectView(R.id.txtPlayCallTwo)
     TextView txtPlayCallTwo;
 
+    @InjectView(R.id.gridview_cat)
+    ExpandableGridView gridview_cat;
+
     RadioButton[] catRadioButtons;
 
     UserSession userSession;
@@ -99,6 +102,7 @@ public class DisabledGameActivity extends MyBaseActivity {
     String pollName;
     int pollId;
     int maxY = 5;
+    Bundle bundle;
 
 
     String graphItemColor = "#14DDF9";
@@ -145,7 +149,7 @@ public class DisabledGameActivity extends MyBaseActivity {
 
         if (getIntent().hasExtra(Const.TAG_POLL_OPTION)) {
 
-            Bundle bundle = getIntent().getExtras();
+            bundle = getIntent().getExtras();
 
             arrayListPollOpt = (ArrayList<PollOptions>) bundle.getSerializable(Const.TAG_POLL_OPTION);
             pollId = bundle.getInt(Const.KEY_POLL_ID);
@@ -194,17 +198,40 @@ public class DisabledGameActivity extends MyBaseActivity {
 
     private void createOptionsTextView() {
         if (arrayListPollOpt.size() != 0) {
+
+            String[] strCat = new String[arrayListPollOpt.size()];
+
+
             for (int i = 0; i < arrayListPollOpt.size(); i++) {
 
-                //Inflating textView
-                View tvView = getLayoutInflater().inflate(R.layout.textview_layout, null);
-                TextView textView = (TextView) tvView.findViewById(R.id.tvCat);
-                textView.setText(String.valueOf(i + 1) + ".  " + arrayListPollOpt.get(i).getPoll_name());
 
-                //apply font
-                Fonts.robotoRegular(this, textView);
+                //For Substitution Category
+                if (bundle.getInt(Const.KEY_POLL_ID) == 4) {
+                    strCat[i] = String.valueOf(i + 1) + ".  " + arrayListPollOpt.get(i).getPoll_name();
+                } else {
 
-                linLayTextView.addView(tvView);
+                    //For Other Play Type Category
+                    //Inflating textView
+                    View tvView = getLayoutInflater().inflate(R.layout.textview_layout, null);
+                    TextView textView = (TextView) tvView.findViewById(R.id.tvCat);
+                    textView.setText(String.valueOf(i + 1) + ".  " + arrayListPollOpt.get(i).getPoll_name());
+                    strCat[i] = String.valueOf(i + 1) + ".  " + arrayListPollOpt.get(i).getPoll_name();
+                    //apply font
+                    Fonts.robotoRegular(this, textView);
+                    linLayTextView.addView(tvView);
+
+                }
+
+            }
+            //For Substitution Category
+            if (bundle.getInt(Const.KEY_POLL_ID) == 4) {
+                linLayTextView.setVisibility(View.GONE);
+                gridview_cat.setExpanded(true);
+                gridview_cat.setVisibility(View.VISIBLE);
+                Log.e("strCatArray", Arrays.toString(strCat));
+                ArrayAdapter arrayAdapter = new ArrayAdapter(this,R.layout.grid_text_layout, strCat);
+                gridview_cat.setAdapter(arrayAdapter);
+                arrayAdapter.notifyDataSetChanged();
             }
         }
     }
@@ -462,9 +489,9 @@ public class DisabledGameActivity extends MyBaseActivity {
                         msg = jsonObject.getString(Const.KEY_MSG);
                     }
                 }
-            }catch (NullPointerException e) {
+            } catch (NullPointerException e) {
                 e.printStackTrace();
-            }  catch (JSONException e) {
+            } catch (JSONException e) {
                 e.printStackTrace();
             }
 
