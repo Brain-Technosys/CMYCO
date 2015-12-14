@@ -57,7 +57,7 @@ public class UserSession {
 
     }
 
-    /* Get User ID */
+    /* Get User ID/ */
     public String getUserID() {
         return pref.getString(KEY_USER_ID, null);
     }
