@@ -26,7 +26,7 @@ public class Const {
     public static String POST_BACKGROUND=BASE_URL+"users/app_lastactivity?";
 
 
-
+//
 
     //Tag login activity
     public static String TAG_USERNAME = "username=";
