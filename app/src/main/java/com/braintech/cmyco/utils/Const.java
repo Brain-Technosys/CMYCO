@@ -7,7 +7,7 @@ public class Const {
 
     public static int TIME_OUT = 6000;
 
-    public static String BASE_URL = "http://braintechnosys.net/cmyco/";
+    public static String BASE_URL = "http://cmyco.com/administrator/";
 
 
     public static String SIGN_IN = BASE_URL + "users/app_login1?";

@@ -79,7 +79,7 @@ public class PollService extends Service {
 
     @Override
     public IBinder onBind(Intent intent) {
-//        // TODO: Return the communication channel to the service.
+
 //        throw new UnsupportedOperationException("Not yet implemented");
         return mBinder;
     }
@@ -115,7 +115,7 @@ public class PollService extends Service {
 
     public void getPollData(Context context) {
 
-        Toast.makeText(getApplicationContext(), "Poll Service", Toast.LENGTH_LONG);
+      //  Toast.makeText(getApplicationContext(), "Poll Service", Toast.LENGTH_LONG);
         this.context = context;
         if (Utility.isNetworkAvailable(getApplicationContext())) {
             new GetPollData().execute();
@@ -154,6 +154,7 @@ public class PollService extends Service {
             JsonParser jsonParser = new JsonParser(context);
 
             String url = Const.GET_ACTIVE_GAME_DETAIL + "?" + Const.TAG_TEAMID + "=" + pollsPref.getTeamId();
+           // Log.e("URL", url);
             String jsonString = jsonParser.getJSONFromUrl(url);
 
             try {
@@ -312,8 +313,9 @@ public class PollService extends Service {
                                 startActivity(intent);
 
                                 break;
-                            } else
-                                System.out.println("Given time doesn't lies between two times");
+                            }
+                        //    else
+//                                System.out.println("Given time doesn't lies between two times");
                         } catch (ParseException ex) {
 
                             ex.printStackTrace();
@@ -333,7 +335,7 @@ public class PollService extends Service {
                 ((Activity) context).finish();
 
             } else {
-                Toast.makeText(context, getString(R.string.server_not_responding), Toast.LENGTH_LONG).show();
+              //  Toast.makeText(context, getString(R.string.server_not_responding), Toast.LENGTH_LONG).show();
             }
         }
     }

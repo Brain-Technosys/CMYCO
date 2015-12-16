@@ -131,16 +131,16 @@ public class Foreground implements Application.ActivityLifecycleCallbacks {
             if (userSession.getUserID() != null)
                 callBackgroundApi();
 
-            Log.i(TAG, "went foreground");
+            //Log.i(TAG, "went foreground");
             for (Listener l : listeners) {
                 try {
                     l.onBecameForeground();
                 } catch (Exception exc) {
-                    Log.e(TAG, "Listener threw exception!", exc);
+                  //  Log.e(TAG, "Listener threw exception!", exc);
                 }
             }
         } else {
-            Log.i(TAG, "still foreground");
+          //  Log.i(TAG, "still foreground");
         }
     }
 
@@ -162,16 +162,16 @@ public class Foreground implements Application.ActivityLifecycleCallbacks {
 
 
 
-                    Log.i(TAG, "went background");
+                  //  Log.i(TAG, "went background");
                     for (Listener l : listeners) {
                         try {
                             l.onBecameBackground();
                         } catch (Exception exc) {
-                            Log.e(TAG, "Listener threw exception!", exc);
+                          //  Log.e(TAG, "Listener threw exception!", exc);
                         }
                     }
                 } else {
-                    Log.i(TAG, "still foreground");
+                   // Log.i(TAG, "still foreground");
                 }
             }
         }, CHECK_DELAY);
@@ -223,9 +223,9 @@ public class Foreground implements Application.ActivityLifecycleCallbacks {
 
 
             String url = Const.POST_BACKGROUND + Const.TAG_USER_ID + userSession.getUserID() + Const.KEY_STATUS;
-            Log.e("url", url);
+         //   Log.e("url", url);
             String urlString = jsonParser.getJSONFromUrl(url);
-            Log.e("urlString", urlString);
+           // Log.e("urlString", urlString);
 
             try {
                 JSONObject jsonObject = new JSONObject(urlString);

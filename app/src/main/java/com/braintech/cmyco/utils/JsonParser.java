@@ -137,7 +137,7 @@ public class JsonParser {
                 response.append('\r');
             }
             rd.close();
-            Log.v("JSON ", " " + response.toString());
+            //Log.v("JSON ", " " + response.toString());
             return response.toString();
 
         } catch (SocketTimeoutException ex) {
@@ -145,16 +145,16 @@ public class JsonParser {
 
         } catch (MalformedURLException ex) {
             Logger.getLogger(getClass().getName()).log(Level.SEVERE, null, ex);
-            Log.v("JSON ", " " + response.toString());
+          //  Log.v("JSON ", " " + response.toString());
         } catch (UnknownHostException e) {
             e.printStackTrace();
-            Log.v("JSON ", " " + response.toString());
+          //  Log.v("JSON ", " " + response.toString());
         } catch (IOException ex) {
 
             Logger.getLogger(getClass().getName()).log(Level.SEVERE, null, ex);
         } catch (Exception e) {
             e.printStackTrace();
-            Log.v("JSON ", " " + response.toString());
+         //   Log.v("JSON ", " " + response.toString());
         } finally {
 
             if (connection != null) {

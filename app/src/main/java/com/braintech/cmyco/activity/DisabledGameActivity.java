@@ -101,7 +101,7 @@ public class DisabledGameActivity extends MyBaseActivity {
 
     String pollName;
     int pollId;
-    int maxY = 5;
+    int maxY = 6;
     Bundle bundle;
 
 
@@ -228,7 +228,7 @@ public class DisabledGameActivity extends MyBaseActivity {
                 linLayTextView.setVisibility(View.GONE);
                 gridview_cat.setExpanded(true);
                 gridview_cat.setVisibility(View.VISIBLE);
-                Log.e("strCatArray", Arrays.toString(strCat));
+                //Log.e("strCatArray", Arrays.toString(strCat));
                 ArrayAdapter arrayAdapter = new ArrayAdapter(this,R.layout.grid_text_layout, strCat);
                 gridview_cat.setAdapter(arrayAdapter);
                 arrayAdapter.notifyDataSetChanged();
@@ -259,7 +259,7 @@ public class DisabledGameActivity extends MyBaseActivity {
     //Handling Graph
     private void handleGraph(int maxY, BarChart chart) {
         if (maxY == 0) {
-            maxY = 5;
+            maxY = 6;
         }
 
         //Handling graph X axis Content

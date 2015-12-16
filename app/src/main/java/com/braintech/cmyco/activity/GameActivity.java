@@ -166,7 +166,7 @@ public class GameActivity extends AppCompatActivity {
 
             isButtonClicked = bundle.getBoolean(Const.KEY_BUTTON_CLICKED);
 
-            Log.e("isButtonClicked", "" + isButtonClicked);
+           // Log.e("isButtonClicked", "" + isButtonClicked);
 
 
             defenceTextView.setText(pollName);
@@ -298,7 +298,7 @@ public class GameActivity extends AppCompatActivity {
         leftAxis.setTextColor(Color.parseColor(graphItemColor));
         leftAxis.setPosition(YAxis.YAxisLabelPosition.OUTSIDE_CHART);
         leftAxis.setDrawGridLines(false);
-        leftAxis.setLabelCount(5, true);
+        leftAxis.setLabelCount(6, true);
         leftAxis.setDrawAxisLine(true);
         leftAxis.setEnabled(true);
         leftAxis.setAxisLineColor(Color.parseColor(graphItemColor));
@@ -637,7 +637,7 @@ public class GameActivity extends AppCompatActivity {
 
             String url = Const.GET_GRAPH + "team_id=" + pollsPref.getTeamId() + Const.TAG_GAME_ID + pollsPref.getActiveGame() + Const.TAG_POLL_ID + pollId;
 
-            Log.e("graphurl", url);
+            //Log.e("graphurl", url);
 
             String jsonString = jsonParser.getJSONFromUrl(url);
 

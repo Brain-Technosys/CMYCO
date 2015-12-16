@@ -211,7 +211,7 @@ public class GamePlayStrategyActivity extends AppCompatActivity {
 
                 String url = Const.GET_ACTIVE_GAME_DETAIL + "?" + Const.TAG_TEAMID + "=" + pollsPref.getTeamId();
 
-                Log.e("url", url);
+              //  Log.e("url", url);
                 String jsonString = jsonParser.getJSONFromUrl(url);
 
 
@@ -258,7 +258,7 @@ public class GamePlayStrategyActivity extends AppCompatActivity {
 
                                 JSONObject jsonObjOpt = jsonArrayPollOptions.getJSONObject(j);
 
-                                Log.e("poll", jsonObjOpt.toString());
+                             //   Log.e("poll", jsonObjOpt.toString());
 
                                 String pollId = jsonObjOpt.getString(Const.KEY_POLL_ID);
 
@@ -329,7 +329,7 @@ public class GamePlayStrategyActivity extends AppCompatActivity {
             String url = Const.GET_ACTIVE_USERS;
             String jsonString = jsonParser.getJSONFromUrl(url);
 
-            Log.e("jsonStringurl", url);
+           // Log.e("jsonStringurl", url);
 
             try {
                 JSONObject jsonObject = new JSONObject(jsonString);

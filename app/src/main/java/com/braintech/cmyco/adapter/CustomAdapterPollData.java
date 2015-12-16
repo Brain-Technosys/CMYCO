@@ -93,7 +93,7 @@ public class CustomAdapterPollData extends BaseAdapter {
             Fonts.robotoRegular(context, holder.txtViewPollNo);
 
             PollData pollData = rowItems.get(position);
-            Log.e("poll id", String.valueOf(pollData.getPoll_id()));
+          //  Log.e("poll id", String.valueOf(pollData.getPoll_id()));
 
             if (pollData.getPoll_id() == 7) {
                 holder.txtViewPollNo.setVisibility(View.GONE);
