@@ -259,7 +259,7 @@ public class DisabledGameActivity extends MyBaseActivity {
     //Handling Graph
     private void handleGraph(int maxY, BarChart chart) {
         if (maxY == 0) {
-            maxY = 6;
+            maxY = 5;
         }
 
         //Handling graph X axis Content
@@ -280,7 +280,7 @@ public class DisabledGameActivity extends MyBaseActivity {
         leftAxis.setTextColor(Color.parseColor(graphItemColor));
         leftAxis.setPosition(YAxis.YAxisLabelPosition.OUTSIDE_CHART);
         leftAxis.setDrawGridLines(false);
-        leftAxis.setLabelCount(5, true);
+        leftAxis.setLabelCount(6, true);
         leftAxis.setDrawAxisLine(true);
         leftAxis.setEnabled(true);
         leftAxis.setAxisLineWidth(2);

@@ -267,6 +267,7 @@ public class PollService extends Service {
                         try {
                             if (TimeCheck.isTimeBetweenTwoTime(startTime, endTime, currentTime)) {
 
+
                                 pollsPref.saveTimePresent(true);
 
                                 if (pollsPref.getPollId() == poll_id) {
@@ -314,8 +315,8 @@ public class PollService extends Service {
 
                                 break;
                             }
-                        //    else
-//                                System.out.println("Given time doesn't lies between two times");
+                            else
+                              System.out.println("Given time doesn't lies between two times");
                         } catch (ParseException ex) {
 
                             ex.printStackTrace();
