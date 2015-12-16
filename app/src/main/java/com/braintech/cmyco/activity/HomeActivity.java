@@ -395,7 +395,7 @@ public class HomeActivity extends MyBaseActivity {
             //do nothing
         } else {
             if (Utility.isNetworkAvailable(this))
-                new GetTeamData().execute(String.valueOf(pos));
+                new GetTeamData().execute(arrayListCoach.get(pos).get(Const.KEY_ID));
             else {
                 SnackNotify.showSnakeBar(this, snakeRetryCoach, coordinatorLayout);
             }
