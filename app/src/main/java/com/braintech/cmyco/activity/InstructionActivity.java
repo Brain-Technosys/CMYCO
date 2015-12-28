@@ -333,6 +333,9 @@ public class InstructionActivity extends MyBaseActivity {
 
     @OnClick(R.id.btn_continue)
     void continueToDefence() {
+        CommonAPI commonAPI = new CommonAPI(this);
+        commonAPI.setActiveUserStatus();
+
         Intent intent = new Intent(InstructionActivity.this, InstructionActivityTwo.class);
         startActivity(intent);
     }

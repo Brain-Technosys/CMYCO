@@ -115,6 +115,9 @@ public class InstructionActivityTwo extends MyBaseActivity {
 
     @OnClick(R.id.btn_continue)
     void goNext() {
+        CommonAPI commonAPI = new CommonAPI(this);
+        commonAPI.setActiveUserStatus();
+
         Intent intent = new Intent(this, GamePlayStrategyActivity.class);
         startActivity(intent);
     }

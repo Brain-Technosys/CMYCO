@@ -46,7 +46,7 @@
 
     <!-- forget Password-->
     <string name="logo_forget_password">FORGET YOUR PASSWORD ?</string>
-    <string name="empty_email">Please enter a email id.</string>
+    <string name="empty_email">Please enter email id.</string>
 
 
     <!-- Home Activity -->
@@ -54,7 +54,7 @@
     <string name="spn_team_title">Select Team</string>
     <string name="home_continue_error">Please select Coach and Team first.</string>
     <string name="alert_no_coach_selected">Please select Coach first.</string>
-    <string name="alert_no_team_selected">Please select Team first.</string>
+    <string name="alert_no_team_selected">Please select Team.</string>
 
 
     <!-- defence Screen-->

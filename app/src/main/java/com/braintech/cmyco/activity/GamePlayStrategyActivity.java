@@ -118,7 +118,6 @@ public class GamePlayStrategyActivity extends AppCompatActivity {
         txt_playCall = (TextView) header.findViewById(R.id.txt_playCall);
 
 
-
         //footer listView
         ViewGroup footer = (ViewGroup) inflater.inflate(R.layout.layout_footer_gps, listViewPoll, false);
         listViewPoll.addFooterView(footer, null, false);
@@ -211,7 +210,7 @@ public class GamePlayStrategyActivity extends AppCompatActivity {
 
                 String url = Const.GET_ACTIVE_GAME_DETAIL + "?" + Const.TAG_TEAMID + "=" + pollsPref.getTeamId();
 
-              //  Log.e("url", url);
+                //  Log.e("url", url);
                 String jsonString = jsonParser.getJSONFromUrl(url);
 
 
@@ -258,7 +257,7 @@ public class GamePlayStrategyActivity extends AppCompatActivity {
 
                                 JSONObject jsonObjOpt = jsonArrayPollOptions.getJSONObject(j);
 
-                             //   Log.e("poll", jsonObjOpt.toString());
+                                //   Log.e("poll", jsonObjOpt.toString());
 
                                 String pollId = jsonObjOpt.getString(Const.KEY_POLL_ID);
 
@@ -329,7 +328,7 @@ public class GamePlayStrategyActivity extends AppCompatActivity {
             String url = Const.GET_ACTIVE_USERS;
             String jsonString = jsonParser.getJSONFromUrl(url);
 
-           // Log.e("jsonStringurl", url);
+            // Log.e("jsonStringurl", url);
 
             try {
                 JSONObject jsonObject = new JSONObject(jsonString);
@@ -413,6 +412,10 @@ public class GamePlayStrategyActivity extends AppCompatActivity {
             pollsPref.pollActivated(false);
             passIntentOnClick(position, poll_id);
         }
+
+        //sending user active status to server
+        CommonAPI commonAPI = new CommonAPI(this);
+        commonAPI.setActiveUserStatus();
     }
 
     public void passIntentOnClick(int position, int poll_id) {

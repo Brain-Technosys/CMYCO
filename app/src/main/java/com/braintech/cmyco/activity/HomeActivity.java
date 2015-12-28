@@ -241,8 +241,6 @@ public class HomeActivity extends MyBaseActivity {
             hashMapCoachTitle.put(Const.KEY_NAME, getString(R.string.spn_coach_title));
 
 
-
-
             arrayListCoach.add(hashMapCoachTitle);
 
             String url = Const.GET_COACH_RESULT;
@@ -423,6 +421,8 @@ public class HomeActivity extends MyBaseActivity {
 
     @OnClick(R.id.btn_continue)
     public void soGraph() {
+        CommonAPI commonAPI = new CommonAPI(this);
+        commonAPI.setActiveUserStatus();
 
         if (coachSpinner.getSelectedItemPosition() == 0) {
             alertDialogManager.showAlertDialog(HomeActivity.this, getString(R.string.home_continue_error));

@@ -22,8 +22,9 @@ public class Const {
     public static String GET_ACTIVE_USERS = BASE_URL + "users/app_active_users1";
     public static String GET_ACTIVE_GAME_DETAIL = BASE_URL + "games/app_active_game1";
     public static String RATING = BASE_URL + "ratings/app_add1";
-    public static String GET_GRAPH=BASE_URL+ "ratings/app_ratings1?";
-    public static String POST_BACKGROUND=BASE_URL+"users/app_lastactivity?";
+    public static String GET_GRAPH = BASE_URL + "ratings/app_ratings1?";
+    public static String POST_BACKGROUND = BASE_URL + "users/app_lastactivity?";
+    public static String SEND_USER_ACTIVE_STATUS = BASE_URL + "users/app_userlastactivity?user_id=";
 
 
 //
@@ -72,7 +73,7 @@ public class Const {
     public static String KEY_POLL_SERVER_TIME = "server_time";
     public static String KEY_MAX_ID = "max_id";
     public static String KEY_MAX = "max";
-    public static String KEY_TIME_ZONE ="timezone";
+    public static String KEY_TIME_ZONE = "timezone";
 
 
     //Rating TAG
@@ -86,13 +87,11 @@ public class Const {
     public static String KEY_ACTIVE_USER = "active_user";
 
     //Background variables for logout
-    public static String KEY_STATUS="&status=B";
-    public static String TAG_LOGOUT="logout";
+    public static String KEY_STATUS = "&status=B";
+    public static String TAG_LOGOUT = "logout";
 
     //Intent varaibles
-    public static String KEY_BUTTON_CLICKED="isButtonClicked";
-
-
+    public static String KEY_BUTTON_CLICKED = "isButtonClicked";
 
 
 }

@@ -75,6 +75,12 @@ public class DisabledGameActivity extends MyBaseActivity {
     @InjectView(R.id.txtPlayCallOne)
     TextView txtPlayCallOne;
 
+    @InjectView(R.id.llay_playcallOne)
+    LinearLayout llay_playcallOne;
+
+    @InjectView(R.id.llay_playcallTwo)
+    LinearLayout llay_playcallTwo;
+
     @InjectView(R.id.txtPlayCallTwo)
     TextView txtPlayCallTwo;
 
@@ -229,7 +235,7 @@ public class DisabledGameActivity extends MyBaseActivity {
                 gridview_cat.setExpanded(true);
                 gridview_cat.setVisibility(View.VISIBLE);
                 //Log.e("strCatArray", Arrays.toString(strCat));
-                ArrayAdapter arrayAdapter = new ArrayAdapter(this,R.layout.grid_text_layout, strCat);
+                ArrayAdapter arrayAdapter = new ArrayAdapter(this, R.layout.grid_text_layout, strCat);
                 gridview_cat.setAdapter(arrayAdapter);
                 arrayAdapter.notifyDataSetChanged();
             }
@@ -378,6 +384,10 @@ public class DisabledGameActivity extends MyBaseActivity {
 
             return true;
         } else if (id == android.R.id.home) {
+            //sending user active status to server
+            CommonAPI commonAPI = new CommonAPI(this);
+            commonAPI.setActiveUserStatus();
+
             this.finish();
         }
 
@@ -476,7 +486,7 @@ public class DisabledGameActivity extends MyBaseActivity {
                             resultMaxPoll = "PLAY CALL :" + jsonObjectData.getString(String.valueOf("max_id"));
                             maxId = jsonObjectData.getString(String.valueOf("max_id")) + "." + jsonObjectData.getString(String.valueOf("max"));
 
-                            sequence = "PLAY CALL :" + jsonObjectData.getString(String.valueOf("sequence"));
+                            sequence = jsonObjectData.getString(String.valueOf("sequence"));
 
                             //set max value for Graph Y axis
                             maxY = jsonObjectData.getInt("max_value");
@@ -509,13 +519,25 @@ public class DisabledGameActivity extends MyBaseActivity {
                 if (GRAPHONE) {
                     getGraphData(xTitle, barDataStrings);
                     handleGraph(maxY, chart);
-                    txtPlayCallOne.setText(sequence);
+
+                    
+                    if (!sequence.equals("0")) {
+                        llay_playcallOne.setVisibility(View.VISIBLE);
+                        txtPlayCallOne.setText("PLAY CALL :" + sequence);
+                    } else {
+                        llay_playcallOne.setVisibility(View.GONE);
+                    }
                 }
 
                 if (!GRAPHONE) {
                     getGraphData(xTitle, barDataStringsTwo);
                     handleGraph(maxY, chartTwo);
-                    txtPlayCallTwo.setText(sequence);
+                    if (!sequence.equals("0")) {
+                        llay_playcallTwo.setVisibility(View.VISIBLE);
+                        txtPlayCallTwo.setText("PLAY CALL :" + sequence);
+                    } else {
+                        llay_playcallTwo.setVisibility(View.GONE);
+                    }
                 }
 
                 if (pollId == 4) {

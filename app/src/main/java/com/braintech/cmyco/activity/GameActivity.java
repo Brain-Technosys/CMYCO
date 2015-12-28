@@ -209,6 +209,10 @@ public class GameActivity extends AppCompatActivity {
 
         // here we are Showing graph
         //  handleGraph(maxY);
+
+        //sending user active status to server
+        CommonAPI commonAPI = new CommonAPI(this);
+        commonAPI.setActiveUserStatus();
     }
 
     public void setFonts() {
@@ -407,6 +411,10 @@ public class GameActivity extends AppCompatActivity {
 
             return true;
         } else if (id == android.R.id.home) {
+            //sending user active status to server
+            CommonAPI commonAPI = new CommonAPI(this);
+            commonAPI.setActiveUserStatus();
+
             passIntent();
         }
 
@@ -417,6 +425,11 @@ public class GameActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
+
+        //sending user active status to server
+        CommonAPI commonAPI = new CommonAPI(this);
+        commonAPI.setActiveUserStatus();
+
         passIntent();
     }
 
@@ -485,6 +498,10 @@ public class GameActivity extends AppCompatActivity {
                     pollsPref.saveButtonClicked(true, pollId, tag);
 
                     callRatingApi(tag);
+
+                    //sending user active status to server
+                    CommonAPI commonAPI = new CommonAPI(GameActivity.this);
+                    commonAPI.setActiveUserStatus();
 
                 }
             });

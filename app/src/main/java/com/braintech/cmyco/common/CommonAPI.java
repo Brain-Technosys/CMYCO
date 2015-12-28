@@ -432,4 +432,44 @@ public class CommonAPI {
     }
 
 
+    public void setActiveUserStatus() {
+        if (Utility.isNetworkAvailable(context)) {
+            if (userSession.getUserID() != null) {
+                new SetUserActiveStatus().execute(userSession.getUserID());
+            }
+        }
+    }
+
+
+    private class SetUserActiveStatus extends AsyncTask<String, String, String> {
+        @Override
+        protected String doInBackground(String... strings) {
+
+            String url = Const.SEND_USER_ACTIVE_STATUS;
+            JsonParser jsonParser = new JsonParser(context);
+
+            String jsonString = jsonParser.getJSONFromUrl(url);
+
+            try {
+                JSONObject jsonObject = new JSONObject(jsonString);
+                if (jsonObject != null) {
+
+                }
+
+            } catch (NullPointerException e) {
+                e.printStackTrace();
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+
+            //Do nothing
+        }
+    }
 }

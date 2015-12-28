@@ -289,6 +289,9 @@ public class LoginActivity extends AppCompatActivity {
                 userSession.storeLoginDetail(email, password, hashMapLoginDetail.get(Const.KEY_ID));
                 if (activeGame != 0) {
 
+                    //calling method to start Asynchronous class to set Active User Status
+                    commonAPI.setActiveUserStatus();
+
                     //Go to Home activity
                     Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
                     startActivity(intent);

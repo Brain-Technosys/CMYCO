@@ -50,8 +50,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:numColumns="2"
                 android:isScrollContainer="false"
+                android:numColumns="2"
                 android:stretchMode="columnWidth"
                 android:visibility="gone" />
         </RelativeLayout>
@@ -85,7 +85,7 @@
                 android:paddingTop="10dp" />
 
             <LinearLayout
-
+                android:id="@+id/llay_playcallOne"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/chart"
@@ -139,6 +139,7 @@
                 />
 
             <LinearLayout
+                android:id="@+id/llay_playcallTwo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/chart"
