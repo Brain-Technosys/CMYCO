@@ -520,7 +520,7 @@ public class DisabledGameActivity extends MyBaseActivity {
                     getGraphData(xTitle, barDataStrings);
                     handleGraph(maxY, chart);
 
-                    
+
                     if (!sequence.equals("0")) {
                         llay_playcallOne.setVisibility(View.VISIBLE);
                         txtPlayCallOne.setText("PLAY CALL :" + sequence);

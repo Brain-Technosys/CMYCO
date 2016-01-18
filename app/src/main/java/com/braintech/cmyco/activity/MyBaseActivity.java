@@ -5,13 +5,14 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.View;
 
 import com.braintech.cmyco.common.CommonAPI;
 
 /**
  * Created by Braintech on 11/26/2015.
  */
-public class MyBaseActivity extends AppCompatActivity {
+public class MyBaseActivity extends AppCompatActivity{
 
 
     public static final long DISCONNECT_TIMEOUT = 3600000; // 1 hour
@@ -56,6 +57,8 @@ public class MyBaseActivity extends AppCompatActivity {
         super.onStop();
         stopDisconnectTimer();
     }
+
+
 }
 
 

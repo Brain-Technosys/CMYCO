@@ -306,6 +306,8 @@ public class InstructionActivity extends MyBaseActivity {
             Progress.stop();
 
             if (result == 1) {
+
+                Log.d("Instruction", instruction);
                 //showing justify text in webView
                 String text = "<html><body style=\"text-align:justify\"> %s </body></Html>";
                 instructionWebView.loadData(String.format(text, instruction), "text/html", "UTF-8");
