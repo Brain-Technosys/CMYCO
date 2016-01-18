@@ -161,12 +161,19 @@ public class GameActivity extends AppCompatActivity {
             catDefenceArrayList = (ArrayList<PollOptions>) bundle.getSerializable(Const.TAG_POLL_OPTION);
 
             pollId = bundle.getInt(Const.KEY_POLL_ID);
-            pollName = bundle.getString(Const.KEY_POLL_NAME, pollName);
+            Log.e("pollid", "" + pollId);
+            if (pollId == 4) {
+                pollName = "Substitution Player In";
+            } else if (pollId == 8) {
+                pollName = "Substitution Player Out";
+            } else
+                pollName = bundle.getString(Const.KEY_POLL_NAME, pollName);
+
             pollDuration = bundle.getLong(Const.KEY_POLL_DURATION);
 
-            pollDuration=pollDuration*1000;
+            pollDuration = pollDuration * 1000;
 
-           // isButtonClicked = bundle.getBoolean(Const.KEY_BUTTON_CLICKED);
+            // isButtonClicked = bundle.getBoolean(Const.KEY_BUTTON_CLICKED);
 
             Log.e("pollDuration", "" + pollDuration);
 
@@ -770,6 +777,6 @@ public class GameActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 
-        isButtonClicked=false;
+        isButtonClicked = false;
     }
 }

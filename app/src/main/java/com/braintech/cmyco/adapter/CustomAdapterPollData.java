@@ -3,8 +3,11 @@ package com.braintech.cmyco.adapter;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.opengl.EGLExt;
+import android.os.Bundle;
+import android.support.annotation.IntegerRes;
 import android.support.v7.widget.CardView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -16,8 +19,10 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.braintech.cmyco.R;
+import com.braintech.cmyco.activity.GameActivity;
 import com.braintech.cmyco.objectclasses.PollData;
 import com.braintech.cmyco.objectclasses.PollOptions;
+import com.braintech.cmyco.utils.Const;
 import com.braintech.cmyco.utils.Fonts;
 
 import org.w3c.dom.Text;
@@ -62,7 +67,7 @@ public class CustomAdapterPollData extends BaseAdapter {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
         ViewHolder holder = null;
 
         if (convertView == null) {
@@ -83,6 +88,7 @@ public class CustomAdapterPollData extends BaseAdapter {
             holder.card_view.setCardBackgroundColor(Color.parseColor("#2980b9"));
 
             //For Substitution
+            holder.linLayPollOne = (LinearLayout) convertView.findViewById(R.id.linLayPollOne);
             holder.linLayoutPollTwo = (LinearLayout) convertView.findViewById(R.id.linLayoutPollTwo);
             holder.txtViewPollOptionsTwo = (TextView) convertView.findViewById(R.id.txtViewPollOptionsTwo);
             holder.txtViewPollNoTwo = (TextView) convertView.findViewById(R.id.txtViewPollNoTwo);
@@ -93,16 +99,7 @@ public class CustomAdapterPollData extends BaseAdapter {
             Fonts.robotoRegular(context, holder.txtViewPollNo);
 
             PollData pollData = rowItems.get(position);
-          //  Log.e("poll id", String.valueOf(pollData.getPoll_id()));
-
-            if (pollData.getPoll_id() == 7) {
-                holder.txtViewPollNo.setVisibility(View.GONE);
-                holder.card_view.setCardBackgroundColor(Color.TRANSPARENT);
-            }
-
-
-            convertView.setTag(holder);
-
+            //  Log.e("poll id", String.valueOf(pollData.getPoll_id()));
 
             if (pollData.getPoll_id() == 4) {
                 //for Substitution, setting visibility visible to views
@@ -113,16 +110,27 @@ public class CustomAdapterPollData extends BaseAdapter {
                 Fonts.robotoRegular(context, holder.txtViewPollNoTwo);
             }
 
+            if (pollData.getPoll_id() == 7) {
+                holder.txtViewPollNo.setVisibility(View.GONE);
+                holder.card_view.setCardBackgroundColor(Color.TRANSPARENT);
+            }
+
+
+            convertView.setTag(holder);
 
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
 
 
+        holder.linLayPollOne.setTag(position);
+        holder.linLayoutPollTwo.setTag(position);
+
         PollData pollData = rowItems.get(position);
 
         holder.txtViewPollName.setText(pollData.getPoll_name());
         holder.txtViewPollName.setTag(pollData.getPoll_id());
+
 
         if (!pollData.getMaxId().equals("null") && !pollData.getMaxValue().equals("null")) {
 
@@ -146,8 +154,9 @@ public class CustomAdapterPollData extends BaseAdapter {
 
             // data for Substitution player In
             if (Integer.parseInt(pollData.getMaxId().trim()) == 0) {
-                holder.txtViewPollOptions.setVisibility(View.INVISIBLE);
-                holder.txtViewPollNo.setVisibility(View.INVISIBLE);
+                holder.txtViewPollOptions.setVisibility(View.VISIBLE);
+                holder.txtViewPollNo.setVisibility(View.VISIBLE);
+                holder.txtViewPollOptions.setText("Player In");
             } else {
                 holder.txtViewPollOptions.setVisibility(View.VISIBLE);
                 holder.txtViewPollNo.setVisibility(View.VISIBLE);
@@ -159,17 +168,42 @@ public class CustomAdapterPollData extends BaseAdapter {
             // data for Substitution player out
             PollData pollDataSubstitution = getRowItems.get(position + 1);
 
-            if (!pollDataSubstitution.getMaxId().equals("null") && !pollDataSubstitution.getMaxValue().equals("null")) {
-                if (Integer.parseInt(pollDataSubstitution.getMaxId().trim()) == 0) {
-                    holder.txtViewPollOptionsTwo.setVisibility(View.INVISIBLE);
-                    holder.txtViewPollNoTwo.setVisibility(View.INVISIBLE);
-                } else {
-                    holder.txtViewPollOptionsTwo.setVisibility(View.VISIBLE);
-                    holder.txtViewPollNoTwo.setVisibility(View.VISIBLE);
-                    holder.txtViewPollNoTwo.setText(pollDataSubstitution.getMaxId());
-                    holder.txtViewPollOptionsTwo.setText("Player Out");
-                }
+            // if (!pollDataSubstitution.getMaxId().equals("null") && !pollDataSubstitution.getMaxValue().equals("null")) {
+            if (Integer.parseInt(pollDataSubstitution.getMaxId().trim()) == 0) {
+                holder.txtViewPollOptionsTwo.setVisibility(View.VISIBLE);
+                holder.txtViewPollNoTwo.setVisibility(View.VISIBLE);
+                holder.txtViewPollOptionsTwo.setText("Player Out");
+            } else {
+                holder.txtViewPollNoTwo.setVisibility(View.VISIBLE);
+                holder.txtViewPollNoTwo.setText(pollDataSubstitution.getMaxId());
+                holder.txtViewPollOptionsTwo.setText("Player Out");
             }
+            // }
+
+            holder.linLayPollOne.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    int pos = Integer.parseInt(v.getTag().toString());
+                    int poll_id = rowItems.get(pos).getPoll_id();
+
+                    if (poll_id == 4 || poll_id == 8)
+
+                        passIntent(poll_id, position);
+
+                }
+            });
+
+            holder.linLayoutPollTwo.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int pos = Integer.parseInt(v.getTag().toString());
+                    int poll_id = rowItems.get(pos).getPoll_id();
+
+                    if (poll_id == 4)
+                        passIntent(8, position);
+                }
+            });
 
 
         }
@@ -184,8 +218,26 @@ public class CustomAdapterPollData extends BaseAdapter {
         TextView txtViewPollOptions;
 
         LinearLayout linLayoutPollTwo;
+        LinearLayout linLayPollOne;
+
         TextView txtViewPollNoTwo;
         TextView txtViewPollOptionsTwo;
         CardView card_view;
+    }
+
+    private void passIntent(int poll_id, int position) {
+        String pollName = rowItems.get(position - 1).getPoll_name();
+
+
+        ArrayList<PollOptions> arrayListPollOpt = hashMapPollOptions.get(poll_id);
+        Intent intent = new Intent(context, GameActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putString(Const.KEY_POLL_NAME, pollName);
+        bundle.putSerializable(Const.TAG_POLL_OPTION, arrayListPollOpt);
+        bundle.putLong(Const.KEY_POLL_DURATION, Long.parseLong(rowItems.get(position - 1).getPoll_duration()));
+        bundle.putInt(Const.KEY_POLL_ID, poll_id);
+        intent.putExtras(bundle);
+
+        context.startActivity(intent);
     }
 }
