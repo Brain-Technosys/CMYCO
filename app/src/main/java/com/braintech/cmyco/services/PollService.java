@@ -154,7 +154,7 @@ public class PollService extends Service {
             JsonParser jsonParser = new JsonParser(context);
 
             String url = Const.GET_ACTIVE_GAME_DETAIL + "?" + Const.TAG_TEAMID + "=" + pollsPref.getTeamId();
-           // Log.e("URL", url);
+           Log.e("URL", url);
             String jsonString = jsonParser.getJSONFromUrl(url);
 
             try {
@@ -262,7 +262,7 @@ public class PollService extends Service {
 
                     String poll_name = arrayListPollData.get(i).getPoll_name();
 
-                    if (startTime != null) {
+                    /*if (startTime != null) {
 
                         try {
                             if (TimeCheck.isTimeBetweenTwoTime(startTime, endTime, currentTime)) {
@@ -321,7 +321,7 @@ public class PollService extends Service {
 
                             ex.printStackTrace();
                         }
-                    }
+                    }*/
 
                 }
 

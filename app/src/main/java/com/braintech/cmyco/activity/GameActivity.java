@@ -164,9 +164,11 @@ public class GameActivity extends AppCompatActivity {
             pollName = bundle.getString(Const.KEY_POLL_NAME, pollName);
             pollDuration = bundle.getLong(Const.KEY_POLL_DURATION);
 
-            isButtonClicked = bundle.getBoolean(Const.KEY_BUTTON_CLICKED);
+            pollDuration=pollDuration*1000;
 
-           // Log.e("isButtonClicked", "" + isButtonClicked);
+           // isButtonClicked = bundle.getBoolean(Const.KEY_BUTTON_CLICKED);
+
+            Log.e("pollDuration", "" + pollDuration);
 
 
             defenceTextView.setText(pollName);
@@ -180,6 +182,7 @@ public class GameActivity extends AppCompatActivity {
 
             public void onTick(long millisUntilFinished) {
 
+                Log.e("isButtonClicked", "" + isButtonClicked);
                 if (!isButtonClicked) {
                     txtViewTimerText.setText("Time Left: ");
                 } else {
@@ -760,9 +763,13 @@ public class GameActivity extends AppCompatActivity {
     protected void onPause() {
         super.onPause();
 
-        if (!isButtonClicked) {
-            pollsPref.saveButtonClicked(false, 0, 0);
-        }
+
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        isButtonClicked=false;
+    }
 }

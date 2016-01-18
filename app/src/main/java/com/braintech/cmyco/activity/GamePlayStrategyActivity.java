@@ -378,7 +378,7 @@ public class GamePlayStrategyActivity extends AppCompatActivity {
 
         poll_id = arrayListPollData.get(position - 1).getPoll_id();
 
-        if (pollsPref.getCurrentPollId() != -1) {
+       /* if (pollsPref.getCurrentPollId() != -1) {
 
             //  pollId = getIntent().getExtras().getInt(Const.TAG_POLL_ID);
             pollId = pollsPref.getCurrentPollId();
@@ -409,9 +409,9 @@ public class GamePlayStrategyActivity extends AppCompatActivity {
                 passIntentOnClick(position, poll_id);
             }
         } else {
-            pollsPref.pollActivated(false);
+            pollsPref.pollActivated(false);*/
             passIntentOnClick(position, poll_id);
-        }
+       // }
 
         //sending user active status to server
         CommonAPI commonAPI = new CommonAPI(this);
@@ -428,11 +428,14 @@ public class GamePlayStrategyActivity extends AppCompatActivity {
 
             String pollName = arrayListPollData.get(position - 1).getPoll_name();
 
+            Log.e("pollDurationGamePlay", "" + arrayListPollData.get(position - 1).getPoll_duration());
+
             arrayListPollOpt = hashMapPollOptions.get(poll_id);
-            Intent intent = new Intent(this, DisabledGameActivity.class);
+            Intent intent = new Intent(this,GameActivity.class);
             Bundle bundle = new Bundle();
             bundle.putString(Const.KEY_POLL_NAME, pollName);
             bundle.putSerializable(Const.TAG_POLL_OPTION, arrayListPollOpt);
+            bundle.putLong(Const.KEY_POLL_DURATION, Long.parseLong(arrayListPollData.get(position - 1).getPoll_duration()));
             bundle.putInt(Const.KEY_POLL_ID, poll_id);
             intent.putExtras(bundle);
 
