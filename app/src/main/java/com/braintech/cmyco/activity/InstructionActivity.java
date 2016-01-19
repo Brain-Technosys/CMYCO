@@ -136,7 +136,7 @@ public class InstructionActivity extends MyBaseActivity {
 
         // callingPollData();
 
-        setPostDelayedDuration(5000);
+        setPostDelayedDuration(30000);
 
         pollsPref.ActivityRunning(false);
 
