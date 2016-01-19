@@ -163,9 +163,9 @@ public class GameActivity extends AppCompatActivity {
             pollId = bundle.getInt(Const.KEY_POLL_ID);
             Log.e("pollid", "" + pollId);
             if (pollId == 4) {
-                pollName = "Substitution Player In";
-            } else if (pollId == 8) {
                 pollName = "Substitution Player Out";
+            } else if (pollId == 8) {
+                pollName = "Substitution Player In";
             } else
                 pollName = bundle.getString(Const.KEY_POLL_NAME, pollName);
 
@@ -451,8 +451,9 @@ public class GameActivity extends AppCompatActivity {
         pollsPref.saveCurrentPollId(pollId);
 
         isActivityStarted = true;
-        finish();
+
         startActivity(intent);
+        finish();
     }
 
     //Setting Layout

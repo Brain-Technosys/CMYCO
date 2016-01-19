@@ -372,13 +372,13 @@ public class GamePlayStrategyActivity extends AppCompatActivity {
 
     }
 
-    @OnItemClick(R.id.listViewPoll)
+   /* @OnItemClick(R.id.listViewPoll)
     void onItemClick(final int position) {
 
 
-        poll_id = arrayListPollData.get(position - 1).getPoll_id();
+//        poll_id = arrayListPollData.get(position - 1).getPoll_id();
 
-       /* if (pollsPref.getCurrentPollId() != -1) {
+       *//* if (pollsPref.getCurrentPollId() != -1) {
 
             //  pollId = getIntent().getExtras().getInt(Const.TAG_POLL_ID);
             pollId = pollsPref.getCurrentPollId();
@@ -409,14 +409,14 @@ public class GamePlayStrategyActivity extends AppCompatActivity {
                 passIntentOnClick(position, poll_id);
             }
         } else {
-            pollsPref.pollActivated(false);*/
-            passIntentOnClick(position, poll_id);
+            pollsPref.pollActivated(false);*//*
+         //   passIntentOnClick(position, poll_id);
        // }
 
         //sending user active status to server
-        CommonAPI commonAPI = new CommonAPI(this);
-        commonAPI.setActiveUserStatus();
-    }
+        //CommonAPI commonAPI = new CommonAPI(this);
+       // commonAPI.setActiveUserStatus();
+    }*/
 
     public void passIntentOnClick(int position, int poll_id) {
 

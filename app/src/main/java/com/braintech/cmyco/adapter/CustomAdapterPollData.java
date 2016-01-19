@@ -34,17 +34,23 @@ import butterknife.InjectView;
 
 public class CustomAdapterPollData extends BaseAdapter {
 
-    Context context;
+    Activity context;
 
     ArrayList<PollData> rowItems;
-    ArrayList<PollData> getRowItems;
+
     HashMap<Integer, ArrayList<PollOptions>> hashMapPollOptions;
 
+    String max_id;
+    String poll_duration;
 
-    public CustomAdapterPollData(Context context, ArrayList<PollData> rowItems, HashMap<Integer, ArrayList<PollOptions>> hashMapPollOptions, int ignorePos) {
+
+    public CustomAdapterPollData(Activity context, ArrayList<PollData> rowItems, HashMap<Integer, ArrayList<PollOptions>> hashMapPollOptions, int ignorePos) {
         this.context = context;
         this.rowItems = rowItems;
-        this.getRowItems = rowItems;
+
+        max_id = rowItems.get(4).getMaxId();
+        poll_duration = rowItems.get(4).getPoll_duration();
+
         rowItems.remove(ignorePos);
         this.hashMapPollOptions = hashMapPollOptions;
 
@@ -93,6 +99,8 @@ public class CustomAdapterPollData extends BaseAdapter {
             holder.txtViewPollOptionsTwo = (TextView) convertView.findViewById(R.id.txtViewPollOptionsTwo);
             holder.txtViewPollNoTwo = (TextView) convertView.findViewById(R.id.txtViewPollNoTwo);
 
+            holder.frameLayOptions = (FrameLayout) convertView.findViewById(R.id.frameLayOptions);
+
 
             Fonts.robotoRegular(context, holder.txtViewPollName);
             Fonts.robotoRegular(context, holder.txtViewPollOptions);
@@ -115,6 +123,24 @@ public class CustomAdapterPollData extends BaseAdapter {
                 holder.card_view.setCardBackgroundColor(Color.TRANSPARENT);
             }
 
+            holder.frameLayOptions.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    int pos = Integer.parseInt(v.getTag().toString());
+
+                    Log.e("pos", "" + pos);
+                    int poll_id = rowItems.get(pos).getPoll_id();
+                    Log.e("poll_id", "" + poll_id);
+                    if (poll_id == 7 || poll_id == 4) {
+                        //do nothing
+                    } else {
+                        passIntent(poll_id, pos);
+                    }
+
+                }
+            });
+
 
             convertView.setTag(holder);
 
@@ -125,12 +151,11 @@ public class CustomAdapterPollData extends BaseAdapter {
 
         holder.linLayPollOne.setTag(position);
         holder.linLayoutPollTwo.setTag(position);
+        holder.frameLayOptions.setTag(position);
 
         PollData pollData = rowItems.get(position);
 
         holder.txtViewPollName.setText(pollData.getPoll_name());
-        holder.txtViewPollName.setTag(pollData.getPoll_id());
-
 
         if (!pollData.getMaxId().equals("null") && !pollData.getMaxValue().equals("null")) {
 
@@ -156,27 +181,29 @@ public class CustomAdapterPollData extends BaseAdapter {
             if (Integer.parseInt(pollData.getMaxId().trim()) == 0) {
                 holder.txtViewPollOptions.setVisibility(View.VISIBLE);
                 holder.txtViewPollNo.setVisibility(View.VISIBLE);
-                holder.txtViewPollOptions.setText("Player In");
+                holder.txtViewPollOptions.setText("Player Out");
             } else {
                 holder.txtViewPollOptions.setVisibility(View.VISIBLE);
                 holder.txtViewPollNo.setVisibility(View.VISIBLE);
 
                 holder.txtViewPollNo.setText(pollData.getMaxId());
-                holder.txtViewPollOptions.setText("Player In");
+                holder.txtViewPollOptions.setText("Player Out");
             }
 
             // data for Substitution player out
-            PollData pollDataSubstitution = getRowItems.get(position + 1);
+            // PollData pollDataSubstitution = getRowItems.get(position + 1);
 
             // if (!pollDataSubstitution.getMaxId().equals("null") && !pollDataSubstitution.getMaxValue().equals("null")) {
-            if (Integer.parseInt(pollDataSubstitution.getMaxId().trim()) == 0) {
+
+            //Log.e("polloptions",""+pollDataSubstitution.getMaxId());
+            if (max_id.equals("0")) {
                 holder.txtViewPollOptionsTwo.setVisibility(View.VISIBLE);
                 holder.txtViewPollNoTwo.setVisibility(View.VISIBLE);
-                holder.txtViewPollOptionsTwo.setText("Player Out");
+                holder.txtViewPollOptionsTwo.setText("Player In");
             } else {
                 holder.txtViewPollNoTwo.setVisibility(View.VISIBLE);
-                holder.txtViewPollNoTwo.setText(pollDataSubstitution.getMaxId());
-                holder.txtViewPollOptionsTwo.setText("Player Out");
+                holder.txtViewPollNoTwo.setText(max_id);
+                holder.txtViewPollOptionsTwo.setText("Player In");
             }
             // }
 
@@ -223,10 +250,12 @@ public class CustomAdapterPollData extends BaseAdapter {
         TextView txtViewPollNoTwo;
         TextView txtViewPollOptionsTwo;
         CardView card_view;
+
+        FrameLayout frameLayOptions;
     }
 
     private void passIntent(int poll_id, int position) {
-        String pollName = rowItems.get(position - 1).getPoll_name();
+        String pollName = rowItems.get(position).getPoll_name();
 
 
         ArrayList<PollOptions> arrayListPollOpt = hashMapPollOptions.get(poll_id);
@@ -234,9 +263,14 @@ public class CustomAdapterPollData extends BaseAdapter {
         Bundle bundle = new Bundle();
         bundle.putString(Const.KEY_POLL_NAME, pollName);
         bundle.putSerializable(Const.TAG_POLL_OPTION, arrayListPollOpt);
-        bundle.putLong(Const.KEY_POLL_DURATION, Long.parseLong(rowItems.get(position - 1).getPoll_duration()));
+        if (poll_id == 8) {
+            bundle.putLong(Const.KEY_POLL_DURATION, Long.parseLong(poll_duration));
+        } else
+            bundle.putLong(Const.KEY_POLL_DURATION, Long.parseLong(rowItems.get(position).getPoll_duration()));
         bundle.putInt(Const.KEY_POLL_ID, poll_id);
         intent.putExtras(bundle);
+
+        context.finish();
 
         context.startActivity(intent);
     }
