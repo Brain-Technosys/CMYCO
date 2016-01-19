@@ -20,6 +20,7 @@ import android.widget.TextView;
 
 import com.braintech.cmyco.R;
 import com.braintech.cmyco.activity.GameActivity;
+import com.braintech.cmyco.common.CommonAPI;
 import com.braintech.cmyco.objectclasses.PollData;
 import com.braintech.cmyco.objectclasses.PollOptions;
 import com.braintech.cmyco.utils.Const;
@@ -43,6 +44,7 @@ public class CustomAdapterPollData extends BaseAdapter {
     String max_id;
     String poll_duration;
 
+    CommonAPI commonAPI;
 
     public CustomAdapterPollData(Activity context, ArrayList<PollData> rowItems, HashMap<Integer, ArrayList<PollOptions>> hashMapPollOptions, int ignorePos) {
         this.context = context;
@@ -53,6 +55,8 @@ public class CustomAdapterPollData extends BaseAdapter {
 
         rowItems.remove(ignorePos);
         this.hashMapPollOptions = hashMapPollOptions;
+
+        commonAPI=new CommonAPI(context);
 
     }
 
@@ -211,6 +215,8 @@ public class CustomAdapterPollData extends BaseAdapter {
                 @Override
                 public void onClick(View v) {
 
+                    commonAPI.setActiveUserStatus();
+
                     int pos = Integer.parseInt(v.getTag().toString());
                     int poll_id = rowItems.get(pos).getPoll_id();
 
@@ -224,6 +230,9 @@ public class CustomAdapterPollData extends BaseAdapter {
             holder.linLayoutPollTwo.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+
+                    commonAPI.setActiveUserStatus();
+
                     int pos = Integer.parseInt(v.getTag().toString());
                     int poll_id = rowItems.get(pos).getPoll_id();
 
