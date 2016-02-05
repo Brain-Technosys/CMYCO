@@ -37,6 +37,7 @@ import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import butterknife.ButterKnife;
@@ -142,7 +143,7 @@ public class LoginActivity extends AppCompatActivity {
 
     @OnClick(R.id.btn_sign_in)
     void doSignIn() {
-
+        Utility.hideSoftKeyboard(this);
         doLogin();
 
     }
@@ -215,6 +216,8 @@ public class LoginActivity extends AppCompatActivity {
         String msg = "";
         HashMap<String, String> hashMapLoginDetail;
 
+        ArrayList<HashMap<String, String>> listCoachTeamDetail;
+
 
         @Override
         protected void onPreExecute() {
@@ -233,6 +236,7 @@ public class LoginActivity extends AppCompatActivity {
                 String url = Const.SIGN_IN + Const.TAG_EMAIL + URLEncoder.encode(email, "UTF-8") +
                         Const.TAG_PASSWORD + URLEncoder.encode(password, "UTF-8");
 
+                Log.d("Login URL", url);
 
                 String jsonString = jsonParser.getJSONFromUrl(url);
 
@@ -242,7 +246,7 @@ public class LoginActivity extends AppCompatActivity {
                     msg = jsonObject.getString(Const.KEY_MSG);
                     if (result == 1) {
 
-
+                        listCoachTeamDetail = new ArrayList<>();
                         JSONObject jsonObjectLoginDetail = jsonObject.getJSONObject(Const.KEY_DATA);
 
                         hashMapLoginDetail.put(Const.KEY_ID, jsonObjectLoginDetail.getString(Const.KEY_ID));
@@ -262,6 +266,35 @@ public class LoginActivity extends AppCompatActivity {
                             //Storing game json in sheared pref
                             JSONObject jsonObjectGame = jsonObjectGameData.getJSONObject(Const.KEY_GAME);
                             pollsPref.storeGameJson(jsonObjectGame.toString());
+
+                            HashMap hashMapTitle = new HashMap();
+                            hashMapTitle.put(Const.KEY_ID, 0);
+                            hashMapTitle.put(Const.KEY_NAME, "Select Team");
+                            hashMapTitle.put(Const.KEY_COACH, "Select Coach");
+
+                            listCoachTeamDetail.add(hashMapTitle);
+
+
+
+                            JSONObject jsonObjectTeam1 = jsonObjectGameData.getJSONObject(Const.KEY_TEAM1);
+                            if (jsonObjectTeam1 != null) {
+                                HashMap hashMapTeam1 = new HashMap();
+                                hashMapTeam1.put(Const.KEY_ID, jsonObjectTeam1.getInt(Const.KEY_ID));
+                                hashMapTeam1.put(Const.KEY_NAME, jsonObjectTeam1.getString(Const.KEY_NAME));
+                                hashMapTeam1.put(Const.KEY_COACH, jsonObjectTeam1.getString(Const.KEY_COACH));
+
+                                listCoachTeamDetail.add(hashMapTeam1);
+                            }
+
+                            JSONObject jsonObjectTeam2 = jsonObjectGameData.getJSONObject(Const.KEY_TEAM2);
+                            if (jsonObjectTeam2 != null) {
+                                HashMap hashMapTeam2 = new HashMap();
+                                hashMapTeam2.put(Const.KEY_ID, jsonObjectTeam2.getInt(Const.KEY_ID));
+                                hashMapTeam2.put(Const.KEY_NAME, jsonObjectTeam2.getString(Const.KEY_NAME));
+                                hashMapTeam2.put(Const.KEY_COACH, jsonObjectTeam2.getString(Const.KEY_COACH));
+
+                                listCoachTeamDetail.add(hashMapTeam2);
+                            }
 
                         }
 
@@ -294,6 +327,7 @@ public class LoginActivity extends AppCompatActivity {
 
                     //Go to Home activity
                     Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
+                    intent.putExtra("TeamCoachDetail", listCoachTeamDetail);
                     startActivity(intent);
                     finish();
 

@@ -31,6 +31,7 @@ import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import butterknife.ButterKnife;
@@ -164,6 +165,7 @@ public class NoGameActivity extends AppCompatActivity {
         int activeGame;
         String msg = "";
         HashMap<String, String> hashMapLoginDetail;
+        ArrayList<HashMap<String, String>> listCoachTeamDetail;
 
 
         @Override
@@ -190,7 +192,7 @@ public class NoGameActivity extends AppCompatActivity {
                     result = jsonObject.getInt(Const.KEY_RESULT);
                     msg = jsonObject.getString(Const.KEY_MSG);
                     if (result == 1) {
-
+                        listCoachTeamDetail = new ArrayList<>();
 
                         JSONObject jsonObjectLoginDetail = jsonObject.getJSONObject(Const.KEY_DATA);
 
@@ -211,6 +213,35 @@ public class NoGameActivity extends AppCompatActivity {
                             //Storing game json in sheared pref
                             JSONObject jsonObjectGame = jsonObjectGameData.getJSONObject(Const.KEY_GAME);
                             pollsPref.storeGameJson(jsonObjectGame.toString());
+
+
+                            HashMap hashMapTitle = new HashMap();
+                            hashMapTitle.put(Const.KEY_ID, 0);
+                            hashMapTitle.put(Const.KEY_NAME, "Select Team");
+                            hashMapTitle.put(Const.KEY_COACH, "Select Coach");
+
+                            listCoachTeamDetail.add(hashMapTitle);
+
+
+                            JSONObject jsonObjectTeam1 = jsonObjectGameData.getJSONObject(Const.KEY_TEAM1);
+                            if (jsonObjectTeam1 != null) {
+                                HashMap hashMapTeam1 = new HashMap();
+                                hashMapTeam1.put(Const.KEY_ID, jsonObjectTeam1.getInt(Const.KEY_ID));
+                                hashMapTeam1.put(Const.KEY_NAME, jsonObjectTeam1.getString(Const.KEY_NAME));
+                                hashMapTeam1.put(Const.KEY_COACH, jsonObjectTeam1.getString(Const.KEY_COACH));
+
+                                listCoachTeamDetail.add(hashMapTeam1);
+                            }
+
+                            JSONObject jsonObjectTeam2 = jsonObjectGameData.getJSONObject(Const.KEY_TEAM2);
+                            if (jsonObjectTeam2 != null) {
+                                HashMap hashMapTeam2 = new HashMap();
+                                hashMapTeam2.put(Const.KEY_ID, jsonObjectTeam2.getInt(Const.KEY_ID));
+                                hashMapTeam2.put(Const.KEY_NAME, jsonObjectTeam2.getString(Const.KEY_NAME));
+                                hashMapTeam2.put(Const.KEY_COACH, jsonObjectTeam2.getString(Const.KEY_COACH));
+
+                                listCoachTeamDetail.add(hashMapTeam2);
+                            }
 
                         }
                     }
@@ -236,6 +267,7 @@ public class NoGameActivity extends AppCompatActivity {
                 if (activeGame != 0) {
 
                     Intent intent = new Intent(NoGameActivity.this, HomeActivity.class);
+                    intent.putExtra("TeamCoachDetail", listCoachTeamDetail);
                     startActivity(intent);
                     finish();
 
